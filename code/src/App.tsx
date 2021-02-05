@@ -1,7 +1,10 @@
+import React from "react";
+import { TypographyPage } from "./views/Typography";
+
 function App() {
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <TypographyPage />
     </div>
   );
 }
