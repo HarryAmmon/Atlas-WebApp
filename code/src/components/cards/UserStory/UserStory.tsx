@@ -1,27 +1,22 @@
-import { Card, CardHeader, Box, makeStyles } from "@material-ui/core";
-import { useTheme } from "@material-ui/styles";
-import React from "react";
+import React, { useState } from "react";
+import { Details } from "./views/Details";
+import { Summary } from "./views/Summary";
 
 export interface UserStoryProps {
   title: string;
   description?: string;
   id: string;
+  changeView?: () => void;
 }
 
 export const UserStory: React.FC<UserStoryProps> = ({ title, id }) => {
-  const theme = useTheme();
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      borderLeft: `0.25rem solid ${theme.palette.primary.main}`,
-    },
-  }));
-  const classes = useStyles(theme);
-
-  return (
-    <Box display="flex" my={1}>
-      <Card classes={{ root: classes.root }}>
-        <CardHeader title={title} titleTypographyProps={{ variant: "h6" }} />
-      </Card>
-    </Box>
-  );
+  const [view, setView] = useState<"summary" | "detail">("summary");
+  switch (view) {
+    case "summary":
+      return (
+        <Summary title={title} id={id} changeView={() => setView("detail")} />
+      );
+    case "detail":
+      return <Details title={title} id={id} />;
+  }
 };
