@@ -1,6 +1,7 @@
 import { TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { AcceptanceCriteriaInput } from "../types";
+import Styles from "./AcceptanceCriteria.module.scss";
 
 export const AcceptanceCriteria: React.FC<AcceptanceCriteriaInput> = ({
   children,
@@ -16,6 +17,7 @@ export const AcceptanceCriteria: React.FC<AcceptanceCriteriaInput> = ({
       value={criteria}
       onChange={(event) => setCriteria(event.target.value)}
       multiline
+      className={Styles.root}
     />
   );
 };
