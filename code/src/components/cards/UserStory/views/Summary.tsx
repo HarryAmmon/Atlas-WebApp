@@ -1,12 +1,8 @@
 import { Box, Card, CardHeader, makeStyles, useTheme } from "@material-ui/core";
 import React from "react";
-import { UserStoryProps } from "../..";
+import { SummaryProps } from "../types";
 
-export const Summary: React.FC<UserStoryProps> = ({
-  title,
-  id,
-  changeView,
-}) => {
+export const Summary: React.FC<SummaryProps> = ({ title, id, changeView }) => {
   const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     root: {

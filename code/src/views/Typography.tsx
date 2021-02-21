@@ -7,6 +7,7 @@ import {
   Divider,
   Box,
 } from "@material-ui/core";
+import { CardTitle } from "../components/forms";
 
 export const TypographyPage = () => (
   <React.Fragment>
@@ -40,6 +41,9 @@ export const TypographyPage = () => (
 
     <Box my={3}>
       <Divider />
+    </Box>
+    <Box my={2}>
+      <CardTitle>My Title</CardTitle>
     </Box>
   </React.Fragment>
 );

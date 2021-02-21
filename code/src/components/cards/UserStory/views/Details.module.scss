@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin-bottom: 30px; // This should be removed
+  padding: 9px;
+}
+
+.titleBar {
+  display: flex;
+}
+
+.id {
+  padding-right: 0.5rem;
+  padding-top: 0.3rem;
+}
+.body {
+  margin-top: 0.85rem;
+}

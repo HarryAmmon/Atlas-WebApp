@@ -5,7 +5,15 @@ import { UserStory } from "../components/cards";
 export const Home = () => (
   <React.Fragment>
     <Typography variant="h1">Atlas</Typography>
-    <UserStory id="123" title="Add a description to a card" />
-    <UserStory id="124" title="Short description" />
+    <UserStory
+      id="123567"
+      title="Add a description to a card"
+      description="This is the first card"
+    />
+    <UserStory
+      id="124567"
+      title="Card title"
+      description={"This is the second card"}
+    />
   </React.Fragment>
 );

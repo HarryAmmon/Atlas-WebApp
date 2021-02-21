@@ -1,4 +1,3 @@
-import { UserStory, UserStoryProps } from "./UserStory/UserStory";
+import { UserStory } from "./UserStory/UserStory";
 
 export { UserStory };
-export type { UserStoryProps };
