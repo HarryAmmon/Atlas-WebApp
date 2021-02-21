@@ -16,4 +16,7 @@
 }
 .body {
   margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
 }

@@ -1,7 +1,6 @@
 import { TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { CardDescriptionInput } from "../types";
-import Styles from "./CardDescription.module.scss";
 
 export const CardDescription: React.FC<CardDescriptionInput> = ({
   children,
@@ -18,7 +17,6 @@ export const CardDescription: React.FC<CardDescriptionInput> = ({
       variant="filled"
       rows={4}
       multiline
-      className={Styles.root}
     />
   );
 };

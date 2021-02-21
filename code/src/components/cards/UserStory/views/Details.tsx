@@ -2,7 +2,7 @@ import { Box, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import Styles from "./Details.module.scss";
 import { DetailsProps } from "../types";
-import { CardTitle, CardDescription } from "../../../forms";
+import { CardTitle, CardDescription, AcceptanceCriteria } from "../../../forms";
 
 export const Details: React.FC<DetailsProps> = ({ id, title, description }) => {
   return (
@@ -15,6 +15,9 @@ export const Details: React.FC<DetailsProps> = ({ id, title, description }) => {
       </Box>
       <Box className={Styles.body}>
         <CardDescription>{description}</CardDescription>
+        <AcceptanceCriteria>
+          Some example acceptance criteria
+        </AcceptanceCriteria>
       </Box>
     </Paper>
   );

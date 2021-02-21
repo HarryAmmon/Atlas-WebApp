@@ -5,3 +5,7 @@ export interface CardTitleInput {
 export interface CardDescriptionInput {
   children: string;
 }
+
+export interface AcceptanceCriteriaInput {
+  children: string;
+}
