@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@material-ui/core";
+import { Box, Paper, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import Styles from "./Details.module.scss";
 import { DetailsProps } from "../types";
@@ -14,10 +14,20 @@ export const Details: React.FC<DetailsProps> = ({ id, title, description }) => {
         <CardTitle>{title}</CardTitle>
       </Box>
       <Box className={Styles.body}>
-        <CardDescription>{description}</CardDescription>
-        <AcceptanceCriteria>
-          Some example acceptance criteria
-        </AcceptanceCriteria>
+        <Box className={Styles.leftColumn}>
+          <CardDescription>{description}</CardDescription>
+          <AcceptanceCriteria>
+            Some example acceptance criteria
+          </AcceptanceCriteria>
+        </Box>
+        <Box className={Styles.rightColumn}>
+          <TextField
+            type="number"
+            id="story-points"
+            label="Story Points"
+            variant="outlined"
+          />
+        </Box>
       </Box>
     </Paper>
   );

@@ -14,9 +14,22 @@
   padding-right: 0.5rem;
   padding-top: 0.3rem;
 }
+
 .body {
+  display: flex;
+  // border: 2px solid green;
   margin-top: 0.85rem;
+  justify-content: space-between;
+}
+
+.leftColumn {
   display: flex;
   flex-direction: column;
   width: 70%;
+  // border: 2px solid red;
+}
+
+.rightColumn {
+  width: 25%;
+  // border: 2px solid blue;
 }
