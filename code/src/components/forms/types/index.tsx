@@ -9,3 +9,7 @@ export interface CardDescriptionInput {
 export interface AcceptanceCriteriaInput {
   children: string;
 }
+
+export interface StoryPointsInput {
+  children: string;
+}

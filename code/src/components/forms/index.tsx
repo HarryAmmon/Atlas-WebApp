@@ -1,5 +1,4 @@
-import { CardTitle } from "./CardTitle/CardTitle";
-import { CardDescription } from "./CardDescription/CardDescription";
-import { AcceptanceCriteria } from "./AcceptanceCriteria/AcceptanceCriteria";
-
-export { CardTitle, CardDescription, AcceptanceCriteria };
+export * from "./CardTitle/CardTitle";
+export * from "./CardDescription/CardDescription";
+export * from "./AcceptanceCriteria/AcceptanceCriteria";
+export * from "./StoryPoints/StoryPoints";

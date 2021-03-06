@@ -1,32 +1,34 @@
-import { Box, Paper, TextField, Typography } from "@material-ui/core";
-import React from "react";
+import { Box, Paper, Typography } from "@material-ui/core";
+import React, { useContext } from "react";
 import Styles from "./Details.module.scss";
-import { DetailsProps } from "../types";
-import { CardTitle, CardDescription, AcceptanceCriteria } from "../../../forms";
+import { ViewProps } from "../types";
+import {
+  CardTitle,
+  CardDescription,
+  AcceptanceCriteria,
+  StoryPoints,
+} from "../../../forms";
+import { UserStoryContext } from "../UserStoryContext";
 
-export const Details: React.FC<DetailsProps> = ({ id, title, description }) => {
+export const Details: React.FC<ViewProps> = ({ changeView }) => {
+  const UserStory = useContext(UserStoryContext);
   return (
     <Paper className={Styles.root}>
       <Box className={Styles.titleBar}>
         <Typography variant="h5" className={Styles.id}>
-          {id}
+          {UserStory.id}
         </Typography>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>{UserStory.title}</CardTitle>
       </Box>
       <Box className={Styles.body}>
         <Box className={Styles.leftColumn}>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription>{UserStory.description || ""}</CardDescription>
           <AcceptanceCriteria>
-            Some example acceptance criteria
+            {UserStory.acceptanceCriteria || ""}
           </AcceptanceCriteria>
         </Box>
         <Box className={Styles.rightColumn}>
-          <TextField
-            type="number"
-            id="story-points"
-            label="Story Points"
-            variant="outlined"
-          />
+          <StoryPoints>{UserStory.storyPoints || ""}</StoryPoints>
         </Box>
       </Box>
     </Paper>

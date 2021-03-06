@@ -1,19 +1,25 @@
-import { Typography } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import { UserStory } from "../components/cards";
+import { AppContext } from "./components/AppContext";
 
-export const Home = () => (
-  <React.Fragment>
-    <Typography variant="h1">Atlas</Typography>
-    <UserStory
-      id="123567"
-      title="Add a description to a card"
-      description="This is the first card"
-    />
-    <UserStory
-      id="124567"
-      title="Card title"
-      description={"This is the second card"}
-    />
-  </React.Fragment>
-);
+export const Home = () => {
+  const appContext = useContext(AppContext);
+
+  return (
+    <React.Fragment>
+      {appContext.UserStories.map((story) => (
+        <UserStory
+          key={story.id}
+          Mode="summary"
+          UserStory={{
+            id: story.id,
+            title: story.title,
+            description: story.description,
+            acceptanceCriteria: story.acceptanceCriteria,
+            storyPoints: story.storyPoints,
+          }}
+        />
+      ))}
+    </React.Fragment>
+  );
+};

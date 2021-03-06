@@ -1,22 +1,17 @@
-import { Box, Card, CardHeader, makeStyles, useTheme } from "@material-ui/core";
-import React from "react";
-import { SummaryProps } from "../types";
+import { Card, CardHeader } from "@material-ui/core";
+import React, { useContext } from "react";
+import { ViewProps } from "../types";
+import { UserStoryContext } from "../UserStoryContext";
+import styles from "./Summary.module.scss";
 
-export const Summary: React.FC<SummaryProps> = ({ title, id, changeView }) => {
-  const theme = useTheme();
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      borderLeft: `0.25rem solid ${theme.palette.primary.main}`,
-      cursor: "pointer",
-    },
-  }));
-  const classes = useStyles(theme);
-
+export const Summary: React.FC<ViewProps> = ({ changeView }) => {
+  const UserStory = useContext(UserStoryContext);
   return (
-    <Box display="flex" my={1}>
-      <Card classes={{ root: classes.root }} onClick={changeView}>
-        <CardHeader title={title} titleTypographyProps={{ variant: "h6" }} />
-      </Card>
-    </Box>
+    <Card onClick={changeView} className={styles.root}>
+      <CardHeader
+        title={UserStory.title}
+        titleTypographyProps={{ variant: "h6" }}
+      />
+    </Card>
   );
 };

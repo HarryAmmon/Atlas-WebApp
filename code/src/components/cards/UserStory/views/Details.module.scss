@@ -1,9 +1,9 @@
 .root {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  max-width: 800px;
-  margin-bottom: 30px; // This should be removed
-  padding: 9px;
+  padding: 0.5rem;
+  border-left: 6px solid cyan;
 }
 
 .titleBar {
@@ -17,7 +17,6 @@
 
 .body {
   display: flex;
-  // border: 2px solid green;
   margin-top: 0.85rem;
   justify-content: space-between;
 }
@@ -26,10 +25,8 @@
   display: flex;
   flex-direction: column;
   width: 70%;
-  // border: 2px solid red;
 }
 
 .rightColumn {
   width: 25%;
-  // border: 2px solid blue;
 }

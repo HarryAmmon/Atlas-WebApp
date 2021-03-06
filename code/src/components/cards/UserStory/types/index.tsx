@@ -1,18 +1,16 @@
 export interface UserStoryProps {
-  title: string;
-  description: string;
-  id: string;
+  UserStory :UserStoryFields;
+  Mode :"summary" | "detail";
 }
 
-export interface SummaryProps {
+export interface UserStoryFields {
   id: string;
   title: string;
-  changeView?: () => void;
+  description?: string;
+  acceptanceCriteria?: string;
+  storyPoints?: string;
 }
 
-export interface DetailsProps {
-  id: string;
-  title: string;
-  description: string;
+export interface ViewProps {
   changeView?: () => void;
 }
