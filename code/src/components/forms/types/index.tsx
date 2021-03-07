@@ -13,3 +13,7 @@ export interface AcceptanceCriteriaInput {
 export interface StoryPointsInput {
   children: string;
 }
+
+export interface SaveAndCloseProps {
+  dirty: boolean;
+}
