@@ -1,5 +1,4 @@
 import { Box, Paper, Typography } from "@material-ui/core";
-import { Save } from "@material-ui/icons";
 import React, { useContext } from "react";
 import Styles from "./Details.module.scss";
 import { ViewProps } from "../types";
@@ -8,6 +7,7 @@ import {
   CardDescription,
   AcceptanceCriteria,
   StoryPoints,
+  SaveAndClose,
 } from "../../../forms";
 import { Form } from "react-final-form";
 import { UserStoryContext } from "../UserStoryContext";
@@ -27,7 +27,6 @@ export const Details: React.FC<ViewProps> = ({ changeView }) => {
   const UserStory = useContext(UserStoryContext);
   return (
     <Paper className={Styles.root}>
-      <Save />
       <Form
         onSubmit={() => console.log("Submitting form")}
         initialValues={{
@@ -39,8 +38,9 @@ export const Details: React.FC<ViewProps> = ({ changeView }) => {
         validateOnBlur
         validate={handleValidate}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, dirty }) => (
           <form onSubmit={handleSubmit}>
+            <SaveAndClose dirty={dirty} />
             <Box className={Styles.titleBar}>
               <Typography variant="h5" className={Styles.id}>
                 {UserStory.id}
