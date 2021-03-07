@@ -1,25 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { CardTitleInput } from "../types";
 import Styles from "./CardTitle.module.scss";
-import { makeStyles, TextField } from "@material-ui/core";
+import { TextField, showErrorOnBlur } from "mui-rff";
 
-export const CardTitle: React.FC<CardTitleInput> = ({ children }) => {
-  const [title, setTitle] = useState(children);
-  const useStyles = makeStyles({
-    input: {},
-  });
-
-  const classes = useStyles();
-
+export const CardTitle: React.FC<CardTitleInput> = () => {
   return (
     <TextField
-      value={title}
-      onChange={(event) => setTitle(event.target.value)}
-      className={classes.input}
-      inputProps={{ "aria-label": "description" }}
-      fullWidth
-      required
+      type="text"
+      name="CardTitle"
+      showError={showErrorOnBlur}
       InputProps={{ classes: { input: Styles.root } }}
+      required
+      fullWidth
     />
   );
 };
