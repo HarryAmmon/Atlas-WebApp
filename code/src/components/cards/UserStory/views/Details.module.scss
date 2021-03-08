@@ -4,10 +4,13 @@
   flex-direction: column;
   padding: 0.5rem;
   border-left: 6px solid cyan;
+  max-width: 1500px;
+  min-width: 600px;
 }
 
 .titleBar {
   display: flex;
+  justify-content: space-between;
 }
 
 .id {

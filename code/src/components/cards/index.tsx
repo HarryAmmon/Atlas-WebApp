@@ -1,3 +1,1 @@
-import { UserStory } from "./UserStory/UserStory";
-
-export { UserStory };
+export * from "./UserStory/UserStory";
