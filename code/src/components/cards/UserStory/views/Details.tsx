@@ -7,9 +7,8 @@ import {
   CardDescription,
   AcceptanceCriteria,
   StoryPoints,
-  SaveAndCloseButton,
-  CloseButton,
 } from "../../../forms";
+import { SaveAndCloseButton, CloseButton } from "../../../buttons";
 import { Form } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../../../views/components/AppContext";
