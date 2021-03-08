@@ -1,0 +1,35 @@
+.root {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5rem;
+  border-left: 6px solid cyan;
+  max-width: 1500px;
+  min-width: 600px;
+}
+
+.titleBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.id {
+  padding-right: 0.5rem;
+  padding-top: 0.3rem;
+}
+
+.body {
+  display: flex;
+  margin-top: 0.85rem;
+  justify-content: space-between;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.rightColumn {
+  width: 25%;
+}
