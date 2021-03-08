@@ -1,11 +1,11 @@
 import { Card, CardHeader } from "@material-ui/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useGetUserStory } from "../services/useGetUserStory";
 import { ViewProps } from "../types";
-import { UserStoryContext } from "../UserStoryContext";
 import styles from "./Summary.module.scss";
 
-export const Summary: React.FC<ViewProps> = ({ changeView }) => {
-  const UserStory = useContext(UserStoryContext);
+export const Summary: React.FC<ViewProps> = ({ UserStoryId, changeView }) => {
+  const UserStory = useGetUserStory(UserStoryId);
 
   useEffect(() => {
     console.log(UserStory);

@@ -11,12 +11,14 @@ import {
   CloseButton,
 } from "../../../forms";
 import { Form } from "react-final-form";
-import { UserStoryContext } from "../UserStoryContext";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../../../views/components/AppContext";
+import { useGetUserStory } from "../services/useGetUserStory";
 
-export const Details: React.FC<ViewProps> = ({ changeView }) => {
-  const UserStory = useContext(UserStoryContext);
+export const Details: React.FC<ViewProps> = ({ UserStoryId }) => {
   const history = useHistory();
+  const appContext = useContext(AppContext);
+  const UserStory = useGetUserStory(UserStoryId);
 
   const handleValidate = (values: any) => {
     console.log("handle validate called");
@@ -32,11 +34,14 @@ export const Details: React.FC<ViewProps> = ({ changeView }) => {
 
   const handleSubmit = (values: any) => {
     console.log("handle submit called");
-    console.log(UserStory.title);
     console.log(values);
-    UserStory.title = "a submitted title";
-    console.log(UserStory.title);
-    close();
+
+    appContext.UserStoriesDispatcher({
+      type: "UPDATE_USER_STORY",
+      UserStory: { id: "2", title: values.CardTitle },
+    });
+
+    // close();
   };
 
   const close = () => {

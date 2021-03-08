@@ -1,34 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { UserStoryProps } from "./types";
-import { UserStoryContext } from "./UserStoryContext";
 import { Details } from "./views/Details";
 import { Summary } from "./views/Summary";
 import { useHistory } from "react-router-dom";
 
-export const UserStory: React.FC<UserStoryProps> = ({ UserStory, Mode }) => {
+export const UserStory: React.FC<UserStoryProps> = ({ UserStoryId, Mode }) => {
   const history = useHistory();
-  const [view] = useState(Mode);
   const selectView = () => {
-    switch (view) {
+    switch (Mode) {
       case "summary":
         return (
-          <Summary changeView={() => history.push(`/story/${UserStory.id}`)} />
+          <Summary
+            UserStoryId={UserStoryId}
+            changeView={() => history.push(`/story/${UserStoryId}`)}
+          />
         );
       case "detail":
-        return <Details />;
+        return <Details UserStoryId={UserStoryId} />;
     }
   };
-  return (
-    <UserStoryContext.Provider
-      value={{
-        id: UserStory.id,
-        title: UserStory.title,
-        description: UserStory.description,
-        acceptanceCriteria: UserStory.acceptanceCriteria,
-        storyPoints: UserStory.storyPoints,
-      }}
-    >
-      {selectView()}
-    </UserStoryContext.Provider>
-  );
+  return <>{selectView()}</>;
 };
