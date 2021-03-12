@@ -8,12 +8,7 @@ export const SaveAndCloseButton: React.FC<SaveAndCloseButtonProps> = ({
   onClick,
 }) => {
   return (
-    <Button
-      className={className}
-      variant="contained"
-      type="submit"
-      onClick={onClick}
-    >
+    <Button className={className} variant="contained" type="submit">
       Save and Close
       <Save />
     </Button>
