@@ -40,7 +40,7 @@ function App() {
               key={story.id}
               path={`/story/${story.id}`}
               component={() => (
-                <UserStory Mode="detail" UserStoryId={story.id} />
+                <UserStory mode="detail" userStoryId={story.id} />
               )}
             />
           ))}

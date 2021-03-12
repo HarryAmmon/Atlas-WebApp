@@ -1,14 +1,17 @@
 export interface UserStoryProps {
-  UserStoryId: string;
-  Mode: "summary" | "detail";
+  userStoryId: string;
+  mode: "summary" | "detail";
 }
 
-export interface UserStoryFields {
+export interface UserStoryFields extends NewUserStoryFields {
   id: string;
-  title: string;
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
+}
+
+export interface NewUserStoryFields {
+  title: string;
 }
 
 export type UserStoryActions =
@@ -18,7 +21,7 @@ export type UserStoryActions =
     }
   | {
       type: "ADD_USER_STORY";
-      UserStory: UserStoryFields;
+      UserStory: NewUserStoryFields;
     }
   | {
       type: "DELETE_USER_STORY";
@@ -30,6 +33,10 @@ export type UserStoryActions =
     };
 
 export interface ViewProps {
-  UserStoryId: string;
+  userStoryId: string;
+}
+
+export interface BaseCardProps {
+  className?: string;
   changeView?: () => void;
 }
