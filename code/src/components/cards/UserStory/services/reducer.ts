@@ -12,6 +12,14 @@ export const reducer = (
       UserStories[index] = action.UserStory;
       return [...UserStories];
     }
+    case "ADD_USER_STORY": {
+      const id = Math.floor(Math.random() * 20000);
+      UserStories = [
+        ...UserStories,
+        { id: id.toString(), title: action.UserStory.title },
+      ];
+      return [...UserStories];
+    }
     default:
       return [...UserStories];
   }

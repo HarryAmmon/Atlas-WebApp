@@ -3,21 +3,29 @@ import { UserStoryProps } from "./types";
 import { Details } from "./views/Details";
 import { Summary } from "./views/Summary";
 import { useHistory } from "react-router-dom";
+import { BaseCard } from "./views/BaseCard";
+import styles from "./UserStory.module.scss";
 
-export const UserStory: React.FC<UserStoryProps> = ({ UserStoryId, Mode }) => {
+export const UserStory: React.FC<UserStoryProps> = ({ userStoryId, mode }) => {
   const history = useHistory();
   const selectView = () => {
-    switch (Mode) {
+    switch (mode) {
       case "summary":
         return (
-          <Summary
-            UserStoryId={UserStoryId}
-            changeView={() => history.push(`/story/${UserStoryId}`)}
-          />
+          <BaseCard
+            className={styles.summary}
+            changeView={() => history.push(`/story/${userStoryId}`)}
+          >
+            <Summary userStoryId={userStoryId} />
+          </BaseCard>
         );
       case "detail":
-        return <Details UserStoryId={UserStoryId} />;
+        return (
+          <BaseCard className={styles.details}>
+            <Details userStoryId={userStoryId} />
+          </BaseCard>
+        );
     }
   };
-  return <>{selectView()}</>;
+  return selectView();
 };
