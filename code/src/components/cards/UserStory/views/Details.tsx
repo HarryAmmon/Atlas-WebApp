@@ -20,25 +20,31 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
   const UserStory = useGetUserStory(userStoryId);
 
   const handleValidate = (values: any) => {
-    console.log("handle validate called");
     const errors: any = {};
-    if (!values.StoryPoint) {
+    if (!values.StoryPoints) {
       errors.StoryPoint = "Story Points Required";
     }
     if (!values.CardTitle) {
       errors.CardTitle = "Title Required";
     }
+    console.log(errors);
     return errors;
   };
 
   const handleSubmit = (values: any) => {
-    console.log("handle submit called");
-    console.log(values);
-
+    console.log("handle submit details");
+    console.log(values.CardTitle);
     appContext.UserStoriesDispatcher({
       type: "UPDATE_USER_STORY",
-      UserStory: { id: "2", title: values.CardTitle },
+      UserStory: {
+        id: userStoryId,
+        title: values.CardTitle,
+        storyPoints: values.StoryPoints,
+        description: values.Description,
+        acceptanceCriteria: values.AcceptanceCriteria,
+      },
     });
+    close();
   };
 
   const close = () => {
@@ -52,7 +58,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
         CardTitle: UserStory.title,
         Description: UserStory.description,
         AcceptanceCriteria: UserStory.acceptanceCriteria,
-        StoryPoint: UserStory.storyPoints,
+        StoryPoints: UserStory.storyPoints,
       }}
       validateOnBlur
       validate={handleValidate}

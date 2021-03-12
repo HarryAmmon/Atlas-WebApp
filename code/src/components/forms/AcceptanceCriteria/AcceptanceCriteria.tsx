@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { TextField } from "mui-rff";
 import React from "react";
 import { AcceptanceCriteriaInput } from "../types";
 import Styles from "./AcceptanceCriteria.module.scss";

@@ -6,7 +6,7 @@ export const StoryPoints: React.FC<StoryPointsInput> = () => {
   return (
     <TextField
       type="number"
-      name="StoryPoint"
+      name="StoryPoints"
       label="Story Points"
       variant="outlined"
       showError={showErrorOnBlur}
