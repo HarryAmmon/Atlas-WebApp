@@ -1,28 +1,21 @@
-import { useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { TypographyPage, Home } from "./views";
 import { Route, Switch } from "react-router";
 import { StylesProvider } from "@material-ui/styles";
 import { AppContext } from "./views/components/AppContext";
 import { reducer, UserStory } from "./components/cards";
 import { Typography } from "@material-ui/core";
+import { UserStoryFields } from "./components/cards";
+import Axios from "axios";
 
 function App() {
-  const UserStories = [
-    {
-      id: "2",
-      title: "Add a description Card",
-      description: "My description",
-      acceptanceCriteria: "some acceptance criteria",
-      storyPoints: "3",
-    },
-    {
-      id: "22",
-      title: "Use react final form",
-      description: "My description",
-      acceptanceCriteria: "fields validate and post on blur",
-      storyPoints: "5",
-    },
-  ];
+  const [UserStories, setUserStories] = useState<UserStoryFields>();
+
+  // useEffect(() => {
+  //   Axios.get("https://localhost:5001/UserStory").then((result) => {
+  //     setUserStories(result.data);
+  //   });
+  // });
 
   const [state, dispatcher] = useReducer(reducer, UserStories);
 
@@ -35,7 +28,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={() => <Home />} />
           <Route path="/typography" component={() => <TypographyPage />} />
-          {state.map((story) => (
+          {state.map((story: UserStoryFields) => (
             <Route
               key={story.id}
               path={`/story/${story.id}`}
