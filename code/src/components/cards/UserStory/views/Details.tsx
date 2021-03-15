@@ -37,7 +37,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     appContext.UserStoriesDispatcher({
       type: "UPDATE_USER_STORY",
       UserStory: {
-        id: userStoryId,
+        storyId: userStoryId,
         title: values.CardTitle,
         storyPoints: values.StoryPoints,
         description: values.Description,
@@ -67,7 +67,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
         <form onSubmit={handleSubmit}>
           <Box className={Styles.titleBar}>
             <Typography variant="h5" className={Styles.id}>
-              {UserStory.id}
+              {UserStory.storyId}
             </Typography>
             <CardTitle>{UserStory.title || ""}</CardTitle>
             {dirty ? <SaveAndCloseButton /> : <CloseButton onClick={close} />}

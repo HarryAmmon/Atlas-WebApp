@@ -1,10 +1,13 @@
+import { Types } from "mongoose";
+
 export interface UserStoryProps {
   userStoryId: string;
   mode: "summary" | "detail";
 }
 
 export interface UserStoryFields extends NewUserStoryFields {
-  id: string;
+  _id?: Types.ObjectId;
+  storyId: string;
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
@@ -20,7 +23,7 @@ export type UserStoryActions =
       id: string;
     }
   | {
-      type: "ADD_USER_STORY";
+      type: "ADD_NEW_USER_STORY";
       UserStory: NewUserStoryFields;
     }
   | {
@@ -30,6 +33,10 @@ export type UserStoryActions =
   | {
       type: "UPDATE_USER_STORY";
       UserStory: UserStoryFields;
+    }
+  | {
+      type: "ADD_EXISTING_USER_STORIES";
+      UserStories: UserStoryFields[];
     };
 
 export interface ViewProps {

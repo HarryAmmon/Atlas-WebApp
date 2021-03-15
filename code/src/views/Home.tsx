@@ -11,12 +11,17 @@ export const Home = () => {
   const handleClick = () => {
     setNewCard(true);
   };
+
   return (
     <React.Fragment>
       <Paper>
         <AddButton label="Add Card" onClick={handleClick} />
         {appContext.UserStories.map((story) => (
-          <UserStory key={story.id} mode="summary" userStoryId={story.id} />
+          <UserStory
+            key={story.storyId}
+            mode="summary"
+            userStoryId={story.storyId}
+          />
         ))}
         <NewCard type="UserStory" display={newCard} setDisplay={setNewCard} />
       </Paper>

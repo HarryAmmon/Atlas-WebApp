@@ -28,7 +28,7 @@ export const NewCard: React.FC<NewCardProps> = ({
             <Form
               onSubmit={(values: any) =>
                 appContext.UserStoriesDispatcher({
-                  type: "ADD_USER_STORY",
+                  type: "ADD_NEW_USER_STORY",
                   UserStory: { title: values.CardTitle },
                 })
               }
