@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import { TypographyPage, Home } from "./views";
 import { Route, Switch } from "react-router";
 import { StylesProvider } from "@material-ui/styles";
@@ -9,15 +9,18 @@ import { UserStoryFields } from "./components/cards";
 import Axios from "axios";
 
 function App() {
-  const [UserStories, setUserStories] = useState<UserStoryFields>();
-
-  // useEffect(() => {
-  //   Axios.get("https://localhost:5001/UserStory").then((result) => {
-  //     setUserStories(result.data);
-  //   });
-  // });
-
+  let UserStories: UserStoryFields[] = [];
   const [state, dispatcher] = useReducer(reducer, UserStories);
+
+  useEffect(() => {
+    Axios.get("https://localhost:5001/UserStory").then((result) => {
+      console.log(result.data);
+      dispatcher({
+        type: "ADD_EXISTING_USER_STORIES",
+        UserStories: result.data,
+      });
+    });
+  }, []);
 
   return (
     <StylesProvider injectFirst>
@@ -30,10 +33,10 @@ function App() {
           <Route path="/typography" component={() => <TypographyPage />} />
           {state.map((story: UserStoryFields) => (
             <Route
-              key={story.id}
-              path={`/story/${story.id}`}
+              key={story.storyId}
+              path={`/story/${story.storyId}`}
               component={() => (
-                <UserStory mode="detail" userStoryId={story.id} />
+                <UserStory mode="detail" userStoryId={story.storyId} />
               )}
             />
           ))}
