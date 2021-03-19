@@ -27,7 +27,7 @@ export type UserStoryActions =
     }
   | {
       type: "DELETE_USER_STORY";
-      UserStory: UserStoryFields;
+      StoryId: string;
     }
   | {
       type: "UPDATE_USER_STORY";
