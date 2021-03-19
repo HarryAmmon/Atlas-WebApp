@@ -13,11 +13,8 @@ export const reducer = (
       return [...UserStories];
 
     case "ADD_NEW_USER_STORY":
-      const id = Math.floor(Math.random() * 20000);
-      UserStories = [
-        ...UserStories,
-        { storyId: id.toString(), title: action.UserStory.title },
-      ];
+      console.log(action.UserStory);
+      UserStories = [...UserStories, action.UserStory];
       return [...UserStories];
 
     case "ADD_EXISTING_USER_STORIES":
