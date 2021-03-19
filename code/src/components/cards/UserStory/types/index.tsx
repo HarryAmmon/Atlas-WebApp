@@ -1,12 +1,10 @@
-import { Types } from "mongoose";
-
 export interface UserStoryProps {
   userStoryId: string;
   mode: "summary" | "detail";
 }
 
 export interface UserStoryFields extends NewUserStoryFields {
-  _id?: Types.ObjectId;
+  id?: string;
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
@@ -15,6 +13,7 @@ export interface UserStoryFields extends NewUserStoryFields {
 export interface NewUserStoryFields {
   title: string;
   storyId: string;
+  archived: boolean;
 }
 
 export type UserStoryActions =

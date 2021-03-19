@@ -16,13 +16,17 @@ export const Home = () => {
     <React.Fragment>
       <Paper>
         <AddButton label="Add Card" onClick={handleClick} />
-        {appContext.UserStories.map((story) => (
-          <UserStory
-            key={story.storyId}
-            mode="summary"
-            userStoryId={story.storyId}
-          />
-        ))}
+        {appContext.UserStories.map((story) => {
+          if (!story.archived) {
+            return (
+              <UserStory
+                key={story.storyId}
+                mode="summary"
+                userStoryId={story.storyId}
+              />
+            );
+          } else return <></>;
+        })}
         <NewCard type="UserStory" display={newCard} setDisplay={setNewCard} />
       </Paper>
     </React.Fragment>

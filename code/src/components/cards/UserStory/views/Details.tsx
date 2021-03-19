@@ -13,6 +13,7 @@ import { Form } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../../../views/components/AppContext";
 import { useGetUserStory } from "../services/useGetUserStory";
+import axios from "axios";
 
 export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
   const history = useHistory();
@@ -24,7 +25,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     if (!values.StoryPoints) {
       errors.StoryPoint = "Story Points Required";
     }
-    if (!values.CardTitle) {
+    if (!values.Title) {
       errors.CardTitle = "Title Required";
     }
     console.log(errors);
@@ -32,19 +33,32 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log("handle submit details");
-    console.log(values.CardTitle);
-    appContext.UserStoriesDispatcher({
-      type: "UPDATE_USER_STORY",
-      UserStory: {
-        storyId: userStoryId,
-        title: values.CardTitle,
-        storyPoints: values.StoryPoints,
-        description: values.Description,
-        acceptanceCriteria: values.AcceptanceCriteria,
-      },
-    });
-    close();
+    const toSubmit = {
+      ...values,
+      id: UserStory.id,
+      storyId: UserStory.storyId,
+    };
+    console.log(toSubmit);
+    axios
+      .put(`https://localhost:5001/UserStory/${UserStory.id}`, toSubmit)
+      .then((response) => {
+        if (response.status === 204) {
+          appContext.UserStoriesDispatcher({
+            type: "UPDATE_USER_STORY",
+            UserStory: {
+              id: UserStory.id,
+              storyId: userStoryId,
+              title: values.Title,
+              storyPoints: values.StoryPoints,
+              description: values.Description,
+              acceptanceCriteria: values.AcceptanceCriteria,
+              archived: UserStory.archived,
+            },
+          });
+          close();
+        }
+      })
+      .catch((err) => console.log(err.response));
   };
 
   const close = () => {
@@ -55,7 +69,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     <Form
       onSubmit={handleSubmit}
       initialValues={{
-        CardTitle: UserStory.title,
+        Title: UserStory.title,
         Description: UserStory.description,
         AcceptanceCriteria: UserStory.acceptanceCriteria,
         StoryPoints: UserStory.storyPoints,
@@ -72,6 +86,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
             <CardTitle>{UserStory.title || ""}</CardTitle>
             {dirty ? <SaveAndCloseButton /> : <CloseButton onClick={close} />}
           </Box>
+          <Box></Box>
           <Box className={Styles.body}>
             <Box className={Styles.leftColumn}>
               <CardDescription>{UserStory.description || ""}</CardDescription>
