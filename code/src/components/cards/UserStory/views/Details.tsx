@@ -8,7 +8,11 @@ import {
   AcceptanceCriteria,
   StoryPoints,
 } from "../../../forms";
-import { SaveAndCloseButton, CloseButton } from "../../../buttons";
+import {
+  SaveAndCloseButton,
+  CloseButton,
+  ArchiveButton,
+} from "../../../buttons";
 import { Form } from "react-final-form";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../../../views/components/AppContext";
@@ -86,7 +90,24 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
             <CardTitle>{UserStory.title || ""}</CardTitle>
             {dirty ? <SaveAndCloseButton /> : <CloseButton onClick={close} />}
           </Box>
-          <Box></Box>
+          <Box>
+            <ArchiveButton
+              onClick={() => {
+                axios
+                  .delete(`https://localhost:5001/UserStory/${UserStory.id}`)
+                  .then((response) => {
+                    if (response.status === 202) {
+                      appContext.UserStoriesDispatcher({
+                        type: "DELETE_USER_STORY",
+                        StoryId: UserStory.id ? UserStory.id : "1",
+                      });
+                    }
+                    close();
+                  })
+                  .catch((err) => console.log(err.response));
+              }}
+            />
+          </Box>
           <Box className={Styles.body}>
             <Box className={Styles.leftColumn}>
               <CardDescription>{UserStory.description || ""}</CardDescription>
