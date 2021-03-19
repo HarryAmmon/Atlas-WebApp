@@ -1,3 +1,4 @@
+import axios from "axios";
 import { TextField } from "mui-rff";
 import React, { useContext } from "react";
 import { Form, useForm } from "react-final-form";
@@ -26,12 +27,20 @@ export const NewCard: React.FC<NewCardProps> = ({
         return (
           <BaseCard>
             <Form
-              onSubmit={(values: any) =>
-                appContext.UserStoriesDispatcher({
-                  type: "ADD_NEW_USER_STORY",
-                  UserStory: { title: values.CardTitle },
-                })
-              }
+              onSubmit={(values: any) => {
+                axios
+                  .post("https://localhost:5001/UserStory", {
+                    ...values,
+                    StoryId: Math.floor(Math.random() * 20000).toString(),
+                  })
+                  .then((response) => {
+                    appContext.UserStoriesDispatcher({
+                      type: "ADD_NEW_USER_STORY",
+                      UserStory: response.data,
+                    });
+                  })
+                  .catch((err) => console.warn(err));
+              }}
             >
               {({ handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
@@ -54,7 +63,7 @@ const SubmitOnBlurTextField: React.FC<SubmitOnBlurTextFieldProps> = ({
   return (
     <TextField
       className={styles.root}
-      name="CardTitle"
+      name="title"
       onBlur={(event: any) => {
         console.log(event.target.value);
         if (event.target.value === "") {

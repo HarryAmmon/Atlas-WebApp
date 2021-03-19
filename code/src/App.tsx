@@ -6,15 +6,14 @@ import { AppContext } from "./views/components/AppContext";
 import { reducer, UserStory } from "./components/cards";
 import { Typography } from "@material-ui/core";
 import { UserStoryFields } from "./components/cards";
-import Axios from "axios";
+import axios from "axios";
 
 function App() {
   let UserStories: UserStoryFields[] = [];
   const [state, dispatcher] = useReducer(reducer, UserStories);
 
   useEffect(() => {
-    Axios.get("https://localhost:5001/UserStory").then((result) => {
-      console.log(result.data);
+    axios.get("https://localhost:5001/UserStory").then((result) => {
       dispatcher({
         type: "ADD_EXISTING_USER_STORIES",
         UserStories: result.data,

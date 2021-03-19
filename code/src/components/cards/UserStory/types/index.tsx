@@ -7,7 +7,6 @@ export interface UserStoryProps {
 
 export interface UserStoryFields extends NewUserStoryFields {
   _id?: Types.ObjectId;
-  storyId: string;
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
@@ -15,6 +14,7 @@ export interface UserStoryFields extends NewUserStoryFields {
 
 export interface NewUserStoryFields {
   title: string;
+  storyId: string;
 }
 
 export type UserStoryActions =
