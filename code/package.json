@@ -18,6 +18,7 @@
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
     "final-form": "^4.20.2",
+    "mongoose": "^5.12.1",
     "mui-rff": "^3.0.3",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
