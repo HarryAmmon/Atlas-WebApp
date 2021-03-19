@@ -6,7 +6,7 @@ export const useGetUserStory = (id: string): UserStoryFields => {
   const appContext = useContext(AppContext);
   const user = appContext.UserStories.find((story) => story.storyId === id);
   if (user === undefined) {
-    return { storyId: "-1", title: "" };
+    return { storyId: "-1", title: "", archived: true };
   }
   return user;
 };

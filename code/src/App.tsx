@@ -14,6 +14,10 @@ function App() {
 
   useEffect(() => {
     axios.get("https://localhost:5001/UserStory").then((result) => {
+      result.data.forEach((result: any) => {
+        console.log(result);
+      });
+
       dispatcher({
         type: "ADD_EXISTING_USER_STORIES",
         UserStories: result.data,
