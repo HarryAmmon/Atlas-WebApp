@@ -4,6 +4,7 @@ import { AddButton } from "../components/buttons";
 import { NewCard, UserStory, UserStoryFields } from "../components/cards";
 import { AppContext } from "./components/AppContext";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { KanBanBoard } from "../components/boards/KanBanBoard";
 
 export const Home = () => {
   const appContext = useContext(AppContext);
@@ -18,6 +19,7 @@ export const Home = () => {
   return (
     <React.Fragment>
       <Paper>
+        <KanBanBoard title="My First Board" />
         <AddButton label="Add Card" onClick={handleClick} />
         <DragDropContext
           onDragEnd={(result) => {
