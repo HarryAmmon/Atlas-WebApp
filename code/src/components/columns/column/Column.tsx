@@ -1,23 +1,24 @@
 import { Box, Typography } from "@material-ui/core";
 import React from "react";
 import { UserStory } from "../../cards";
+import { Li, Ul } from "../../typography/typography";
 import { ColumnProps } from "../types/ColumnTypes";
 
 export const Column: React.FC<ColumnProps> = ({ title, stories }) => {
   return (
     <Box>
       <Typography variant="h4">{title}</Typography>
-      <ul>
+      <Ul>
         {stories ? (
           stories.map((story, index) => (
-            <li>
+            <Li>
               <UserStory userStoryId={story.storyId} mode="summary" />{" "}
-            </li>
+            </Li>
           ))
         ) : (
           <></>
         )}
-      </ul>
+      </Ul>
     </Box>
   );
 };
