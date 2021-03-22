@@ -45,6 +45,7 @@ export const Column: React.FC<ColumnProps> = ({
             ) : (
               <></>
             )}
+            {provided.placeholder}
           </ul>
         )}
       </Droppable>

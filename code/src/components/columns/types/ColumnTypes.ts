@@ -8,5 +8,5 @@ export interface ColumnFields {
   groupId: string;
   columnTitle: string;
   columnId: string;
-  stories?: UserStoryFields[];
+  stories: UserStoryFields[];
 }

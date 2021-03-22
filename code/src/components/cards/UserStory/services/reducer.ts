@@ -14,7 +14,6 @@ export const reducer = (
     }
 
     case "ADD_NEW_USER_STORY":
-      console.log(action.UserStory);
       UserStories = [...UserStories, action.UserStory];
       return [...UserStories];
 

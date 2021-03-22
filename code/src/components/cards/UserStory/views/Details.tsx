@@ -32,7 +32,6 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     if (!values.Title) {
       errors.CardTitle = "Title Required";
     }
-    console.log(errors);
     return errors;
   };
 
@@ -42,7 +41,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
       id: UserStory.id,
       storyId: UserStory.storyId,
     };
-    console.log(toSubmit);
+
     axios
       .put(`https://localhost:5001/UserStory/${UserStory.id}`, toSubmit)
       .then((response) => {

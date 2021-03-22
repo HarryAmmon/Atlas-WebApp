@@ -65,7 +65,6 @@ const SubmitOnBlurTextField: React.FC<SubmitOnBlurTextFieldProps> = ({
       className={styles.root}
       name="title"
       onBlur={(event: any) => {
-        console.log(event.target.value);
         if (event.target.value === "") {
           setDisplay(false);
         } else {
