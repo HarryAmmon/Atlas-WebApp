@@ -1,4 +1,9 @@
 .root {
+  border: 2px solid blue;
+  max-width: 500px;
+}
+
+.columnContainer {
   display: flex;
   flex-direction: row;
   border: 2px solid yellow;

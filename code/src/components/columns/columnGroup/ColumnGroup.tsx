@@ -10,13 +10,15 @@ interface ColumnGroupProps {
 
 export const ColumnGroup: React.FC<ColumnGroupProps> = ({ title, columns }) => {
   return (
-    <Box>
+    <Box className={styles.root}>
       <Typography variant="h3">{title}</Typography>
-      <Box className={styles.root}>
+      <Box className={styles.columnContainer}>
         {columns ? (
           columns.map((columnItem, index) => (
             <Column
-              title={columnItem.title}
+              columnId={columnItem.columnId}
+              columnGroupTitle={title}
+              columnTitle={columnItem.columnTitle}
               key={index}
               stories={columnItem.stories}
             />

@@ -88,7 +88,13 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
               {UserStory.storyId}
             </Typography>
             <CardTitle>{UserStory.title || ""}</CardTitle>
-            {dirty ? <SaveAndCloseButton /> : <CloseButton onClick={close} />}
+            {dirty ? (
+              <SaveAndCloseButton />
+            ) : (
+              <>
+                <CloseButton onClick={close} />
+              </>
+            )}
           </Box>
           <Box>
             <ArchiveButton
