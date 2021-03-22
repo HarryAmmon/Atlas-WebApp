@@ -58,37 +58,25 @@ const boardData: boardDataFields = {
 };
 
 const handleDragEnd = ({ source, destination, draggableId }: DropResult) => {
-  console.group();
-  console.log(source);
-  console.log(destination);
-  console.log(draggableId);
-
   if (destination === null || source === null) {
     return;
   } else if (source.droppableId === destination?.droppableId) {
-    console.log("Card dropped in the same list");
     const column = boardData.columns.find(
       (x) => x.columnId === source.droppableId
     );
     const removedCard = column?.stories?.splice(source.index, 1);
     if (removedCard !== undefined) {
-      console.log(removedCard);
       column?.stories?.splice(destination.index, 0, removedCard[0]);
     }
   } else {
-    console.log("moving to a new list");
     const sourceColumn = boardData.columns.find(
       (x) => x.columnId === source.droppableId
     );
     const destinationColumn = boardData.columns.find(
       (x) => x.columnId === destination?.droppableId
     );
-    console.log(sourceColumn);
-    console.log(destinationColumn);
     const movedCard = sourceColumn?.stories?.splice(source.index, 1);
-    console.log("moved card", movedCard);
     if (destination?.index !== undefined && movedCard !== undefined) {
-      console.log("this is working");
       destinationColumn?.stories?.splice(destination?.index, 0, movedCard[0]);
     }
   }
