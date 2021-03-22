@@ -1,6 +1,4 @@
-import { ColumnFields } from "./ColumnTypes";
-
 export interface ColumnGroupFields {
-  title: string;
-  columns?: ColumnFields[];
+  groupId: string;
+  groupTitle: string;
 }

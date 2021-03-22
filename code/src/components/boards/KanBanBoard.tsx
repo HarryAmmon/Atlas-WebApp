@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import styles from "./KanBanBoard.module.scss";
 import React, { useState } from "react";
-import { ColumnGroup, ColumnGroupFields } from "../columns";
+import { ColumnFields, ColumnGroup, ColumnGroupFields } from "../columns";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 interface KanBanBoardProps {
@@ -10,49 +10,49 @@ interface KanBanBoardProps {
 
 interface boardDataFields {
   title: string;
+  columns: ColumnFields[];
   columnGroups: ColumnGroupFields[];
 }
 
 const boardData: boardDataFields = {
   title: "MyFirstBoard",
+  columns: [
+    {
+      columnId: "1",
+      columnTitle: "Doing",
+      groupId: "1",
+      stories: [
+        { title: "kanban test 1", archived: false, storyId: "1" },
+        { title: "kanban test 2", archived: false, storyId: "222" },
+      ],
+    },
+    {
+      columnId: "2",
+      columnTitle: "Done",
+      groupId: "1",
+      stories: [
+        { title: "kanban test 1", archived: false, storyId: "11123" },
+        { title: "kanban test 2", archived: false, storyId: "3313" },
+      ],
+    },
+    {
+      columnId: "3",
+      columnTitle: "Doing",
+      groupId: "2",
+      stories: [{ title: "kanban test 1", archived: false, storyId: "9687" }],
+    },
+    {
+      columnId: "4",
+      columnTitle: "Done",
+      groupId: "2",
+    },
+  ],
   columnGroups: [
     {
-      title: "Column Group 1",
-      columns: [
-        {
-          columnTitle: "Doing",
-          columnId: "1",
-          stories: [
-            { title: "kanban test 1", archived: false, storyId: "1" },
-            { title: "kanban test 2", archived: false, storyId: "222" },
-          ],
-        },
-        {
-          columnTitle: "Done",
-          columnId: "2",
-          stories: [
-            { title: "kanban test 1", archived: false, storyId: "11123" },
-            { title: "kanban test 2", archived: false, storyId: "3313" },
-          ],
-        },
-      ],
+      groupId: "1",
+      groupTitle: "Column Group 1",
     },
-    {
-      title: "Column Group 2",
-      columns: [
-        {
-          columnTitle: "Doing",
-          columnId: "3",
-          stories: [
-            { title: "kanban test 1", archived: false, storyId: "9687" },
-          ],
-        },
-        {
-          columnTitle: "Done",
-          columnId: "4",
-        },
-      ],
-    },
+    { groupId: "2", groupTitle: "Column Group 2" },
   ],
 };
 
@@ -67,6 +67,14 @@ const handleDragEnd = ({ source, destination, draggableId }: DropResult) => {
     // return;
   } else if (source.droppableId === destination?.droppableId) {
     console.log("Card dropped in the same list");
+    const column = boardData.columns.find(
+      (x) => x.columnId === source.droppableId
+    );
+    const removedCard = column?.stories?.splice(source.index, 1);
+    if (removedCard !== undefined) {
+      console.log(removedCard);
+      column?.stories?.splice(destination.index, 0, removedCard[0]);
+    }
     // return;
   } else {
     console.log("Card dropped into a new list");
@@ -83,8 +91,11 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
         <Box className={styles.root}>
           {columnGroups.map((columnGroup, index) => (
             <ColumnGroup
-              title={columnGroup.title}
-              columns={columnGroup.columns}
+              id={columnGroup.groupId}
+              title={columnGroup.groupTitle}
+              columns={boardData.columns.filter(
+                (x) => x.groupId === columnGroup.groupId
+              )}
             />
           ))}
         </Box>
