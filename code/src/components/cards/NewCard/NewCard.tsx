@@ -31,7 +31,7 @@ export const NewCard: React.FC<NewCardProps> = ({
                 axios
                   .post("https://localhost:5001/UserStory", {
                     ...values,
-                    StoryId: Math.floor(Math.random() * 20000).toString(),
+                    UserStoryId: Math.floor(Math.random() * 20000).toString(),
                   })
                   .then((response) => {
                     appContext.UserStoriesDispatcher({
@@ -39,7 +39,7 @@ export const NewCard: React.FC<NewCardProps> = ({
                       UserStory: response.data,
                     });
                   })
-                  .catch((err) => console.warn(err));
+                  .catch((err) => console.warn(err.response));
               }}
             >
               {({ handleSubmit }) => (
