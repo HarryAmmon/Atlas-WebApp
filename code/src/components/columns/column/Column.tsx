@@ -6,7 +6,6 @@ import { ColumnProps } from "../types/ColumnTypes";
 import styles from "./Column.module.scss";
 
 export const Column: React.FC<ColumnProps> = ({
-  columnGroupTitle,
   columnTitle,
   stories,
   columnId,
@@ -25,18 +24,21 @@ export const Column: React.FC<ColumnProps> = ({
               stories.map((story, index) => {
                 return (
                   <Draggable
-                    key={story.storyId}
+                    key={story.userStoryId}
                     index={index}
-                    draggableId={story.storyId}
+                    draggableId={story.userStoryId}
                   >
                     {(provided) => (
                       <li
-                        key={story.storyId}
+                        key={story.userStoryId}
                         ref={provided.innerRef}
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                       >
-                        <UserStory userStoryId={story.storyId} mode="summary" />
+                        <UserStory
+                          userStoryId={story.userStoryId}
+                          mode="summary"
+                        />
                       </li>
                     )}
                   </Draggable>

@@ -1,5 +1,4 @@
-export interface UserStoryProps {
-  userStoryId: string;
+export interface UserStoryProps extends UserStoryId {
   mode: "summary" | "detail";
 }
 
@@ -10,10 +9,13 @@ export interface UserStoryFields extends NewUserStoryFields {
   storyPoints?: string;
 }
 
-export interface NewUserStoryFields {
+export interface NewUserStoryFields extends UserStoryId {
   title: string;
-  storyId: string;
   archived: boolean;
+}
+
+export interface UserStoryId {
+  userStoryId: string;
 }
 
 export type UserStoryActions =

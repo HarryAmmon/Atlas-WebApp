@@ -7,7 +7,7 @@ export const reducer = (
   switch (action.type) {
     case "UPDATE_USER_STORY": {
       const index = UserStories.findIndex(
-        (story) => story.storyId === action.UserStory.storyId
+        (story) => story.userStoryId === action.UserStory.userStoryId
       );
       UserStories[index] = action.UserStory;
       return [...UserStories];
