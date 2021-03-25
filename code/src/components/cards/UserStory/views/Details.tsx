@@ -32,7 +32,6 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     if (!values.Title) {
       errors.CardTitle = "Title Required";
     }
-    console.log(errors);
     return errors;
   };
 
@@ -40,9 +39,9 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
     const toSubmit = {
       ...values,
       id: UserStory.id,
-      storyId: UserStory.storyId,
+      storyId: UserStory.userStoryId,
     };
-    console.log(toSubmit);
+
     axios
       .put(`https://localhost:5001/UserStory/${UserStory.id}`, toSubmit)
       .then((response) => {
@@ -51,7 +50,7 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
             type: "UPDATE_USER_STORY",
             UserStory: {
               id: UserStory.id,
-              storyId: userStoryId,
+              userStoryId: userStoryId,
               title: values.Title,
               storyPoints: values.StoryPoints,
               description: values.Description,
@@ -85,10 +84,16 @@ export const Details: React.FC<ViewProps> = ({ userStoryId }) => {
         <form onSubmit={handleSubmit}>
           <Box className={Styles.titleBar}>
             <Typography variant="h5" className={Styles.id}>
-              {UserStory.storyId}
+              {UserStory.userStoryId}
             </Typography>
             <CardTitle>{UserStory.title || ""}</CardTitle>
-            {dirty ? <SaveAndCloseButton /> : <CloseButton onClick={close} />}
+            {dirty ? (
+              <SaveAndCloseButton />
+            ) : (
+              <>
+                <CloseButton onClick={close} />
+              </>
+            )}
           </Box>
           <Box>
             <ArchiveButton

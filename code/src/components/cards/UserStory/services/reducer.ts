@@ -7,14 +7,13 @@ export const reducer = (
   switch (action.type) {
     case "UPDATE_USER_STORY": {
       const index = UserStories.findIndex(
-        (story) => story.storyId === action.UserStory.storyId
+        (story) => story.userStoryId === action.UserStory.userStoryId
       );
       UserStories[index] = action.UserStory;
       return [...UserStories];
     }
 
     case "ADD_NEW_USER_STORY":
-      console.log(action.UserStory);
       UserStories = [...UserStories, action.UserStory];
       return [...UserStories];
 

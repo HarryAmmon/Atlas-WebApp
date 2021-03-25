@@ -1,13 +1,11 @@
 import { Paper } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { AddButton } from "../components/buttons";
-import { NewCard, UserStory } from "../components/cards";
-import { AppContext } from "./components/AppContext";
+import { NewCard } from "../components/cards";
+import { KanBanBoard } from "../components/boards/KanBanBoard";
 
 export const Home = () => {
-  const appContext = useContext(AppContext);
   const [newCard, setNewCard] = useState<boolean>(false);
-
   const handleClick = () => {
     setNewCard(true);
   };
@@ -15,18 +13,8 @@ export const Home = () => {
   return (
     <React.Fragment>
       <Paper>
+        <KanBanBoard title="My First Board" />
         <AddButton label="Add Card" onClick={handleClick} />
-        {appContext.UserStories.map((story) => {
-          if (!story.archived) {
-            return (
-              <UserStory
-                key={story.storyId}
-                mode="summary"
-                userStoryId={story.storyId}
-              />
-            );
-          } else return <></>;
-        })}
         <NewCard type="UserStory" display={newCard} setDisplay={setNewCard} />
       </Paper>
     </React.Fragment>
