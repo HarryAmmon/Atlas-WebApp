@@ -5,6 +5,7 @@ import {
 import {
   ColumnActions,
   ColumnFields,
+  ColumnGroupActions,
   ColumnGroupFields,
 } from "../../components/columns";
 
@@ -14,4 +15,5 @@ export interface AppContextFields {
   Columns: ColumnFields[];
   ColumnsDispatcher: React.Dispatch<ColumnActions>;
   ColumnGroups: ColumnGroupFields[];
+  ColumnGroupsDispatcher: React.Dispatch<ColumnGroupActions>;
 }

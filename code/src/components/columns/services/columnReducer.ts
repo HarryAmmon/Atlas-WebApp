@@ -55,6 +55,16 @@ export const ColumnReducer = (
       Columns = [...Columns, ...action.Columns];
       return [...Columns];
     }
+    case "ADD_NEW_COLUMN": {
+      const newColumn: ColumnFields = {
+        columnTitle: action.NewColumnFields.columnTitle,
+        columnId: Math.floor(Math.random() * 10000).toString(),
+        stories: [],
+        groupId: action.NewColumnFields.groupId,
+      };
+      Columns = [...Columns, newColumn];
+      return [...Columns];
+    }
     default:
       return [...Columns];
   }

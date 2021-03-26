@@ -1,5 +1,6 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { ColumnFields } from "./ColumnTypes";
+import { NewColumnGroupFields } from "./ColumnGroupTypes";
+import { ColumnFields, NewColumnFields } from "./ColumnTypes";
 
 export type ColumnActions =
   | {
@@ -10,4 +11,13 @@ export type ColumnActions =
   | {
       type: "ADD_EXISTING_COLUMNS";
       Columns: ColumnFields[];
+    }
+  | {
+      type: "ADD_NEW_COLUMN";
+      NewColumnFields: NewColumnFields;
     };
+
+export type ColumnGroupActions = {
+  type: "ADD_COLUMN_GROUP";
+  ColumnGroup: NewColumnGroupFields;
+};
