@@ -12,7 +12,9 @@ export const Column: React.FC<ColumnProps> = ({
 }) => {
   return (
     <Box className={styles.root}>
-      <Typography variant="h4">{columnTitle}</Typography>
+      <Typography variant="h6" component="h4">
+        {columnTitle}
+      </Typography>
       <Droppable droppableId={columnId}>
         {(provided) => (
           <ul

@@ -10,7 +10,7 @@ export const Summary: React.FC<ViewProps> = ({ userStoryId }) => {
   return (
     <CardHeader
       title={UserStory.title}
-      titleTypographyProps={{ variant: "body1" }}
+      titleTypographyProps={{ variant: "body2" }}
       className={styles.root}
     />
   );

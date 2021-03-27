@@ -47,7 +47,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
         });
       }}
       validate={(values: any) => {
-        console.log("calling on validate");
         const errors: any = {};
         if (!values.ColumnTitle) {
           errors.ColumnTitle = "Enter a title";

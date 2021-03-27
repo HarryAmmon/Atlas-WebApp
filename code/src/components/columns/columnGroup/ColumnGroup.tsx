@@ -12,7 +12,9 @@ interface ColumnGroupProps {
 export const ColumnGroup: React.FC<ColumnGroupProps> = ({ title, columns }) => {
   return (
     <Box className={styles.root}>
-      <Typography variant="h3">{title}</Typography>
+      <Typography component="h3" variant="h5">
+        {title}
+      </Typography>
       <Box className={styles.columnContainer}>
         {columns ? (
           columns.map((columnItem, index) => (
