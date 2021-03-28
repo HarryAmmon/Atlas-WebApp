@@ -96,7 +96,9 @@ export const Details: React.FC<DetailsProps> = ({
               <ArchiveButton
                 onClick={() => {
                   axios
-                    .delete(`https://localhost:5001/UserStory/${UserStory.id}`)
+                    .delete(
+                      `https://ci601-api.azurewebsites.net/${UserStory.id}`
+                    )
                     .then((response) => {
                       if (response.status === 202) {
                         appContext.UserStoriesDispatcher({
