@@ -83,13 +83,14 @@ function App() {
   );
 
   useEffect(() => {
-    axios.get("https://localhost:5001/UserStory").then((result) => {
-      console.log(result.data, "result from API");
-      userStoryDispatcher({
-        type: "ADD_EXISTING_USER_STORIES",
-        UserStories: result.data,
+    axios
+      .get("https://ci601-api.azurewebsites.net/UserStory")
+      .then((result) => {
+        userStoryDispatcher({
+          type: "ADD_EXISTING_USER_STORIES",
+          UserStories: result.data,
+        });
       });
-    });
   }, []);
 
   return (

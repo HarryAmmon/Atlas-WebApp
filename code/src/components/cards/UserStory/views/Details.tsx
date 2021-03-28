@@ -48,7 +48,10 @@ export const Details: React.FC<DetailsProps> = ({
     };
 
     axios
-      .put(`https://localhost:5001/UserStory/${UserStory.id}`, toSubmit)
+      .put(
+        `https://ci601-api.azurewebsites.net/UserStory/${UserStory.id}`,
+        toSubmit
+      )
       .then((response) => {
         if (response.status === 204) {
           appContext.UserStoriesDispatcher({
