@@ -43,13 +43,13 @@ function App() {
       {
         columnId: "3",
         columnTitle: "Doing",
-        groupId: "2",
+        groupId: "asdasd",
         stories: [{ userStoryId: "19812" }],
       },
       {
         columnId: "4",
         columnTitle: "Done",
-        groupId: "2",
+        groupId: "asdasd",
         stories: [],
       },
     ],
@@ -71,7 +71,7 @@ function App() {
 
   let UserStories: UserStoryFields[] = [];
   let Columns: ColumnFields[] = boardData.columns;
-  // let ColumnGroups: ColumnGroupFields[] = [];
+  let ColumnGroups: ColumnGroupFields[] = [];
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
@@ -79,7 +79,7 @@ function App() {
   const [columnsState, columnsDispatcher] = useReducer(ColumnReducer, Columns);
   const [columnGroupsState, columnGroupsDispatcher] = useReducer(
     ColumnGroupReducer,
-    boardData.columnGroups
+    ColumnGroups
   );
 
   useEffect(() => {
@@ -89,6 +89,15 @@ function App() {
         userStoryDispatcher({
           type: "ADD_EXISTING_USER_STORIES",
           UserStories: result.data,
+        });
+      });
+
+    axios
+      .get("https://ci601-api.azurewebsites.net/ColumnGroup")
+      .then((result) => {
+        columnGroupsDispatcher({
+          type: "ADD_COLUMN_GROUPS",
+          ColumnGroups: result.data,
         });
       });
   }, []);
