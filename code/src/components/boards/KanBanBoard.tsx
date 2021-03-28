@@ -13,24 +13,6 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
   const appContext = useContext(AppContext);
 
   const handleDragEnd = ({ source, destination }: DropResult) => {
-    // if (destination === null || source === null) {
-    //   return;
-    // } else if (source.droppableId === destination?.droppableId) {
-    //   const sourceColumn = appContext.Columns.find(
-    //     (x) => x.columnId === source.droppableId
-    //   );
-    //   const removedCard = sourceColumn?.stories.splice(source.index, 1);
-    //   if (removedCard !== undefined) {
-    //     sourceColumn?.stories.splice(destination.index, 0, removedCard[0]);
-    //   }
-    // } else {
-    //   appContext.ColumnsDispatcher({type: "MOVE_CARD_IN_SAME_COLUMN", Card})
-
-    //   const movedCard = sourceColumn?.stories.splice(source.index, 1);
-    //   if (destination?.index !== undefined && movedCard !== undefined) {
-    //     destinationColumn?.stories?.splice(destination?.index, 0, movedCard[0]);
-    //   }
-    // }
     appContext.ColumnsDispatcher({
       type: "MOVE_CARD",
       CardSource: source,
@@ -45,11 +27,14 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
         <Box className={styles.root}>
           {appContext.ColumnGroups.map((columnGroup, index) => (
             <ColumnGroup
-              id={columnGroup.groupId}
-              title={columnGroup.groupTitle}
+              key={index}
+              groupId={columnGroup.groupId}
+              groupTitle={columnGroup.groupTitle}
               columns={appContext.Columns.filter(
                 (x) => x.groupId === columnGroup.groupId
               )}
+              limits={columnGroup.limits}
+              exitCriteria={columnGroup.exitCriteria}
             />
           ))}
         </Box>

@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, DialogActions, DialogContent } from "@material-ui/core";
 import { TextField } from "mui-rff";
 import React, { useContext } from "react";
 import { Form } from "react-final-form";
@@ -16,90 +16,92 @@ export const AddColumn: React.FC<AddColumnProps> = ({
 }) => {
   const appContext = useContext(AppContext);
   return (
-    <Form
-      onSubmit={(values: any) => {
-        const newGroupId = Math.floor(Math.random() * 10000).toString();
+    <DialogContent>
+      <Form
+        onSubmit={(values: any) => {
+          const newGroupId = Math.floor(Math.random() * 10000).toString();
 
-        appContext.ColumnGroupsDispatcher({
-          type: "ADD_COLUMN_GROUP",
-          ColumnGroup: {
-            groupTitle: values.ColumnTitle,
-            limits: values.WIPLimit,
-            exitCriteria: values.ExitCriteria,
-            groupId: newGroupId,
-          },
-        });
+          appContext.ColumnGroupsDispatcher({
+            type: "ADD_COLUMN_GROUP",
+            ColumnGroup: {
+              groupTitle: values.ColumnTitle,
+              limits: values.WIPLimit,
+              exitCriteria: values.ExitCriteria,
+              groupId: newGroupId,
+            },
+          });
 
-        appContext.ColumnsDispatcher({
-          type: "ADD_NEW_COLUMN",
-          NewColumnFields: {
-            columnTitle: "Doing",
-            groupId: newGroupId,
-          },
-        });
+          appContext.ColumnsDispatcher({
+            type: "ADD_NEW_COLUMN",
+            NewColumnFields: {
+              columnTitle: "Doing",
+              groupId: newGroupId,
+            },
+          });
 
-        appContext.ColumnsDispatcher({
-          type: "ADD_NEW_COLUMN",
-          NewColumnFields: {
-            columnTitle: "Done",
-            groupId: newGroupId,
-          },
-        });
-      }}
-      validate={(values: any) => {
-        const errors: any = {};
-        if (!values.ColumnTitle) {
-          errors.ColumnTitle = "Enter a title";
-        }
-        if (!values.WIPLimit) {
-          errors.WIPLimit = "Enter a WIP Limit";
-        }
-        if (values.WIPLimit <= 0) {
-          errors.WIPLimit = "Limit must be greater than 0";
-        }
-        return errors;
-      }}
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <Box className={styles.root}>
-            <Box className={styles.titleAndLimits}>
+          appContext.ColumnsDispatcher({
+            type: "ADD_NEW_COLUMN",
+            NewColumnFields: {
+              columnTitle: "Done",
+              groupId: newGroupId,
+            },
+          });
+        }}
+        validate={(values: any) => {
+          const errors: any = {};
+          if (!values.ColumnTitle) {
+            errors.ColumnTitle = "Enter a title";
+          }
+          if (!values.WIPLimit) {
+            errors.WIPLimit = "Enter a WIP Limit";
+          }
+          if (values.WIPLimit <= 0) {
+            errors.WIPLimit = "Limit must be greater than 0";
+          }
+          return errors;
+        }}
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Box className={styles.root}>
+              <Box className={styles.titleAndLimits}>
+                <TextField
+                  className={styles.columnTitle}
+                  name="ColumnTitle"
+                  label="Title"
+                  size="medium"
+                />
+                <TextField
+                  className={styles.limit}
+                  type="number"
+                  name="WIPLimit"
+                  label="Limit"
+                />
+              </Box>
               <TextField
-                className={styles.columnTitle}
-                name="ColumnTitle"
-                label="Title"
-                size="medium"
+                className={styles.criteria}
+                name="ExitCriteria"
+                label="Exit Criteria"
+                rows={3}
+                multiline
               />
-              <TextField
-                className={styles.limit}
-                type="number"
-                name="WIPLimit"
-                label="Limit"
-              />
+              <DialogActions>
+                <Button
+                  variant="text"
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => setDisplay(!display)}
+                >
+                  Cancel
+                </Button>
+                <Button variant="contained" type="submit">
+                  Add
+                </Button>
+              </DialogActions>
             </Box>
-            <TextField
-              className={styles.criteria}
-              name="ExitCriteria"
-              label="Exit Criteria"
-              rows={3}
-              multiline
-            />
-            <Box className={styles.buttons}>
-              <Button
-                variant="text"
-                type="button"
-                className={styles.cancelButton}
-                onClick={() => setDisplay(!display)}
-              >
-                Cancel
-              </Button>
-              <Button variant="contained" type="submit">
-                Add
-              </Button>
-            </Box>
-          </Box>
-        </form>
-      )}
-    </Form>
+          </form>
+        )}
+      </Form>
+    </DialogContent>
   );
 };

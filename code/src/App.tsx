@@ -28,7 +28,11 @@ function App() {
         columnId: "1",
         columnTitle: "Doing",
         groupId: "1",
-        stories: [{ userStoryId: "6101" }, { userStoryId: "3666" }],
+        stories: [
+          { userStoryId: "6101" },
+          { userStoryId: "3666" },
+          { userStoryId: "12566" },
+        ],
       },
       {
         columnId: "2",
@@ -66,8 +70,8 @@ function App() {
   };
 
   let UserStories: UserStoryFields[] = [];
-  let Columns: ColumnFields[] = [];
-  let ColumnGroups: ColumnGroupFields[] = [];
+  let Columns: ColumnFields[] = boardData.columns;
+  // let ColumnGroups: ColumnGroupFields[] = [];
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
@@ -85,10 +89,6 @@ function App() {
         type: "ADD_EXISTING_USER_STORIES",
         UserStories: result.data,
       });
-    });
-    columnsDispatcher({
-      type: "ADD_EXISTING_COLUMNS",
-      Columns: boardData.columns,
     });
   }, []);
 
