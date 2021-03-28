@@ -6,7 +6,7 @@ export interface ColumnGroupProps extends NewColumnGroupFields {
 
 export interface NewColumnGroupFields {
   groupTitle: string;
-  limits: string;
+  limits: number;
   exitCriteria: string;
   groupId: string;
 }

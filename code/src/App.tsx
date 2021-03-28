@@ -58,13 +58,13 @@ function App() {
         groupId: "1",
         groupTitle: "Column Group 1",
         exitCriteria: "This is a long list of exit criteria",
-        limits: "1",
+        limits: 1,
       },
       {
         groupId: "2",
         groupTitle: "Column Group 2",
         exitCriteria: "This is a long list of exit criteria",
-        limits: "1",
+        limits: 1,
       },
     ],
   };
