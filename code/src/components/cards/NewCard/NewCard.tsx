@@ -29,7 +29,7 @@ export const NewCard: React.FC<NewCardProps> = ({
             <Form
               onSubmit={(values: any) => {
                 axios
-                  .post("https://localhost:5001/UserStory", {
+                  .post("https://ci601-api.azurewebsites.net/UserStory", {
                     ...values,
                     UserStoryId: Math.floor(Math.random() * 20000).toString(),
                   })
