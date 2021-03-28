@@ -1,10 +1,47 @@
 .root {
-  border: 2px solid blue;
-  max-width: 500px;
+  background-color: #c3cfe2;
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.columnGroupBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .columnContainer {
   display: flex;
   flex-direction: row;
-  border: 2px solid yellow;
+}
+
+.exitAndLimits {
+  display: flex;
+  align-items: center;
+}
+
+.limits_safe {
+  color: green;
+}
+
+.limits_warning {
+  color: orange;
+}
+
+.limits_danger {
+  color: orangered;
+}
+
+.exitIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 0.3rem;
+}
+
+.exitCriteria {
+  margin: 0.3rem;
 }

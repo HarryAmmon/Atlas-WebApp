@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.titleAndLimits {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.columnTitle {
+  width: 65%;
+  margin-right: 1rem;
+}
+
+.limit {
+  width: 33%;
+}
+
+.buttons {
+  display: flex;
+  align-self: flex-end;
+  margin-top: 1rem;
+}
+
+.cancelButton {
+  margin-right: 1rem;
+}

@@ -12,6 +12,7 @@ import {
   ColumnGroupFields,
   ColumnReducer,
 } from "./components/columns";
+import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
 function App() {
   interface boardDataFields {
@@ -27,7 +28,11 @@ function App() {
         columnId: "1",
         columnTitle: "Doing",
         groupId: "1",
-        stories: [{ userStoryId: "6101" }, { userStoryId: "3666" }],
+        stories: [
+          { userStoryId: "6101" },
+          { userStoryId: "3666" },
+          { userStoryId: "12566" },
+        ],
       },
       {
         columnId: "2",
@@ -52,18 +57,30 @@ function App() {
       {
         groupId: "1",
         groupTitle: "Column Group 1",
+        exitCriteria: "This is a long list of exit criteria",
+        limits: "1",
       },
-      { groupId: "2", groupTitle: "Column Group 2" },
+      {
+        groupId: "2",
+        groupTitle: "Column Group 2",
+        exitCriteria: "This is a long list of exit criteria",
+        limits: "1",
+      },
     ],
   };
 
   let UserStories: UserStoryFields[] = [];
-  let Columns: ColumnFields[] = [];
+  let Columns: ColumnFields[] = boardData.columns;
+  // let ColumnGroups: ColumnGroupFields[] = [];
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
   );
   const [columnsState, columnsDispatcher] = useReducer(ColumnReducer, Columns);
+  const [columnGroupsState, columnGroupsDispatcher] = useReducer(
+    ColumnGroupReducer,
+    boardData.columnGroups
+  );
 
   useEffect(() => {
     axios.get("https://localhost:5001/UserStory").then((result) => {
@@ -73,10 +90,6 @@ function App() {
         UserStories: result.data,
       });
     });
-    columnsDispatcher({
-      type: "ADD_EXISTING_COLUMNS",
-      Columns: boardData.columns,
-    });
   }, []);
 
   return (
@@ -85,7 +98,8 @@ function App() {
         value={{
           UserStories: userStoryState,
           UserStoriesDispatcher: userStoryDispatcher,
-          ColumnGroups: boardData.columnGroups,
+          ColumnGroups: columnGroupsState,
+          ColumnGroupsDispatcher: columnGroupsDispatcher,
           Columns: columnsState,
           ColumnsDispatcher: columnsDispatcher,
         }}

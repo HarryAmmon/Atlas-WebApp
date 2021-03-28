@@ -1,12 +1,15 @@
 import { UserStoryId } from "../../cards";
 
-export interface ColumnProps extends ColumnFields {
-  columnGroupTitle: string;
+export interface NewColumnFields {
+  columnTitle: string;
+  groupId: string;
 }
 
-export interface ColumnFields {
-  groupId: string;
-  columnTitle: string;
+export interface ColumnFields extends NewColumnFields {
   columnId: string;
   stories: UserStoryId[];
+}
+
+export interface ColumnProps extends ColumnFields {
+  columnGroupTitle: string;
 }

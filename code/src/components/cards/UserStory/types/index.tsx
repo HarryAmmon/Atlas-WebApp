@@ -40,7 +40,13 @@ export type UserStoryActions =
       UserStories: UserStoryFields[];
     };
 
-export interface ViewProps {
+export interface DetailsProps {
+  userStoryId: string;
+  showDetails: boolean;
+  handleClose: () => void;
+}
+
+export interface SummaryProps {
   userStoryId: string;
 }
 
