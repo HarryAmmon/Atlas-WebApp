@@ -17,7 +17,12 @@ export type ColumnActions =
       NewColumnFields: NewColumnFields;
     };
 
-export type ColumnGroupActions = {
-  type: "ADD_COLUMN_GROUP";
-  ColumnGroup: NewColumnGroupFields;
-};
+export type ColumnGroupActions =
+  | {
+      type: "ADD_COLUMN_GROUP";
+      ColumnGroup: NewColumnGroupFields;
+    }
+  | {
+      type: "ADD_COLUMN_GROUPS";
+      ColumnGroups: NewColumnGroupFields[];
+    };
