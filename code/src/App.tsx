@@ -43,13 +43,13 @@ function App() {
       {
         columnId: "3",
         columnTitle: "Doing",
-        groupId: "2",
+        groupId: "asdasd",
         stories: [{ userStoryId: "19812" }],
       },
       {
         columnId: "4",
         columnTitle: "Done",
-        groupId: "2",
+        groupId: "asdasd",
         stories: [],
       },
     ],
@@ -58,20 +58,20 @@ function App() {
         groupId: "1",
         groupTitle: "Column Group 1",
         exitCriteria: "This is a long list of exit criteria",
-        limits: "1",
+        limits: 1,
       },
       {
         groupId: "2",
         groupTitle: "Column Group 2",
         exitCriteria: "This is a long list of exit criteria",
-        limits: "1",
+        limits: 1,
       },
     ],
   };
 
   let UserStories: UserStoryFields[] = [];
   let Columns: ColumnFields[] = boardData.columns;
-  // let ColumnGroups: ColumnGroupFields[] = [];
+  let ColumnGroups: ColumnGroupFields[] = [];
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
@@ -79,18 +79,23 @@ function App() {
   const [columnsState, columnsDispatcher] = useReducer(ColumnReducer, Columns);
   const [columnGroupsState, columnGroupsDispatcher] = useReducer(
     ColumnGroupReducer,
-    boardData.columnGroups
+    ColumnGroups
   );
 
   useEffect(() => {
-    axios
-      .get("https://ci601-api.azurewebsites.net/UserStory")
-      .then((result) => {
-        userStoryDispatcher({
-          type: "ADD_EXISTING_USER_STORIES",
-          UserStories: result.data,
-        });
+    axios.get("/UserStory").then((result) => {
+      userStoryDispatcher({
+        type: "ADD_EXISTING_USER_STORIES",
+        UserStories: result.data,
       });
+    });
+
+    axios.get("/ColumnGroup").then((result) => {
+      columnGroupsDispatcher({
+        type: "ADD_COLUMN_GROUPS",
+        ColumnGroups: result.data,
+      });
+    });
   }, []);
 
   return (

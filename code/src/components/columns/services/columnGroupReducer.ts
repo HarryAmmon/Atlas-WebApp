@@ -15,6 +15,11 @@ export const ColumnGroupReducer = (
       };
       ColumnGroups = [...ColumnGroups, newColumnGroup];
       return [...ColumnGroups];
+
+    case "ADD_COLUMN_GROUPS":
+      ColumnGroups = [...ColumnGroups, ...action.ColumnGroups];
+      return [...ColumnGroups];
+
     default:
       return [...ColumnGroups];
   }
