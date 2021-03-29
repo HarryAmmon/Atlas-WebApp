@@ -31,7 +31,6 @@ export const NewCard: React.FC<NewCardProps> = ({
                 axios
                   .post("/UserStory", {
                     ...values,
-                    UserStoryId: Math.floor(Math.random() * 20000).toString(),
                   })
                   .then((response) => {
                     appContext.UserStoriesDispatcher({
