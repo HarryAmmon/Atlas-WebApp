@@ -48,10 +48,7 @@ export const Details: React.FC<DetailsProps> = ({
     };
 
     axios
-      .put(
-        `https://ci601-api.azurewebsites.net/UserStory/${UserStory.id}`,
-        toSubmit
-      )
+      .put(`/UserStory/${UserStory.id}`, toSubmit)
       .then((response) => {
         if (response.status === 204) {
           appContext.UserStoriesDispatcher({
@@ -96,9 +93,7 @@ export const Details: React.FC<DetailsProps> = ({
               <ArchiveButton
                 onClick={() => {
                   axios
-                    .delete(
-                      `https://ci601-api.azurewebsites.net/${UserStory.id}`
-                    )
+                    .delete(`/${UserStory.id}`)
                     .then((response) => {
                       if (response.status === 202) {
                         appContext.UserStoriesDispatcher({

@@ -83,23 +83,19 @@ function App() {
   );
 
   useEffect(() => {
-    axios
-      .get("https://ci601-api.azurewebsites.net/UserStory")
-      .then((result) => {
-        userStoryDispatcher({
-          type: "ADD_EXISTING_USER_STORIES",
-          UserStories: result.data,
-        });
+    axios.get("/UserStory").then((result) => {
+      userStoryDispatcher({
+        type: "ADD_EXISTING_USER_STORIES",
+        UserStories: result.data,
       });
+    });
 
-    axios
-      .get("https://ci601-api.azurewebsites.net/ColumnGroup")
-      .then((result) => {
-        columnGroupsDispatcher({
-          type: "ADD_COLUMN_GROUPS",
-          ColumnGroups: result.data,
-        });
+    axios.get("/ColumnGroup").then((result) => {
+      columnGroupsDispatcher({
+        type: "ADD_COLUMN_GROUPS",
+        ColumnGroups: result.data,
       });
+    });
   }, []);
 
   return (

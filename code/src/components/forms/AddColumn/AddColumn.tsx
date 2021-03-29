@@ -1,4 +1,5 @@
 import { Box, Button, DialogActions, DialogContent } from "@material-ui/core";
+import axios from "axios";
 import { TextField } from "mui-rff";
 import React, { useContext } from "react";
 import { Form } from "react-final-form";
@@ -20,16 +21,26 @@ export const AddColumn: React.FC<AddColumnProps> = ({
       <Form
         onSubmit={(values: any) => {
           const newGroupId = Math.floor(Math.random() * 10000).toString();
+          console.log(values);
 
-          appContext.ColumnGroupsDispatcher({
-            type: "ADD_COLUMN_GROUP",
-            ColumnGroup: {
-              groupTitle: values.ColumnTitle,
-              limits: values.WIPLimit,
-              exitCriteria: values.ExitCriteria,
-              groupId: newGroupId,
-            },
-          });
+          axios
+            .post("/ColumnGroup", {
+              GroupTitle: values.GroupTitle,
+              ExitCriteria: values.ExitCriteria,
+              Limits: values.Limits,
+            })
+            .then((result) => {
+              appContext.ColumnGroupsDispatcher({
+                type: "ADD_COLUMN_GROUP",
+                ColumnGroup: {
+                  groupTitle: result.data.groupTitle,
+                  limits: result.data.limits,
+                  exitCriteria: result.data.exitCriteria,
+                  groupId: result.data.groupId,
+                },
+              });
+            })
+            .catch((err: any) => console.log(err.response.data));
 
           appContext.ColumnsDispatcher({
             type: "ADD_NEW_COLUMN",
@@ -48,9 +59,10 @@ export const AddColumn: React.FC<AddColumnProps> = ({
           });
         }}
         validate={(values: any) => {
+          console.log("validating");
           const errors: any = {};
-          if (!values.ColumnTitle) {
-            errors.ColumnTitle = "Enter a title";
+          if (!values.GroupTitle) {
+            errors.GroupTitle = "Enter a title";
           }
           if (!values.WIPLimit) {
             errors.WIPLimit = "Enter a WIP Limit";
@@ -58,6 +70,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
           if (values.WIPLimit <= 0) {
             errors.WIPLimit = "Limit must be greater than 0";
           }
+          console.log(errors);
           return errors;
         }}
       >
@@ -67,7 +80,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
               <Box className={styles.titleAndLimits}>
                 <TextField
                   className={styles.columnTitle}
-                  name="ColumnTitle"
+                  name="GroupTitle"
                   label="Title"
                   size="medium"
                 />
