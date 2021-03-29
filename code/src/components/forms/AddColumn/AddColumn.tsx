@@ -27,7 +27,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
             .post("/ColumnGroup", {
               GroupTitle: values.GroupTitle,
               ExitCriteria: values.ExitCriteria,
-              Limits: values.Limits,
+              Limits: values.WIPLimit,
             })
             .then((result) => {
               appContext.ColumnGroupsDispatcher({
