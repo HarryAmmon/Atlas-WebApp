@@ -15,12 +15,12 @@ export const ColumnReducer = (
         const sourceColumn = Columns.find(
           (x) => x.columnId === action.CardSource.droppableId
         );
-        const removedCard = sourceColumn?.stories.splice(
+        const removedCard = sourceColumn?.userStoriesId.splice(
           action.CardSource.index,
           1
         );
         if (removedCard !== undefined) {
-          sourceColumn?.stories.splice(
+          sourceColumn?.userStoriesId.splice(
             action.CardDestination?.index,
             0,
             removedCard[0]
@@ -34,7 +34,7 @@ export const ColumnReducer = (
         const destinationColumn = Columns.find(
           (x) => x.columnId === action.CardDestination?.droppableId
         );
-        const movedCard = sourceColumn?.stories.splice(
+        const movedCard = sourceColumn?.userStoriesId.splice(
           action.CardSource.index,
           1
         );
@@ -42,7 +42,7 @@ export const ColumnReducer = (
           action.CardDestination?.index !== undefined &&
           movedCard !== undefined
         ) {
-          destinationColumn?.stories.splice(
+          destinationColumn?.userStoriesId.splice(
             action.CardDestination?.index,
             0,
             movedCard[0]
@@ -57,9 +57,9 @@ export const ColumnReducer = (
     }
     case "ADD_NEW_COLUMN": {
       const newColumn: ColumnFields = {
-        columnTitle: action.NewColumnFields.columnTitle,
-        columnId: Math.floor(Math.random() * 10000).toString(),
-        stories: [],
+        title: action.NewColumnFields.title,
+        columnId: action.NewColumnFields.groupId,
+        userStoriesId: [],
         groupId: action.NewColumnFields.groupId,
       };
       Columns = [...Columns, newColumn];

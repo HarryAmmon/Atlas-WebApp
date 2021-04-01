@@ -6,7 +6,9 @@ import App from "./App";
 import { ThemeProvider } from "@material-ui/core";
 import { CustomTheme } from "./components/theming";
 
-axios.defaults.baseURL = "https://ci601-api.azurewebsites.net";
+// axios.defaults.baseURL = "https://ci601-api.azurewebsites.net";
+axios.defaults.baseURL = "http://localhost:5000";
+// axios.defaults.baseURL = "https://localhost:5001";
 
 ReactDOM.render(
   <ThemeProvider theme={CustomTheme}>

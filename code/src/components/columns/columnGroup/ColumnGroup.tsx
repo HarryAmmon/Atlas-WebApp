@@ -9,7 +9,6 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   columns,
   limits,
   exitCriteria,
-  groupId,
 }) => {
   const [cardQuantity, setCardQuantity] = useState<number>();
   const [limitStyle, setLimitStyle] = useState<string>("");
@@ -30,21 +29,19 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   useEffect(() => {
     let count = 0;
     columns.forEach((column) => {
-      count += column.stories.length;
+      let temp = column.userStoriesId;
+      count += temp.length;
     });
+
     setCardQuantity(count);
-    if (count < Number(limits)) {
+    if (count < limits) {
       setLimitStyle(styles.limits_safe);
-    } else if (count === Number(limits)) {
+    } else if (count === limits) {
       setLimitStyle(styles.limits_warning);
     } else {
       setLimitStyle(styles.limits_danger);
     }
   }, [columns, limits]);
-
-  useEffect(() => {
-    console.log(open);
-  }, [open]);
 
   return (
     <Box className={styles.root}>
@@ -66,10 +63,9 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
           <Column
             columnId={columnItem.columnId}
             groupId={columnItem.groupId}
-            columnTitle={columnItem.columnTitle}
-            columnGroupTitle="X"
+            title={columnItem.title}
             key={index}
-            stories={columnItem.stories}
+            userStoriesId={columnItem.userStoriesId}
           />
         ))}
       </Box>

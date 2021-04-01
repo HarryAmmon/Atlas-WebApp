@@ -6,49 +6,35 @@ import { ColumnProps } from "../types/ColumnTypes";
 import styles from "./Column.module.scss";
 
 export const Column: React.FC<ColumnProps> = ({
-  columnTitle,
-  stories,
+  title,
+  userStoriesId,
   columnId,
 }) => {
   return (
     <Box className={styles.root}>
       <Typography variant="h6" component="h4">
-        {columnTitle}
+        {title}
       </Typography>
       <Droppable droppableId={columnId}>
         {(provided) => (
-          <ul
-            id={columnTitle}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {stories ? (
-              stories.map((story, index) => {
-                return (
-                  <Draggable
-                    key={story.userStoryId}
-                    index={index}
-                    draggableId={story.userStoryId}
-                  >
-                    {(provided) => (
-                      <li
-                        key={story.userStoryId}
-                        ref={provided.innerRef}
-                        {...provided.dragHandleProps}
-                        {...provided.draggableProps}
-                      >
-                        <UserStory
-                          userStoryId={story.userStoryId}
-                          mode="summary"
-                        />
-                      </li>
-                    )}
-                  </Draggable>
-                );
-              })
-            ) : (
-              <></>
-            )}
+          <ul id={title} {...provided.droppableProps} ref={provided.innerRef}>
+            {userStoriesId.map((id, index) => {
+              return (
+                <Draggable key={Number(id)} index={index} draggableId={id}>
+                  {(provided) => (
+                    <li
+                      key={index}
+                      ref={provided.innerRef}
+                      {...provided.dragHandleProps}
+                      {...provided.draggableProps}
+                    >
+                      <UserStory userStoryId={id} mode="summary" />
+                    </li>
+                  )}
+                </Draggable>
+              );
+            })}
+
             {provided.placeholder}
           </ul>
         )}

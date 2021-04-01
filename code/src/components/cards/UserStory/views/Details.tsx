@@ -40,7 +40,6 @@ export const Details: React.FC<DetailsProps> = ({
   };
 
   const submitForm = (values: any) => {
-    console.log("calling submit form");
     const toSubmit = {
       ...values,
       id: UserStory.id,

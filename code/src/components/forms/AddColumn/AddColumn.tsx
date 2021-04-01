@@ -40,21 +40,25 @@ export const AddColumn: React.FC<AddColumnProps> = ({
                 },
               });
             })
-            .catch((err: any) => console.log(err.response.data));
+            .catch((err: any) => console.log(err));
 
           appContext.ColumnsDispatcher({
             type: "ADD_NEW_COLUMN",
             NewColumnFields: {
-              columnTitle: "Doing",
+              title: "Doing",
               groupId: newGroupId,
+              userStoriesId: [],
+              columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
             },
           });
 
           appContext.ColumnsDispatcher({
             type: "ADD_NEW_COLUMN",
             NewColumnFields: {
-              columnTitle: "Done",
+              title: "Done",
               groupId: newGroupId,
+              userStoriesId: [],
+              columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
             },
           });
         }}
