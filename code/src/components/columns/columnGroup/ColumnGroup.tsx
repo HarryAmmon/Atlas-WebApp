@@ -29,8 +29,7 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   useEffect(() => {
     let count = 0;
     columns.forEach((column) => {
-      let temp = column.userStoriesId;
-      count += temp.length;
+      count += column.userStoriesId.length;
     });
 
     setCardQuantity(count);
