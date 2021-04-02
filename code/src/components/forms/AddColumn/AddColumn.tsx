@@ -30,37 +30,38 @@ export const AddColumn: React.FC<AddColumnProps> = ({
               Limits: values.WIPLimit,
             })
             .then((result) => {
+              console.log(result.data);
               appContext.ColumnGroupsDispatcher({
                 type: "ADD_COLUMN_GROUP",
                 ColumnGroup: {
-                  groupTitle: result.data.groupTitle,
-                  limits: result.data.limits,
-                  exitCriteria: result.data.exitCriteria,
-                  groupId: result.data.groupId,
+                  groupTitle: result.data[0].groupTitle,
+                  limits: result.data[0].limits,
+                  exitCriteria: result.data[0].exitCriteria,
+                  groupId: result.data[0].groupId,
+                },
+              });
+
+              appContext.ColumnsDispatcher({
+                type: "ADD_NEW_COLUMN",
+                NewColumnFields: {
+                  title: "Doing",
+                  groupId: newGroupId,
+                  userStoriesId: [],
+                  columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
+                },
+              });
+
+              appContext.ColumnsDispatcher({
+                type: "ADD_NEW_COLUMN",
+                NewColumnFields: {
+                  title: "Done",
+                  groupId: newGroupId,
+                  userStoriesId: [],
+                  columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
                 },
               });
             })
             .catch((err: any) => console.log(err));
-
-          appContext.ColumnsDispatcher({
-            type: "ADD_NEW_COLUMN",
-            NewColumnFields: {
-              title: "Doing",
-              groupId: newGroupId,
-              userStoriesId: [],
-              columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
-            },
-          });
-
-          appContext.ColumnsDispatcher({
-            type: "ADD_NEW_COLUMN",
-            NewColumnFields: {
-              title: "Done",
-              groupId: newGroupId,
-              userStoriesId: [],
-              columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
-            },
-          });
         }}
         validate={(values: any) => {
           console.log("validating");
