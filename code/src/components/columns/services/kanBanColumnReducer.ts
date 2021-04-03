@@ -1,8 +1,8 @@
 import { ColumnActions } from "../types/Actions";
-import { ColumnFields } from "../types/ColumnTypes";
+import { KanBanColumnFields } from "../types/ColumnTypes";
 
-export const ColumnReducer = (
-  Columns: ColumnFields[],
+export const KanBanColumnReducer = (
+  Columns: KanBanColumnFields[],
   action: ColumnActions
 ) => {
   switch (action.type) {
@@ -56,11 +56,12 @@ export const ColumnReducer = (
       return [...Columns];
     }
     case "ADD_NEW_COLUMN": {
-      const newColumn: ColumnFields = {
+      const newColumn: KanBanColumnFields = {
         title: action.NewColumnFields.title,
         columnId: action.NewColumnFields.groupId,
         userStoriesId: [],
         groupId: action.NewColumnFields.groupId,
+        visible: action.NewColumnFields.visible,
       };
       Columns = [...Columns, newColumn];
       return [...Columns];

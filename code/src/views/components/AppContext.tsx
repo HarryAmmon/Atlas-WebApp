@@ -2,7 +2,9 @@ import { createContext } from "react";
 import { AppContextFields } from "../types/AppContextFields";
 
 export const AppContext = createContext<AppContextFields>({
-  UserStories: [{ userStoryId: "1", title: "Default Title", archived: true }],
+  UserStories: [
+    { userStoryId: "1", title: "Default Title", archived: true, id: "2" },
+  ],
   UserStoriesDispatcher: () => {},
   ColumnGroups: [{ groupId: "1", groupTitle: "", limits: 1, exitCriteria: "" }],
   ColumnGroupsDispatcher: () => {},
@@ -12,7 +14,12 @@ export const AppContext = createContext<AppContextFields>({
       title: "Done",
       columnId: "1",
       userStoriesId: ["1"],
+      visible: true,
     },
   ],
   ColumnsDispatcher: () => {},
+  DefaultColumns: [
+    { columnId: "2", title: "", visible: true, userStoriesId: [] },
+  ],
+  DefaultColumnDispatcher: () => {},
 });

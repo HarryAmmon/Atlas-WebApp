@@ -44,6 +44,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
                   groupId: result.data[1].groupId,
                   userStoriesId: result.data[1].userStoriesId,
                   columnId: result.data[1].columnId,
+                  visible: result.data[1].visible,
                 },
               });
 
@@ -54,13 +55,13 @@ export const AddColumn: React.FC<AddColumnProps> = ({
                   groupId: result.data[2].groupId,
                   userStoriesId: result.data[2].userStoriesId,
                   columnId: result.data[2].columnId,
+                  visible: result.data[2].visible,
                 },
               });
             })
             .catch((err: any) => console.log(err));
         }}
         validate={(values: any) => {
-          console.log("validating");
           const errors: any = {};
           if (!values.GroupTitle) {
             errors.GroupTitle = "Enter a title";
@@ -71,7 +72,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
           if (values.WIPLimit <= 0) {
             errors.WIPLimit = "Limit must be greater than 0";
           }
-          console.log(errors);
           return errors;
         }}
       >

@@ -1,7 +1,7 @@
-import { ColumnFields } from "..";
+import { KanBanColumnFields } from "..";
 
 export interface ColumnGroupProps extends NewColumnGroupFields {
-  columns: ColumnFields[];
+  columns: KanBanColumnFields[];
 }
 
 export interface NewColumnGroupFields {

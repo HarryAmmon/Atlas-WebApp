@@ -8,7 +8,7 @@ export const AddButton: React.FC<AddButtonProps> = ({
   className,
   label,
 }) => (
-  <Button variant="outlined" onClick={onClick} className={className}>
+  <Button variant="text" onClick={onClick} className={className}>
     <>
       {label}
       <Add />

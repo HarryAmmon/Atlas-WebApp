@@ -4,16 +4,20 @@ import {
 } from "../../components/cards/UserStory/types";
 import {
   ColumnActions,
-  ColumnFields,
+  KanBanColumnFields,
   ColumnGroupActions,
   ColumnGroupFields,
+  DefaultColumnFields,
+  DefaultColumnActions,
 } from "../../components/columns";
 
 export interface AppContextFields {
   UserStories: UserStoryFields[];
   UserStoriesDispatcher: React.Dispatch<UserStoryActions>;
-  Columns: ColumnFields[];
+  Columns: KanBanColumnFields[];
   ColumnsDispatcher: React.Dispatch<ColumnActions>;
   ColumnGroups: ColumnGroupFields[];
   ColumnGroupsDispatcher: React.Dispatch<ColumnGroupActions>;
+  DefaultColumns: DefaultColumnFields[];
+  DefaultColumnDispatcher: React.Dispatch<DefaultColumnActions>;
 }

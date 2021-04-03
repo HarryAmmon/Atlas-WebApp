@@ -23,7 +23,6 @@ import axios from "axios";
 export const Details: React.FC<DetailsProps> = ({
   userStoryId,
   handleClose,
-  showDetails,
 }) => {
   const appContext = useContext(AppContext);
   const UserStory = useGetUserStory(userStoryId);
@@ -92,12 +91,12 @@ export const Details: React.FC<DetailsProps> = ({
               <ArchiveButton
                 onClick={() => {
                   axios
-                    .delete(`/${UserStory.id}`)
+                    .delete(`/UserStory/${userStoryId}`)
                     .then((response) => {
                       if (response.status === 202) {
                         appContext.UserStoriesDispatcher({
                           type: "DELETE_USER_STORY",
-                          StoryId: UserStory.id ? UserStory.id : "1",
+                          StoryId: UserStory.id,
                         });
                       }
                     })

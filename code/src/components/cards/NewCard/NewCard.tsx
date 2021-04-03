@@ -13,12 +13,14 @@ interface SubmitOnBlurTextFieldProps {
 interface NewCardProps extends SubmitOnBlurTextFieldProps {
   type: "UserStory";
   display: boolean;
+  columnId: string;
 }
 
 export const NewCard: React.FC<NewCardProps> = ({
   type,
   display,
   setDisplay,
+  columnId,
 }) => {
   const appContext = useContext(AppContext);
   if (display) {
@@ -31,12 +33,17 @@ export const NewCard: React.FC<NewCardProps> = ({
                 axios
                   .post("/UserStory", {
                     ...values,
-                    UserStoryId: Math.floor(Math.random() * 10000).toString(),
                   })
                   .then((response) => {
                     appContext.UserStoriesDispatcher({
                       type: "ADD_NEW_USER_STORY",
                       UserStory: response.data,
+                    });
+
+                    appContext.DefaultColumnDispatcher({
+                      type: "ADD_NEW_CARD",
+                      ColumnId: columnId,
+                      Card: response.data,
                     });
                   })
                   .catch((err) => console.warn(err.response));

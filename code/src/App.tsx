@@ -8,24 +8,35 @@ import { Typography } from "@material-ui/core";
 import { UserStoryFields } from "./components/cards";
 import axios from "axios";
 import {
-  ColumnFields,
+  KanBanColumnFields,
   ColumnGroupFields,
-  ColumnReducer,
+  KanBanColumnReducer,
+  DefaultColumnFields,
+  DefaultColumnReducer,
 } from "./components/columns";
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
 function App() {
   let UserStories: UserStoryFields[] = [];
-  let Columns: ColumnFields[] = [];
+  let Columns: KanBanColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
+  let DefaultColumns: DefaultColumnFields[] = [];
+
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
   );
-  const [columnsState, columnsDispatcher] = useReducer(ColumnReducer, Columns);
+  const [columnsState, columnsDispatcher] = useReducer(
+    KanBanColumnReducer,
+    Columns
+  );
   const [columnGroupsState, columnGroupsDispatcher] = useReducer(
     ColumnGroupReducer,
     ColumnGroups
+  );
+  const [defaultColumnsState, defaultColumnsDispatcher] = useReducer(
+    DefaultColumnReducer,
+    DefaultColumns
   );
 
   useEffect(() => {
@@ -36,7 +47,7 @@ function App() {
       });
     });
 
-    axios.get("/Column").then((result) => {
+    axios.get("/KanBanColumn").then((result) => {
       columnsDispatcher({ type: "ADD_EXISTING_COLUMNS", Columns: result.data });
     });
 
@@ -44,6 +55,13 @@ function App() {
       columnGroupsDispatcher({
         type: "ADD_COLUMN_GROUPS",
         ColumnGroups: result.data,
+      });
+
+      axios.get("/DefaultColumn").then((result) => {
+        defaultColumnsDispatcher({
+          type: "ADD_EXISTING_DEFAULT_COLUMNS",
+          DefaultColumns: result.data,
+        });
       });
     });
   }, []);
@@ -58,13 +76,15 @@ function App() {
           ColumnGroupsDispatcher: columnGroupsDispatcher,
           Columns: columnsState,
           ColumnsDispatcher: columnsDispatcher,
+          DefaultColumns: defaultColumnsState,
+          DefaultColumnDispatcher: defaultColumnsDispatcher,
         }}
       >
         <Typography variant="h1">Atlas</Typography>
         <Switch>
           <Route exact path="/" component={() => <Home />} />
           <Route path="/typography" component={() => <TypographyPage />} />
-          {userStoryState.map((story: UserStoryFields) => (
+          {/* {userStoryState.map((story: UserStoryFields) => (
             <Route
               key={story.userStoryId}
               path={`/story/${story.userStoryId}`}
@@ -72,7 +92,7 @@ function App() {
                 <UserStory mode="detail" userStoryId={story.userStoryId} />
               )}
             />
-          ))}
+          ))} */}
         </Switch>
       </AppContext.Provider>
     </StylesProvider>

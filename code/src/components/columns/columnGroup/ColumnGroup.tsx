@@ -1,7 +1,7 @@
 import { Box, Popover, Typography } from "@material-ui/core";
 import { InfoOutlined } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
-import { Column, ColumnGroupProps } from "..";
+import { KanBanColumn, ColumnGroupProps } from "..";
 import styles from "./ColumnGroup.module.scss";
 
 export const ColumnGroup: React.FC<ColumnGroupProps> = ({
@@ -63,10 +63,10 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
       </Box>
       <Box className={styles.columnContainer}>
         {columns.map((columnItem, index) => (
-          <Column
+          <KanBanColumn
             columnId={columnItem.columnId}
-            groupId={columnItem.groupId}
             title={columnItem.title}
+            visible={columnItem.visible}
             key={index}
             userStoriesId={columnItem.userStoriesId}
           />
