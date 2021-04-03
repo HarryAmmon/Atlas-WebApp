@@ -9,13 +9,9 @@ export const AppContext = createContext<AppContextFields>({
   Columns: [
     {
       groupId: "1",
-      columnTitle: "Done",
+      title: "Done",
       columnId: "1",
-      stories: [
-        {
-          userStoryId: "1",
-        },
-      ],
+      userStoriesId: ["1"],
     },
   ],
   ColumnsDispatcher: () => {},

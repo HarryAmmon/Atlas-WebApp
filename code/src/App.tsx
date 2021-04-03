@@ -15,62 +15,8 @@ import {
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
 function App() {
-  interface boardDataFields {
-    title: string;
-    columns: ColumnFields[];
-    columnGroups: ColumnGroupFields[];
-  }
-
-  const boardData: boardDataFields = {
-    title: "MyFirstBoard",
-    columns: [
-      {
-        columnId: "1",
-        columnTitle: "Doing",
-        groupId: "1",
-        stories: [
-          { userStoryId: "6101" },
-          { userStoryId: "3666" },
-          { userStoryId: "12566" },
-        ],
-      },
-      {
-        columnId: "2",
-        columnTitle: "Done",
-        groupId: "1",
-        stories: [{ userStoryId: "16132" }, { userStoryId: "14109" }],
-      },
-      {
-        columnId: "3",
-        columnTitle: "Doing",
-        groupId: "asdasd",
-        stories: [{ userStoryId: "19812" }],
-      },
-      {
-        columnId: "4",
-        columnTitle: "Done",
-        groupId: "asdasd",
-        stories: [],
-      },
-    ],
-    columnGroups: [
-      {
-        groupId: "1",
-        groupTitle: "Column Group 1",
-        exitCriteria: "This is a long list of exit criteria",
-        limits: 1,
-      },
-      {
-        groupId: "2",
-        groupTitle: "Column Group 2",
-        exitCriteria: "This is a long list of exit criteria",
-        limits: 1,
-      },
-    ],
-  };
-
   let UserStories: UserStoryFields[] = [];
-  let Columns: ColumnFields[] = boardData.columns;
+  let Columns: ColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
@@ -88,6 +34,10 @@ function App() {
         type: "ADD_EXISTING_USER_STORIES",
         UserStories: result.data,
       });
+    });
+
+    axios.get("/Column").then((result) => {
+      columnsDispatcher({ type: "ADD_EXISTING_COLUMNS", Columns: result.data });
     });
 
     axios.get("/ColumnGroup").then((result) => {

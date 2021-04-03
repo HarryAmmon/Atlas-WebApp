@@ -9,7 +9,6 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   columns,
   limits,
   exitCriteria,
-  groupId,
 }) => {
   const [cardQuantity, setCardQuantity] = useState<number>();
   const [limitStyle, setLimitStyle] = useState<string>("");
@@ -30,46 +29,46 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   useEffect(() => {
     let count = 0;
     columns.forEach((column) => {
-      count += column.stories.length;
+      count += column.userStoriesId.length;
     });
+
     setCardQuantity(count);
-    if (count < Number(limits)) {
+    if (count < limits) {
       setLimitStyle(styles.limits_safe);
-    } else if (count === Number(limits)) {
+    } else if (count === limits) {
       setLimitStyle(styles.limits_warning);
     } else {
       setLimitStyle(styles.limits_danger);
     }
   }, [columns, limits]);
 
-  useEffect(() => {
-    console.log(open);
-  }, [open]);
-
   return (
     <Box className={styles.root}>
       <Box className={styles.columnGroupBar}>
-        <Typography component="h3" variant="h5">
-          {groupTitle}
-        </Typography>
-        <Box className={styles.exitAndLimits}>
-          <Typography variant="subtitle1" className={limitStyle}>
-            {cardQuantity}/{limits}
+        <Box className={styles.titleAndExit}>
+          <Typography component="h3" variant="h5">
+            {groupTitle}
           </Typography>
-          <Typography onClick={handlePopoverOpen} className={styles.exitIcon}>
-            <InfoOutlined />
+          <Typography
+            onClick={handlePopoverOpen}
+            className={styles.exitIcon}
+            variant="subtitle2"
+          >
+            <InfoOutlined fontSize="small" />
           </Typography>
         </Box>
+        <Typography variant="subtitle1" className={limitStyle}>
+          {cardQuantity}/{limits}
+        </Typography>
       </Box>
       <Box className={styles.columnContainer}>
         {columns.map((columnItem, index) => (
           <Column
             columnId={columnItem.columnId}
             groupId={columnItem.groupId}
-            columnTitle={columnItem.columnTitle}
-            columnGroupTitle="X"
+            title={columnItem.title}
             key={index}
-            stories={columnItem.stories}
+            userStoriesId={columnItem.userStoriesId}
           />
         ))}
       </Box>

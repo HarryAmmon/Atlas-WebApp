@@ -20,9 +20,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
     <DialogContent>
       <Form
         onSubmit={(values: any) => {
-          const newGroupId = Math.floor(Math.random() * 10000).toString();
-          console.log(values);
-
           axios
             .post("/ColumnGroup", {
               GroupTitle: values.GroupTitle,
@@ -33,30 +30,34 @@ export const AddColumn: React.FC<AddColumnProps> = ({
               appContext.ColumnGroupsDispatcher({
                 type: "ADD_COLUMN_GROUP",
                 ColumnGroup: {
-                  groupTitle: result.data.groupTitle,
-                  limits: result.data.limits,
-                  exitCriteria: result.data.exitCriteria,
-                  groupId: result.data.groupId,
+                  groupTitle: result.data[0].groupTitle,
+                  limits: result.data[0].limits,
+                  exitCriteria: result.data[0].exitCriteria,
+                  groupId: result.data[0].groupId,
+                },
+              });
+
+              appContext.ColumnsDispatcher({
+                type: "ADD_NEW_COLUMN",
+                NewColumnFields: {
+                  title: result.data[1].title,
+                  groupId: result.data[1].groupId,
+                  userStoriesId: result.data[1].userStoriesId,
+                  columnId: result.data[1].columnId,
+                },
+              });
+
+              appContext.ColumnsDispatcher({
+                type: "ADD_NEW_COLUMN",
+                NewColumnFields: {
+                  title: result.data[2].title,
+                  groupId: result.data[2].groupId,
+                  userStoriesId: result.data[2].userStoriesId,
+                  columnId: result.data[2].columnId,
                 },
               });
             })
-            .catch((err: any) => console.log(err.response.data));
-
-          appContext.ColumnsDispatcher({
-            type: "ADD_NEW_COLUMN",
-            NewColumnFields: {
-              columnTitle: "Doing",
-              groupId: newGroupId,
-            },
-          });
-
-          appContext.ColumnsDispatcher({
-            type: "ADD_NEW_COLUMN",
-            NewColumnFields: {
-              columnTitle: "Done",
-              groupId: newGroupId,
-            },
-          });
+            .catch((err: any) => console.log(err));
         }}
         validate={(values: any) => {
           console.log("validating");
