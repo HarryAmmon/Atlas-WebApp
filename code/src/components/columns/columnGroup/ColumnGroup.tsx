@@ -45,17 +45,21 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   return (
     <Box className={styles.root}>
       <Box className={styles.columnGroupBar}>
-        <Typography component="h3" variant="h5">
-          {groupTitle}
-        </Typography>
-        <Box className={styles.exitAndLimits}>
-          <Typography variant="subtitle1" className={limitStyle}>
-            {cardQuantity}/{limits}
+        <Box className={styles.titleAndExit}>
+          <Typography component="h3" variant="h5">
+            {groupTitle}
           </Typography>
-          <Typography onClick={handlePopoverOpen} className={styles.exitIcon}>
-            <InfoOutlined />
+          <Typography
+            onClick={handlePopoverOpen}
+            className={styles.exitIcon}
+            variant="subtitle2"
+          >
+            <InfoOutlined fontSize="small" />
           </Typography>
         </Box>
+        <Typography variant="subtitle1" className={limitStyle}>
+          {cardQuantity}/{limits}
+        </Typography>
       </Box>
       <Box className={styles.columnContainer}>
         {columns.map((columnItem, index) => (

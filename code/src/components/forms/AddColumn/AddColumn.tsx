@@ -20,9 +20,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
     <DialogContent>
       <Form
         onSubmit={(values: any) => {
-          const newGroupId = Math.floor(Math.random() * 10000).toString();
-          console.log(values);
-
           axios
             .post("/ColumnGroup", {
               GroupTitle: values.GroupTitle,
@@ -30,7 +27,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
               Limits: values.WIPLimit,
             })
             .then((result) => {
-              console.log(result.data);
               appContext.ColumnGroupsDispatcher({
                 type: "ADD_COLUMN_GROUP",
                 ColumnGroup: {
@@ -44,20 +40,20 @@ export const AddColumn: React.FC<AddColumnProps> = ({
               appContext.ColumnsDispatcher({
                 type: "ADD_NEW_COLUMN",
                 NewColumnFields: {
-                  title: "Doing",
-                  groupId: newGroupId,
-                  userStoriesId: [],
-                  columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
+                  title: result.data[1].title,
+                  groupId: result.data[1].groupId,
+                  userStoriesId: result.data[1].userStoriesId,
+                  columnId: result.data[1].columnId,
                 },
               });
 
               appContext.ColumnsDispatcher({
                 type: "ADD_NEW_COLUMN",
                 NewColumnFields: {
-                  title: "Done",
-                  groupId: newGroupId,
-                  userStoriesId: [],
-                  columnId: Math.floor(Math.random() * 10000).toString(), // REPLACE WITH ID FROM API
+                  title: result.data[2].title,
+                  groupId: result.data[2].groupId,
+                  userStoriesId: result.data[2].userStoriesId,
+                  columnId: result.data[2].columnId,
                 },
               });
             })

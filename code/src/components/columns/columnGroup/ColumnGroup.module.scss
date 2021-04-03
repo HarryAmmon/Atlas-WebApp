@@ -17,7 +17,7 @@
   flex-direction: row;
 }
 
-.exitAndLimits {
+.titleAndExit {
   display: flex;
   align-items: center;
 }
@@ -35,11 +35,8 @@
 }
 
 .exitIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  margin-left: 0.3rem;
+  margin-left: 0.1rem;
 }
 
 .exitCriteria {
