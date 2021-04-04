@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { ColumnGroup, KanBanColumn } from "../columns";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { AppContext } from "../../views/components/AppContext";
+import axios from "axios";
 
 interface KanBanBoardProps {
   title: string;
@@ -18,12 +19,15 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
     (x) => x.title === "Done" && x.kanBanColumn === false
   );
   const handleDragEnd = ({ source, destination }: DropResult) => {
-    console.log({ source, destination });
     if (source !== null || destination !== null) {
       appContext.ColumnsDispatcher({
         type: "MOVE_CARD",
         CardSource: source,
         CardDestination: destination,
+      });
+      axios.put(`KanBanColumn/${destination?.droppableId}`, {
+        source,
+        destination,
       });
     }
   };
