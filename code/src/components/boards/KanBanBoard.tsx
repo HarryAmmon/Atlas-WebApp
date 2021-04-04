@@ -18,11 +18,14 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
     (x) => x.title === "Done" && x.kanBanColumn === false
   );
   const handleDragEnd = ({ source, destination }: DropResult) => {
-    appContext.ColumnsDispatcher({
-      type: "MOVE_CARD",
-      CardSource: source,
-      CardDestination: destination,
-    });
+    console.log({ source, destination });
+    if (source !== null || destination !== null) {
+      appContext.ColumnsDispatcher({
+        type: "MOVE_CARD",
+        CardSource: source,
+        CardDestination: destination,
+      });
+    }
   };
 
   return (
