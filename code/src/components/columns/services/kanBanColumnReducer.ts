@@ -7,9 +7,7 @@ export const KanBanColumnReducer = (
 ) => {
   switch (action.type) {
     case "MOVE_CARD": {
-      if (action.CardSource === null || action.CardDestination === null) {
-        return [...Columns];
-      } else if (
+      if (
         action.CardSource.droppableId === action.CardDestination?.droppableId
       ) {
         const sourceColumn = Columns.find(
