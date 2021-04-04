@@ -40,7 +40,7 @@ export const NewCard: React.FC<NewCardProps> = ({
                       UserStory: response.data,
                     });
 
-                    appContext.DefaultColumnDispatcher({
+                    appContext.ColumnsDispatcher({
                       type: "ADD_NEW_CARD",
                       ColumnId: columnId,
                       Card: response.data,

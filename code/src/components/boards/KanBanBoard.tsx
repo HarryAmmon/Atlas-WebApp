@@ -11,10 +11,12 @@ interface KanBanBoardProps {
 
 export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
   const appContext = useContext(AppContext);
-  const backLogColumn = appContext.DefaultColumns.find(
-    (x) => x.title === "Backlog"
+  const backLogColumn = appContext.Columns.find(
+    (x) => x.title === "Backlog" && x.kanBanColumn === false
   );
-  const doneColumn = appContext.DefaultColumns.find((x) => x.title === "Done");
+  const doneColumn = appContext.Columns.find(
+    (x) => x.title === "Done" && x.kanBanColumn === false
+  );
   const handleDragEnd = ({ source, destination }: DropResult) => {
     appContext.ColumnsDispatcher({
       type: "MOVE_CARD",
@@ -33,6 +35,7 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
               title={backLogColumn?.title}
               columnId={backLogColumn?.columnId}
               userStoriesId={backLogColumn?.userStoriesId}
+              kanBanColumn={backLogColumn?.kanBanColumn}
               visible
               addCardButton
             />
@@ -57,6 +60,7 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
               title={doneColumn?.title}
               columnId={doneColumn?.columnId}
               userStoriesId={doneColumn?.userStoriesId}
+              kanBanColumn={doneColumn?.kanBanColumn}
               visible
             />
           ) : (

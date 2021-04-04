@@ -45,6 +45,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
                   userStoriesId: result.data[1].userStoriesId,
                   columnId: result.data[1].columnId,
                   visible: result.data[1].visible,
+                  kanBanColumn: true,
                 },
               });
 
@@ -56,6 +57,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
                   userStoriesId: result.data[2].userStoriesId,
                   columnId: result.data[2].columnId,
                   visible: result.data[2].visible,
+                  kanBanColumn: true,
                 },
               });
             })

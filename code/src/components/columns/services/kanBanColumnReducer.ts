@@ -62,8 +62,40 @@ export const KanBanColumnReducer = (
         userStoriesId: [],
         groupId: action.NewColumnFields.groupId,
         visible: action.NewColumnFields.visible,
+        kanBanColumn: action.NewColumnFields.kanBanColumn,
       };
       Columns = [...Columns, newColumn];
+      return [...Columns];
+    }
+    case "ADD_NEW_CARD": {
+      const columnToUpdate = Columns.filter(
+        (x) => x.columnId === action.ColumnId
+      );
+      if (columnToUpdate) {
+        columnToUpdate[0].userStoriesId = [
+          ...columnToUpdate[0].userStoriesId,
+          action.Card.id,
+        ];
+      }
+      return [...Columns];
+    }
+    case "ARCHIVE_CARD": {
+      Columns.forEach((column) => {
+        const idIndex = column.userStoriesId.findIndex(
+          (x) => x === action.CardId
+        );
+        if (idIndex !== -1) {
+          column.userStoriesId.splice(idIndex, 1);
+
+          const archiveColumn = Columns.find((x) => x.title === "Archived");
+          if (archiveColumn) {
+            archiveColumn.userStoriesId = [
+              ...archiveColumn.userStoriesId,
+              action.CardId,
+            ];
+          }
+        }
+      });
       return [...Columns];
     }
     default:

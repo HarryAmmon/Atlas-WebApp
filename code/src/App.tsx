@@ -3,7 +3,7 @@ import { TypographyPage, Home } from "./views";
 import { Route, Switch } from "react-router";
 import { StylesProvider } from "@material-ui/styles";
 import { AppContext } from "./views/components/AppContext";
-import { reducer, UserStory } from "./components/cards";
+import { reducer } from "./components/cards";
 import { Typography } from "@material-ui/core";
 import { UserStoryFields } from "./components/cards";
 import axios from "axios";
@@ -11,8 +11,6 @@ import {
   KanBanColumnFields,
   ColumnGroupFields,
   KanBanColumnReducer,
-  DefaultColumnFields,
-  DefaultColumnReducer,
 } from "./components/columns";
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
@@ -20,7 +18,6 @@ function App() {
   let UserStories: UserStoryFields[] = [];
   let Columns: KanBanColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
-  let DefaultColumns: DefaultColumnFields[] = [];
 
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
@@ -33,10 +30,6 @@ function App() {
   const [columnGroupsState, columnGroupsDispatcher] = useReducer(
     ColumnGroupReducer,
     ColumnGroups
-  );
-  const [defaultColumnsState, defaultColumnsDispatcher] = useReducer(
-    DefaultColumnReducer,
-    DefaultColumns
   );
 
   useEffect(() => {
@@ -56,13 +49,6 @@ function App() {
         type: "ADD_COLUMN_GROUPS",
         ColumnGroups: result.data,
       });
-
-      axios.get("/DefaultColumn").then((result) => {
-        defaultColumnsDispatcher({
-          type: "ADD_EXISTING_DEFAULT_COLUMNS",
-          DefaultColumns: result.data,
-        });
-      });
     });
   }, []);
 
@@ -76,8 +62,6 @@ function App() {
           ColumnGroupsDispatcher: columnGroupsDispatcher,
           Columns: columnsState,
           ColumnsDispatcher: columnsDispatcher,
-          DefaultColumns: defaultColumnsState,
-          DefaultColumnDispatcher: defaultColumnsDispatcher,
         }}
       >
         <Typography variant="h1">Atlas</Typography>

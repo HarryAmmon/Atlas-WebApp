@@ -15,11 +15,8 @@ export const AppContext = createContext<AppContextFields>({
       columnId: "1",
       userStoriesId: ["1"],
       visible: true,
+      kanBanColumn: true,
     },
   ],
   ColumnsDispatcher: () => {},
-  DefaultColumns: [
-    { columnId: "2", title: "", visible: true, userStoriesId: [] },
-  ],
-  DefaultColumnDispatcher: () => {},
 });

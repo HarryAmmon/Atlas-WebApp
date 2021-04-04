@@ -62,15 +62,18 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
         </Typography>
       </Box>
       <Box className={styles.columnContainer}>
-        {columns.map((columnItem, index) => (
-          <KanBanColumn
-            columnId={columnItem.columnId}
-            title={columnItem.title}
-            visible={columnItem.visible}
-            key={index}
-            userStoriesId={columnItem.userStoriesId}
-          />
-        ))}
+        {columns
+          .filter((x) => x.kanBanColumn === true)
+          .map((columnItem, index) => (
+            <KanBanColumn
+              columnId={columnItem.columnId}
+              title={columnItem.title}
+              visible={columnItem.visible}
+              key={index}
+              userStoriesId={columnItem.userStoriesId}
+              kanBanColumn={columnItem.kanBanColumn}
+            />
+          ))}
       </Box>
       <Popover
         open={open}
