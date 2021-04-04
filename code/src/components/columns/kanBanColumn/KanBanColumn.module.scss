@@ -1,0 +1,17 @@
+.root {
+  max-width: 15rem;
+  width: 35rem;
+  background-color: #c3cfe2;
+  padding: 0.3rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-left: 0.1rem;
+}
+
+.titleAndButton {
+  display: flex;
+  justify-content: space-between;
+}

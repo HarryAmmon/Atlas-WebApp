@@ -23,7 +23,6 @@ import axios from "axios";
 export const Details: React.FC<DetailsProps> = ({
   userStoryId,
   handleClose,
-  showDetails,
 }) => {
   const appContext = useContext(AppContext);
   const UserStory = useGetUserStory(userStoryId);
@@ -67,6 +66,24 @@ export const Details: React.FC<DetailsProps> = ({
       .catch((err) => console.log(err.response));
   };
 
+  const handleArchive = () => {
+    axios
+      .delete(`/UserStory/${userStoryId}`)
+      .then((response) => {
+        if (response.status === 202) {
+          appContext.UserStoriesDispatcher({
+            type: "DELETE_USER_STORY",
+            StoryId: UserStory.id,
+          });
+        }
+        appContext.ColumnsDispatcher({
+          type: "ARCHIVE_CARD",
+          CardId: userStoryId,
+        });
+      })
+      .catch((err) => console.log(err.response));
+  };
+
   return (
     <DialogContent>
       <Form
@@ -80,30 +97,16 @@ export const Details: React.FC<DetailsProps> = ({
         validateOnBlur
         validate={handleValidate}
       >
-        {({ handleSubmit, dirty }) => (
+        {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Box className={styles.titleBar}>
               <Typography variant="h5" className={styles.id}>
                 {UserStory.userStoryId}
               </Typography>
-              <CardTitle>{UserStory.title || ""}</CardTitle>
+              <CardTitle>{UserStory.title}</CardTitle>
             </Box>
             <Box>
-              <ArchiveButton
-                onClick={() => {
-                  axios
-                    .delete(`/${UserStory.id}`)
-                    .then((response) => {
-                      if (response.status === 202) {
-                        appContext.UserStoriesDispatcher({
-                          type: "DELETE_USER_STORY",
-                          StoryId: UserStory.id ? UserStory.id : "1",
-                        });
-                      }
-                    })
-                    .catch((err) => console.log(err.response));
-                }}
-              />
+              <ArchiveButton onClick={handleArchive} />
             </Box>
             <Box className={styles.body}>
               <Box className={styles.leftColumn}>

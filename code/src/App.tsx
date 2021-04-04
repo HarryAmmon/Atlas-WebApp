@@ -3,26 +3,30 @@ import { TypographyPage, Home } from "./views";
 import { Route, Switch } from "react-router";
 import { StylesProvider } from "@material-ui/styles";
 import { AppContext } from "./views/components/AppContext";
-import { reducer, UserStory } from "./components/cards";
+import { reducer } from "./components/cards";
 import { Typography } from "@material-ui/core";
 import { UserStoryFields } from "./components/cards";
 import axios from "axios";
 import {
-  ColumnFields,
+  KanBanColumnFields,
   ColumnGroupFields,
-  ColumnReducer,
+  KanBanColumnReducer,
 } from "./components/columns";
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
 function App() {
   let UserStories: UserStoryFields[] = [];
-  let Columns: ColumnFields[] = [];
+  let Columns: KanBanColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
+
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
   );
-  const [columnsState, columnsDispatcher] = useReducer(ColumnReducer, Columns);
+  const [columnsState, columnsDispatcher] = useReducer(
+    KanBanColumnReducer,
+    Columns
+  );
   const [columnGroupsState, columnGroupsDispatcher] = useReducer(
     ColumnGroupReducer,
     ColumnGroups
@@ -36,7 +40,7 @@ function App() {
       });
     });
 
-    axios.get("/Column").then((result) => {
+    axios.get("/KanBanColumn").then((result) => {
       columnsDispatcher({ type: "ADD_EXISTING_COLUMNS", Columns: result.data });
     });
 
@@ -64,7 +68,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={() => <Home />} />
           <Route path="/typography" component={() => <TypographyPage />} />
-          {userStoryState.map((story: UserStoryFields) => (
+          {/* {userStoryState.map((story: UserStoryFields) => (
             <Route
               key={story.userStoryId}
               path={`/story/${story.userStoryId}`}
@@ -72,7 +76,7 @@ function App() {
                 <UserStory mode="detail" userStoryId={story.userStoryId} />
               )}
             />
-          ))}
+          ))} */}
         </Switch>
       </AppContext.Provider>
     </StylesProvider>

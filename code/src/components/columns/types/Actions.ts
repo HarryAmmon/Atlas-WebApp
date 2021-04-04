@@ -1,6 +1,7 @@
 import { DraggableLocation } from "react-beautiful-dnd";
+import { UserStoryFields } from "../../cards";
 import { NewColumnGroupFields } from "./ColumnGroupTypes";
-import { ColumnFields } from "./ColumnTypes";
+import { KanBanColumnFields } from "./ColumnTypes";
 
 export type ColumnActions =
   | {
@@ -10,11 +11,20 @@ export type ColumnActions =
     }
   | {
       type: "ADD_EXISTING_COLUMNS";
-      Columns: ColumnFields[];
+      Columns: KanBanColumnFields[];
     }
   | {
       type: "ADD_NEW_COLUMN";
-      NewColumnFields: ColumnFields;
+      NewColumnFields: KanBanColumnFields;
+    }
+  | {
+      type: "ADD_NEW_CARD";
+      ColumnId: string;
+      Card: UserStoryFields;
+    }
+  | {
+      type: "ARCHIVE_CARD";
+      CardId: string;
     };
 
 export type ColumnGroupActions =

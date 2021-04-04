@@ -3,7 +3,7 @@ export interface UserStoryProps extends UserStoryId {
 }
 
 export interface UserStoryFields extends NewUserStoryFields {
-  id?: string;
+  id: string;
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
@@ -25,7 +25,7 @@ export type UserStoryActions =
     }
   | {
       type: "ADD_NEW_USER_STORY";
-      UserStory: NewUserStoryFields;
+      UserStory: UserStoryFields;
     }
   | {
       type: "DELETE_USER_STORY";
