@@ -2,6 +2,8 @@ import { Box, Popover, Typography } from "@material-ui/core";
 import { InfoOutlined } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { KanBanColumn, ColumnGroupProps } from "..";
+import { MenuButton } from "../../buttons";
+import { ColumnGroupMenu } from "../../menus/ColumnGroupMenu";
 import styles from "./ColumnGroup.module.scss";
 
 export const ColumnGroup: React.FC<ColumnGroupProps> = ({
@@ -9,22 +11,44 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
   columns,
   limits,
   exitCriteria,
+  groupId,
 }) => {
   const [cardQuantity, setCardQuantity] = useState<number>();
   const [limitStyle, setLimitStyle] = useState<string>("");
-  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
+
+  const [
+    anchorElementExitCriteria,
+    setAnchorElementExitCriteria,
+  ] = useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    setAnchorElement(event.currentTarget);
+    setAnchorElementExitCriteria(event.currentTarget);
   };
 
   const handlePopoverClose = () => {
-    setAnchorElement(null);
+    setAnchorElementExitCriteria(null);
   };
 
-  const open = Boolean(anchorElement);
+  const openExitCriteria = Boolean(anchorElementExitCriteria);
+
+  const [
+    anchorElementMenuButton,
+    setAnchorElementMenuButton,
+  ] = useState<HTMLElement | null>(null);
+
+  const handleMenuButtonOpen = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    setAnchorElementMenuButton(event.currentTarget);
+  };
+
+  const handleMenuButtonClose = () => {
+    setAnchorElementMenuButton(null);
+  };
+
+  const openMenuButton = Boolean(anchorElementMenuButton);
 
   useEffect(() => {
     let count = 0;
@@ -64,6 +88,7 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
         <Typography variant="subtitle1" className={limitStyle}>
           {cardQuantity}/{limits}
         </Typography>
+        <MenuButton onClick={handleMenuButtonOpen} />
       </Box>
       <Box className={styles.columnContainer}>
         {columns
@@ -80,12 +105,20 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
           ))}
       </Box>
       <Popover
-        open={open}
+        open={openExitCriteria}
         onClose={handlePopoverClose}
-        anchorEl={anchorElement}
+        anchorEl={anchorElementExitCriteria}
         disableRestoreFocus
       >
         <Typography className={styles.exitCriteria}>{exitCriteria}</Typography>
+      </Popover>
+      <Popover
+        open={openMenuButton}
+        onClose={handleMenuButtonClose}
+        anchorEl={anchorElementMenuButton}
+        disableRestoreFocus
+      >
+        <ColumnGroupMenu groupId={groupId} />
       </Popover>
     </Box>
   );

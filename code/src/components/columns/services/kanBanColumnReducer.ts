@@ -96,6 +96,15 @@ export const KanBanColumnReducer = (
       });
       return [...Columns];
     }
+    case "DELETE_COLUMN": {
+      const columnToRemove = Columns.findIndex(
+        (x) => x.columnId === action.ColumnId
+      );
+      if (columnToRemove !== -1) {
+        Columns.splice(columnToRemove, 1);
+      }
+      return [...Columns];
+    }
     default:
       return [...Columns];
   }

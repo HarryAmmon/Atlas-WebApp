@@ -20,6 +20,15 @@ export const ColumnGroupReducer = (
       ColumnGroups = [...ColumnGroups, ...action.ColumnGroups];
       return [...ColumnGroups];
 
+    case "REMOVE_COLUMN_GROUP":
+      const columnToRemove = ColumnGroups.findIndex(
+        (x) => x.groupId === action.ColumnGroupId
+      );
+      if (columnToRemove !== -1) {
+        ColumnGroups.splice(columnToRemove, 1);
+      }
+      return [...ColumnGroups];
+
     default:
       return [...ColumnGroups];
   }
