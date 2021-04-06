@@ -46,16 +46,20 @@ export const ColumnGroup: React.FC<ColumnGroupProps> = ({
     <Box className={styles.root}>
       <Box className={styles.columnGroupBar}>
         <Box className={styles.titleAndExit}>
-          <Typography component="h3" variant="h5">
+          <Typography component="h3" variant="h6">
             {groupTitle}
           </Typography>
-          <Typography
-            onClick={handlePopoverOpen}
-            className={styles.exitIcon}
-            variant="subtitle2"
-          >
-            <InfoOutlined fontSize="small" />
-          </Typography>
+          {exitCriteria ? (
+            <Typography
+              onClick={handlePopoverOpen}
+              className={styles.exitIcon}
+              variant="subtitle2"
+            >
+              <InfoOutlined fontSize="small" />
+            </Typography>
+          ) : (
+            <></>
+          )}
         </Box>
         <Typography variant="subtitle1" className={limitStyle}>
           {cardQuantity}/{limits}

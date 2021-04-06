@@ -64,19 +64,12 @@ function App() {
           ColumnsDispatcher: columnsDispatcher,
         }}
       >
-        <Typography variant="h1">Atlas</Typography>
+        <Typography component="h1" variant="h5">
+          Atlas
+        </Typography>
         <Switch>
           <Route exact path="/" component={() => <Home />} />
           <Route path="/typography" component={() => <TypographyPage />} />
-          {/* {userStoryState.map((story: UserStoryFields) => (
-            <Route
-              key={story.userStoryId}
-              path={`/story/${story.userStoryId}`}
-              component={() => (
-                <UserStory mode="detail" userStoryId={story.userStoryId} />
-              )}
-            />
-          ))} */}
         </Switch>
       </AppContext.Provider>
     </StylesProvider>

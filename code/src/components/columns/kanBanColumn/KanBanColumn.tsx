@@ -21,7 +21,7 @@ export const KanBanColumn: React.FC<KanBanColumnProps> = ({
   return (
     <Box className={styles.root}>
       <Box className={styles.titleAndButton}>
-        <Typography variant="h6" component="h4">
+        <Typography variant="body1" component="h4">
           {title}
         </Typography>
         {addCardButton ? (
@@ -30,40 +30,50 @@ export const KanBanColumn: React.FC<KanBanColumnProps> = ({
           <></>
         )}
       </Box>
-      <Droppable droppableId={columnId}>
-        {(provided) => (
-          <ul
-            id={columnId}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {userStoriesId.map((id, index) => {
-              return (
-                <Draggable key={id} index={index} draggableId={id}>
-                  {(provided) => (
-                    <li
-                      key={index}
-                      ref={provided.innerRef}
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                    >
-                      <UserStory userStoryId={id} mode="summary" />
-                    </li>
-                  )}
-                </Draggable>
-              );
-            })}
+      <Box className={styles.droppableContainer}>
+        <Droppable droppableId={columnId}>
+          {(provided, snapshot) => (
+            <div
+              id={columnId}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className={`${
+                snapshot.isDraggingOver ? styles.draggingOver : ""
+              } ${styles.droppable}`}
+            >
+              {userStoriesId.map((id, index) => {
+                return (
+                  <Draggable key={id} index={index} draggableId={id}>
+                    {(provided, snapshot) => (
+                      <div
+                        key={index}
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                      >
+                        <UserStory
+                          userStoryId={id}
+                          className={
+                            snapshot.isDragging ? styles.draggingCard : ""
+                          }
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
 
-            {provided.placeholder}
-            <NewCard
-              type="UserStory"
-              display={showNewCard}
-              setDisplay={setShowNewCard}
-              columnId={columnId}
-            />
-          </ul>
-        )}
-      </Droppable>
+              {provided.placeholder}
+              <NewCard
+                type="UserStory"
+                display={showNewCard}
+                setDisplay={setShowNewCard}
+                columnId={columnId}
+              />
+            </div>
+          )}
+        </Droppable>
+      </Box>
     </Box>
   );
 };

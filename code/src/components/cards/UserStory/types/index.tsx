@@ -1,5 +1,5 @@
 export interface UserStoryProps extends UserStoryId {
-  mode: "summary" | "detail";
+  className: string;
 }
 
 export interface UserStoryFields extends NewUserStoryFields {
