@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, Paper, Typography } from "@material-ui/core";
 import styles from "./KanBanBoard.module.scss";
 import React, { useContext, useState } from "react";
 import { ColumnGroup, KanBanColumn } from "../columns";
@@ -54,16 +46,7 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
         >
           Add Column
         </Button>
-        <Dialog
-          open={displayPopUp}
-          onClose={() => setDisplayPopUp(false)}
-          maxWidth={"md"}
-        >
-          <DialogTitle>Add Column</DialogTitle>
-          <DialogContent>
-            <AddColumn display={displayPopUp} setDisplay={setDisplayPopUp} />
-          </DialogContent>
-        </Dialog>
+        <AddColumn display={displayPopUp} setDisplay={setDisplayPopUp} />
       </Box>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Box className={styles.root}>

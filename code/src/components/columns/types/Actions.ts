@@ -25,6 +25,10 @@ export type ColumnActions =
   | {
       type: "ARCHIVE_CARD";
       CardId: string;
+    }
+  | {
+      type: "DELETE_COLUMN";
+      ColumnId: string;
     };
 
 export type ColumnGroupActions =
@@ -35,4 +39,12 @@ export type ColumnGroupActions =
   | {
       type: "ADD_COLUMN_GROUPS";
       ColumnGroups: NewColumnGroupFields[];
+    }
+  | {
+      type: "REMOVE_COLUMN_GROUP";
+      ColumnGroupId: string;
+    }
+  | {
+      type: "EDIT_COLUMN_GROUP";
+      ColumnGroup: NewColumnGroupFields;
     };

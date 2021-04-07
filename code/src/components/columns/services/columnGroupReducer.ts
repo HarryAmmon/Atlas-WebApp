@@ -20,6 +20,23 @@ export const ColumnGroupReducer = (
       ColumnGroups = [...ColumnGroups, ...action.ColumnGroups];
       return [...ColumnGroups];
 
+    case "REMOVE_COLUMN_GROUP":
+      const columnToRemove = ColumnGroups.findIndex(
+        (x) => x.groupId === action.ColumnGroupId
+      );
+      if (columnToRemove !== -1) {
+        ColumnGroups.splice(columnToRemove, 1);
+      }
+      return [...ColumnGroups];
+
+    case "EDIT_COLUMN_GROUP":
+      const index = ColumnGroups.findIndex(
+        (column) => column.groupId === action.ColumnGroup.groupId
+      );
+      if (index !== -1) {
+        ColumnGroups[index] = action.ColumnGroup;
+      }
+      return [...ColumnGroups];
     default:
       return [...ColumnGroups];
   }
