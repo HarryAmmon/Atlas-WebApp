@@ -29,6 +29,14 @@ export const ColumnGroupReducer = (
       }
       return [...ColumnGroups];
 
+    case "EDIT_COLUMN_GROUP":
+      const index = ColumnGroups.findIndex(
+        (column) => column.groupId === action.ColumnGroup.groupId
+      );
+      if (index !== -1) {
+        ColumnGroups[index] = action.ColumnGroup;
+      }
+      return [...ColumnGroups];
     default:
       return [...ColumnGroups];
   }

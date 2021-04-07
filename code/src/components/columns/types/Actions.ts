@@ -43,4 +43,8 @@ export type ColumnGroupActions =
   | {
       type: "REMOVE_COLUMN_GROUP";
       ColumnGroupId: string;
+    }
+  | {
+      type: "EDIT_COLUMN_GROUP";
+      ColumnGroup: NewColumnGroupFields;
     };
