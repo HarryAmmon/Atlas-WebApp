@@ -105,8 +105,8 @@ export const Details: React.FC<DetailsProps> = ({
               </Typography>
               <CardTitle>{UserStory.title}</CardTitle>
             </Box>
-            <Box>
-              <ArchiveButton onClick={handleArchive} />
+            <Box className={styles.menuBar}>
+              <StoryPoints>{UserStory.storyPoints || ""}</StoryPoints>
             </Box>
             <Box className={styles.body}>
               <Box className={styles.leftColumn}>
@@ -115,19 +115,22 @@ export const Details: React.FC<DetailsProps> = ({
                   {UserStory.acceptanceCriteria || ""}
                 </AcceptanceCriteria>
               </Box>
-              <Box className={styles.rightColumn}>
-                <StoryPoints>{UserStory.storyPoints || ""}</StoryPoints>
-              </Box>
+              <Box className={styles.rightColumn}></Box>
             </Box>
             <DialogActions>
               <Button
+                className={styles.archiveButton}
                 type="button"
-                onClick={() => handleClose()}
-                variant="text"
+                onClick={handleArchive}
+                variant="outlined"
+                color="secondary"
               >
+                Archive
+              </Button>
+              <Button type="button" onClick={handleClose} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" color="primary">
                 Save
               </Button>
             </DialogActions>

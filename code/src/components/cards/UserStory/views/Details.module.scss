@@ -27,3 +27,13 @@
 .rightColumn {
   width: 25%;
 }
+
+.menuBar {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+}
+
+.archiveButton {
+  margin-right: auto;
+}

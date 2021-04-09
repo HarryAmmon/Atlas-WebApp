@@ -9,6 +9,7 @@ export const StoryPoints: React.FC<StoryPointsInput> = () => {
       name="StoryPoints"
       label="Story Points"
       variant="outlined"
+      fullWidth={false}
       showError={showErrorOnBlur}
       required
     />
