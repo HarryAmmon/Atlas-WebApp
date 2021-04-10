@@ -2,8 +2,9 @@ import axios from "axios";
 import { TextField } from "mui-rff";
 import React, { useContext } from "react";
 import { Form, useForm } from "react-final-form";
+import { BaseCard } from "..";
 import { AppContext } from "../../../views/components/AppContext";
-import { BaseCard } from "../UserStory/views/BaseCard";
+import { CardVariants } from "../BaseCard/types";
 import styles from "./NewCard.module.scss";
 
 interface SubmitOnBlurTextFieldProps {
@@ -11,7 +12,7 @@ interface SubmitOnBlurTextFieldProps {
 }
 
 interface NewCardProps extends SubmitOnBlurTextFieldProps {
-  type: "UserStory";
+  type: CardVariants;
   display: boolean;
   columnId: string;
 }
@@ -27,7 +28,7 @@ export const NewCard: React.FC<NewCardProps> = ({
     switch (type) {
       case "UserStory":
         return (
-          <BaseCard>
+          <BaseCard variant="UserStory">
             <Form
               onSubmit={(values: any) => {
                 axios
@@ -57,6 +58,10 @@ export const NewCard: React.FC<NewCardProps> = ({
             </Form>
           </BaseCard>
         );
+      case "Task":
+        return <BaseCard variant="Task"></BaseCard>;
+      default:
+        return <></>;
     }
   } else {
     return <></>;

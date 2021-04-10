@@ -1,12 +1,13 @@
 import {
   Box,
   Button,
+  Checkbox,
   DialogActions,
   DialogContent,
   Typography,
 } from "@material-ui/core";
 import React, { useContext } from "react";
-import styles from "./Details.module.scss";
+import styles from "../../Details.module.scss";
 import { DetailsProps } from "../types";
 import {
   CardTitle,
@@ -18,6 +19,7 @@ import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
 import { useGetUserStory } from "../services/useGetUserStory";
 import axios from "axios";
+import { Task } from "../..";
 
 export const Details: React.FC<DetailsProps> = ({
   userStoryId,
@@ -82,7 +84,26 @@ export const Details: React.FC<DetailsProps> = ({
       })
       .catch((err) => console.log(err.response));
   };
-
+  const tasks = [
+    {
+      title: "My first task",
+      description: "a long description",
+      completed: false,
+      id: "anId1",
+    },
+    {
+      title: "My second task",
+      description: "a long description",
+      completed: false,
+      id: "anId2",
+    },
+    {
+      title: "My third task",
+      description: "a long description",
+      completed: false,
+      id: "anId3",
+    },
+  ];
   return (
     <DialogContent>
       <Form
@@ -114,7 +135,24 @@ export const Details: React.FC<DetailsProps> = ({
                   {UserStory.acceptanceCriteria || ""}
                 </AcceptanceCriteria>
               </Box>
-              <Box className={styles.rightColumn}></Box>
+              <Box className={styles.rightColumn}>
+                <Box className={styles.titleAndButton}>
+                  <Typography variant="h5" component="h3">
+                    Tasks
+                  </Typography>
+                  <Button type="button" variant="outlined">
+                    Add Task
+                  </Button>
+                </Box>
+                <Box className={styles.taskBox}>
+                  {tasks.map((task) => (
+                    <Box>
+                      <Checkbox />
+                      <Task id={task.id} />
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
             </Box>
             <DialogActions>
               <Button

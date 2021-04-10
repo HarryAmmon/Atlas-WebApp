@@ -1,8 +1,7 @@
 import { TextField } from "mui-rff";
 import React from "react";
-import { CardDescriptionInput } from "../types";
 
-export const CardDescription: React.FC<CardDescriptionInput> = () => {
+export const CardDescription: React.FC = () => {
   return (
     <TextField
       name="Description"

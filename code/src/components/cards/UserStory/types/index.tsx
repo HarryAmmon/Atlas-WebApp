@@ -49,8 +49,3 @@ export interface DetailsProps {
 export interface SummaryProps {
   userStoryId: string;
 }
-
-export interface BaseCardProps {
-  className?: string;
-  changeView?: () => void;
-}
