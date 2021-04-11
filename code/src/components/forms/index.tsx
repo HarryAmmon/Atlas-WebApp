@@ -5,3 +5,4 @@ export * from "./StoryPoints/StoryPoints";
 export * from "./Columns/AbstractColumnForm/AbstractColumn";
 export * from "./Columns/AddColumn/AddColumn";
 export * from "./Columns/EditColumn/EditColumn";
+export * from "./TextFields/SubmitOnBlurTextField";
