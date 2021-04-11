@@ -1,3 +1,4 @@
+import { TaskActions, TaskFields } from "../../components/cards/Task/types";
 import {
   UserStoryActions,
   UserStoryFields,
@@ -16,4 +17,6 @@ export interface AppContextFields {
   ColumnsDispatcher: React.Dispatch<ColumnActions>;
   ColumnGroups: ColumnGroupFields[];
   ColumnGroupsDispatcher: React.Dispatch<ColumnGroupActions>;
+  Tasks: TaskFields[];
+  TasksDispatcher: React.Dispatch<TaskActions>;
 }

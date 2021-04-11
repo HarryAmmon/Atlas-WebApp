@@ -19,4 +19,6 @@ export const AppContext = createContext<AppContextFields>({
     },
   ],
   ColumnsDispatcher: () => {},
+  Tasks: [{ id: "1", title: "", completed: false, description: "" }],
+  TasksDispatcher: () => {},
 });

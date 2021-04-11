@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   DialogActions,
   DialogContent,
   Typography,
@@ -19,7 +18,7 @@ import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
 import { useGetUserStory } from "../services/useGetUserStory";
 import axios from "axios";
-import { Task } from "../..";
+import { TaskWithCheckBox } from "../../Task/views/TaskWithCheckbox";
 
 export const Details: React.FC<DetailsProps> = ({
   userStoryId,
@@ -86,21 +85,12 @@ export const Details: React.FC<DetailsProps> = ({
   };
   const tasks = [
     {
-      title: "My first task",
-      description: "a long description",
-      completed: false,
       id: "anId1",
     },
     {
-      title: "My second task",
-      description: "a long description",
-      completed: false,
       id: "anId2",
     },
     {
-      title: "My third task",
-      description: "a long description",
-      completed: false,
       id: "anId3",
     },
   ];
@@ -146,10 +136,7 @@ export const Details: React.FC<DetailsProps> = ({
                 </Box>
                 <Box className={styles.taskBox}>
                   {tasks.map((task) => (
-                    <Box>
-                      <Checkbox />
-                      <Task id={task.id} />
-                    </Box>
+                    <TaskWithCheckBox id={task.id} key={task.id} />
                   ))}
                 </Box>
               </Box>

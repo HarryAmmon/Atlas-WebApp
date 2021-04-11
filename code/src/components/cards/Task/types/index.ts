@@ -23,4 +23,10 @@ export interface TaskProps {
   className?: string;
 }
 
+export type TaskActions = {
+  type: "SET_COMPLETED";
+  id: TaskId;
+  completed: boolean;
+};
+
 export type TaskId = string;

@@ -10,8 +10,10 @@ import { Form } from "react-final-form";
 import { DetailsProps } from "../types";
 import styles from "../../Details.module.scss";
 import { CardDescription, CardTitle } from "../../../forms";
+import { useGetTask } from "../services/useGetTask";
 
-export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
+export const Details: React.FC<DetailsProps> = ({ id, handleClose }) => {
+  const task = useGetTask(id);
   const handleSubmit = (values: any) => {
     console.log({ values });
   };
@@ -21,7 +23,11 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   };
   return (
     <DialogContent>
-      <Form onSubmit={handleSubmit} validateOnBlur>
+      <Form
+        onSubmit={handleSubmit}
+        validateOnBlur
+        initialValues={{ Title: task.title, Description: task.description }}
+      >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Box className={styles.titleBar}>
