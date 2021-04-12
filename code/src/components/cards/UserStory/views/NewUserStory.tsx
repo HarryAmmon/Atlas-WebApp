@@ -30,10 +30,10 @@ export const NewUserStory: React.FC<NewUserStoryProps> = ({
                 ...values,
               })
               .then((response) => {
-                appContext.UserStoriesDispatcher({
-                  type: "ADD_NEW_USER_STORY",
-                  UserStory: response.data,
-                });
+                // appContext.UserStoriesDispatcher({
+                //   type: "ADD_NEW_USER_STORY",
+                //   UserStory: response.data,
+                // });
 
                 appContext.ColumnsDispatcher({
                   type: "ADD_NEW_CARD",

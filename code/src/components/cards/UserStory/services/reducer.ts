@@ -1,35 +1,29 @@
 import { UserStoryActions, UserStoryFields } from "../types";
 
 export const reducer = (
-  UserStories: UserStoryFields[],
+  UserStory: UserStoryFields,
   action: UserStoryActions
 ) => {
   switch (action.type) {
     case "UPDATE_USER_STORY": {
-      const index = UserStories.findIndex(
-        (story) => story.userStoryId === action.UserStory.userStoryId
-      );
-      UserStories[index] = action.UserStory;
-      return [...UserStories];
+      UserStory = action.UserStory;
+      return { ...UserStory };
     }
 
     case "ADD_NEW_USER_STORY":
-      UserStories = [...UserStories, action.UserStory];
-      return [...UserStories];
+      UserStory = action.UserStory;
+      return { ...UserStory };
 
-    case "ADD_EXISTING_USER_STORIES":
-      UserStories = [...UserStories, ...action.UserStories];
-      return [...UserStories];
-
-    case "DELETE_USER_STORY": {
-      const index = UserStories.findIndex(
-        (story) => story.id === action.StoryId
-      );
-      UserStories[index] = { ...UserStories[index], archived: true };
-      return [...UserStories];
-    }
-
+    case "ADD_NEW_TASK":
+      UserStory.tasksId = [...UserStory.tasksId, action.id];
+      return { ...UserStory };
+    case "REMOVE_TASK":
+      const taskIndex = UserStory.tasksId.findIndex((x) => x === action.id);
+      if (taskIndex) {
+        UserStory.tasksId.splice(taskIndex, 1);
+      }
+      return { ...UserStory };
     default:
-      return [...UserStories];
+      return { ...UserStory };
   }
 };

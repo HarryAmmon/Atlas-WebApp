@@ -5,7 +5,7 @@ import {
   DialogContent,
   Typography,
 } from "@material-ui/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "../../Details.module.scss";
 import { DetailsProps, UserStoryFields } from "../types";
 import {
@@ -18,7 +18,6 @@ import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
 import axios from "axios";
 import { NewTask } from "../..";
-import { TaskFields } from "../../Task/types";
 import { UserStoryContext } from "../services/UserStoryContext";
 import { Task } from "../../Task/Task";
 
@@ -30,21 +29,12 @@ type FormFields = UserStoryFields & NewTaskFields;
 
 export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const appContext = useContext(AppContext);
-  const Context = useContext(UserStoryContext);
-  const UserStory = Context.userStory;
+  const StoryContext = useContext(UserStoryContext);
+  const UserStory = StoryContext.userStory;
   const [addTask, setAddTask] = useState<boolean>(false);
   const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
     "story"
   );
-  const [tasks, setTasks] = useState<TaskFields[]>([]);
-
-  useEffect(() => {
-    UserStory.tasksId.forEach((id) => {
-      axios.get(`/Task/${id}`).then((result) => {
-        setTasks((tasks) => [...tasks, result.data]);
-      });
-    });
-  }, [UserStory.tasksId]);
 
   const handleValidate = (values: any) => {
     const errors: any = {};
@@ -67,46 +57,27 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
     axios
       .put(`/UserStory/${UserStory.id}`, toSubmit)
       .then((response) => {
-        if (response.status === 204) {
-          appContext.UserStoriesDispatcher({
-            type: "UPDATE_USER_STORY",
-            UserStory: {
-              id: UserStory.id,
-              userStoryId: UserStory.userStoryId,
-              title: values.title,
-              storyPoints: values.storyPoints,
-              description: values.description,
-              acceptanceCriteria: values.acceptanceCriteria,
-              archived: UserStory.archived,
-              tasksId: UserStory.tasksId,
-            },
-          });
-        }
+        StoryContext.userStoryDispatcher({
+          type: "UPDATE_USER_STORY",
+          UserStory: { ...UserStory, ...values },
+        });
+        handleClose();
       })
       .catch((err) => console.log(err.response));
   };
 
   const submitNewTask = (values: NewTaskFields) => {
-    console.log("submitting new task");
     axios
       .post(`/Task/${UserStory.id}`, { title: values.TaskName })
       .then((result) => {
         console.log(result.data);
-        appContext.UserStoriesDispatcher({
-          type: "UPDATE_USER_STORY",
-          UserStory: {
-            id: UserStory.id,
-            userStoryId: UserStory.userStoryId,
-            title: UserStory.title,
-            storyPoints: UserStory.storyPoints,
-            description: UserStory.description,
-            acceptanceCriteria: UserStory.acceptanceCriteria,
-            archived: UserStory.archived,
-            tasksId: [...UserStory.tasksId, result.data.id],
-          },
+        StoryContext.userStoryDispatcher({
+          type: "ADD_NEW_TASK",
+          id: result.data.id,
         });
-        // setAddTask(false);
-      });
+        setAddTask(false);
+      })
+      .catch((err) => console.warn(err));
   };
 
   const submitForm = (values: FormFields) => {
@@ -123,12 +94,6 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
     axios
       .delete(`/UserStory/${UserStory.id}`)
       .then((response) => {
-        if (response.status === 202) {
-          appContext.UserStoriesDispatcher({
-            type: "DELETE_USER_STORY",
-            StoryId: UserStory.id,
-          });
-        }
         appContext.ColumnsDispatcher({
           type: "ARCHIVE_CARD",
           CardId: UserStory.id,
@@ -189,8 +154,8 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
                     setDisplay={setAddTask}
                     name="TaskName"
                   />
-                  {tasks.map((task) => (
-                    <Task id={task.id} key={task.id} />
+                  {UserStory.tasksId.map((id) => (
+                    <Task id={id} key={id} />
                   ))}
                 </Box>
               </Box>

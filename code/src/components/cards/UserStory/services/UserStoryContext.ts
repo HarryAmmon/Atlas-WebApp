@@ -9,4 +9,5 @@ export const UserStoryContext = createContext<UserStoryContextProps>({
     archived: false,
     userStoryId: "",
   },
+  userStoryDispatcher: () => {},
 });

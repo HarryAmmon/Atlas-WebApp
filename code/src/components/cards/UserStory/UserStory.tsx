@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { UserStoryFields, UserStoryProps } from "./types";
 import { Details } from "./views/Details";
 import { Summary } from "./views/Summary";
@@ -7,33 +7,35 @@ import { Dialog } from "@material-ui/core";
 import { BaseCard } from "..";
 import { UserStoryContext } from "./services/UserStoryContext";
 import axios from "axios";
+import { reducer } from "./services/reducer";
 
 export const UserStory: React.FC<UserStoryProps> = ({
   userStoryId,
   className,
 }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
   const handleOpen = () => setShowDetails(true);
-
   const handleClose = () => setShowDetails(false);
-  const [story, setStory] = useState<UserStoryFields>({
-    title: "",
+  let tempStory: UserStoryFields = {
     id: "",
-    tasksId: [],
+    title: "",
     archived: false,
+    tasksId: [],
     userStoryId: "",
-  });
+  };
+  const [story, storyDispatcher] = useReducer(reducer, tempStory);
 
   useEffect(() => {
+    console.log("use effect user story");
     axios.get(`UserStory/${userStoryId}`).then((result) => {
-      console.log(result.data);
-      setStory(result.data);
+      storyDispatcher({ type: "ADD_NEW_USER_STORY", UserStory: result.data });
     });
   }, [userStoryId]);
 
   return (
-    <UserStoryContext.Provider value={{ userStory: story }}>
+    <UserStoryContext.Provider
+      value={{ userStory: story, userStoryDispatcher: storyDispatcher }}
+    >
       <BaseCard
         className={`${styles.summary} ${className}`}
         changeView={handleOpen}
