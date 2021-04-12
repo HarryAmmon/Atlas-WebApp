@@ -10,6 +10,7 @@ export interface KanBanColumnFields extends BaseColumnFields {
   groupId: string;
 }
 
-export interface KanBanColumnProps extends BaseColumnFields {
+export interface KanBanColumnProps {
+  id: string;
   addCardButton?: boolean;
 }

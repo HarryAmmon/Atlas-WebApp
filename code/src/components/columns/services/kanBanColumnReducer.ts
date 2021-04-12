@@ -1,5 +1,5 @@
 import { ColumnActions } from "../types/Actions";
-import { KanBanColumnFields } from "../types/ColumnTypes";
+import { KanBanColumnFields } from "../kanBanColumn/types/KanBanColumnTypes";
 
 export const KanBanColumnReducer = (
   Columns: KanBanColumnFields[],

@@ -15,11 +15,11 @@ import {
   StoryPoints,
 } from "../../../forms";
 import { Form } from "react-final-form";
-import { AppContext } from "../../../../views/components/AppContext";
 import axios from "axios";
 import { NewTask } from "../..";
 import { UserStoryContext } from "../services/UserStoryContext";
 import { Task } from "../../Task/Task";
+import { BoardContext } from "../../../boards/services/BoardContext";
 
 interface NewTaskFields {
   TaskName: string;
@@ -28,8 +28,8 @@ interface NewTaskFields {
 type FormFields = UserStoryFields & NewTaskFields;
 
 export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
-  const appContext = useContext(AppContext);
   const StoryContext = useContext(UserStoryContext);
+  const boardContext = useContext(BoardContext);
   const UserStory = StoryContext.userStory;
   const [addTask, setAddTask] = useState<boolean>(false);
   const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
@@ -70,7 +70,6 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
     axios
       .post(`/Task/${UserStory.id}`, { title: values.TaskName })
       .then((result) => {
-        console.log(result.data);
         StoryContext.userStoryDispatcher({
           type: "ADD_NEW_TASK",
           id: result.data.id,
@@ -94,9 +93,9 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
     axios
       .delete(`/UserStory/${UserStory.id}`)
       .then((response) => {
-        appContext.ColumnsDispatcher({
-          type: "ARCHIVE_CARD",
-          CardId: UserStory.id,
+        boardContext.KanBanColumnDispatcher({
+          type: "REMOVE_CARD",
+          userStoryId: UserStory.id,
         });
       })
       .catch((err) => console.log(err.response));

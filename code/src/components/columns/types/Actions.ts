@@ -1,7 +1,7 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import { UserStoryFields } from "../../cards";
 import { NewColumnGroupFields } from "./ColumnGroupTypes";
-import { KanBanColumnFields } from "./ColumnTypes";
+import { KanBanColumnFields } from "../kanBanColumn/types/KanBanColumnTypes";
 
 export type ColumnActions =
   | {

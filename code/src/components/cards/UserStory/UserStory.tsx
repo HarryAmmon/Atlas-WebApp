@@ -26,7 +26,6 @@ export const UserStory: React.FC<UserStoryProps> = ({
   const [story, storyDispatcher] = useReducer(reducer, tempStory);
 
   useEffect(() => {
-    console.log("use effect user story");
     axios.get(`UserStory/${userStoryId}`).then((result) => {
       storyDispatcher({ type: "ADD_NEW_USER_STORY", UserStory: result.data });
     });
