@@ -1,0 +1,53 @@
+.root {
+  padding: 1rem;
+}
+
+.titleBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.id {
+  padding-right: 0.5rem;
+  padding-top: 0.3rem;
+}
+
+.body {
+  display: flex;
+  margin-top: 0.85rem;
+  justify-content: space-between;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.rightColumn {
+  width: 30%;
+  margin-left: 1rem;
+}
+
+.menuBar {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+}
+
+.titleAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.archiveButton {
+  margin-right: auto;
+}
+
+.taskBox {
+  padding: 0.5rem 0 0 0;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}

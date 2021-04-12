@@ -2,7 +2,8 @@ import { Box, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { AddButton } from "../../buttons";
-import { NewCard, UserStory } from "../../cards";
+import { UserStory } from "../../cards";
+import { NewUserStory } from "../../cards/UserStory/views/NewUserStory";
 import { KanBanColumnProps } from "../types/ColumnTypes";
 import styles from "./KanBanColumn.module.scss";
 
@@ -64,11 +65,11 @@ export const KanBanColumn: React.FC<KanBanColumnProps> = ({
               })}
 
               {provided.placeholder}
-              <NewCard
-                type="UserStory"
+              <NewUserStory
                 display={showNewCard}
                 setDisplay={setShowNewCard}
                 columnId={columnId}
+                name="StoryTitle"
               />
             </div>
           )}

@@ -1,3 +1,4 @@
+import { TaskActions, TaskFields } from "../../components/cards/Task/types";
 import {
   UserStoryActions,
   UserStoryFields,

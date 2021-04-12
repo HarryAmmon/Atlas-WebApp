@@ -7,6 +7,7 @@ export interface UserStoryFields extends NewUserStoryFields {
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
+  tasksId: string[];
 }
 
 export interface NewUserStoryFields extends UserStoryId {
@@ -48,9 +49,4 @@ export interface DetailsProps {
 
 export interface SummaryProps {
   userStoryId: string;
-}
-
-export interface BaseCardProps {
-  className?: string;
-  changeView?: () => void;
 }

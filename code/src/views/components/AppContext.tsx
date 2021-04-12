@@ -3,7 +3,13 @@ import { AppContextFields } from "../types/AppContextFields";
 
 export const AppContext = createContext<AppContextFields>({
   UserStories: [
-    { userStoryId: "1", title: "Default Title", archived: true, id: "2" },
+    {
+      userStoryId: "1",
+      title: "Default Title",
+      archived: true,
+      id: "2",
+      tasksId: [],
+    },
   ],
   UserStoriesDispatcher: () => {},
   ColumnGroups: [{ groupId: "1", groupTitle: "", limits: 1, exitCriteria: "" }],

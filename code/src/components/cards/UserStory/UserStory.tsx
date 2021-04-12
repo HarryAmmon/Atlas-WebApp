@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { UserStoryProps } from "./types";
 import { Details } from "./views/Details";
 import { Summary } from "./views/Summary";
-import { BaseCard } from "./views/BaseCard";
 import styles from "./UserStory.module.scss";
 import { Dialog } from "@material-ui/core";
+import { BaseCard } from "..";
 
 export const UserStory: React.FC<UserStoryProps> = ({
   userStoryId,
@@ -21,6 +21,7 @@ export const UserStory: React.FC<UserStoryProps> = ({
       <BaseCard
         className={`${styles.summary} ${className}`}
         changeView={handleOpen}
+        variant="UserStory"
       >
         <Summary userStoryId={userStoryId} />
       </BaseCard>

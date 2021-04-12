@@ -1,14 +1,13 @@
 import React from "react";
-import { CardTitleInput } from "../types";
 import Styles from "./CardTitle.module.scss";
 import { TextField, showErrorOnBlur } from "mui-rff";
 
-export const CardTitle: React.FC<CardTitleInput> = () => {
+export const CardTitle: React.FC = () => {
   return (
     <TextField
       className={Styles.root}
       type="text"
-      name="Title"
+      name="title"
       showError={showErrorOnBlur}
       fullWidth={false}
       InputProps={{ classes: { input: Styles.input } }}

@@ -5,20 +5,27 @@ import {
   DialogContent,
   Typography,
 } from "@material-ui/core";
-import React, { useContext } from "react";
-import styles from "./Details.module.scss";
-import { DetailsProps } from "../types";
+import React, { useContext, useEffect, useState } from "react";
+import styles from "../../Details.module.scss";
+import { DetailsProps, UserStoryFields } from "../types";
 import {
   CardTitle,
   CardDescription,
   AcceptanceCriteria,
   StoryPoints,
 } from "../../../forms";
-import { ArchiveButton } from "../../../buttons";
 import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
 import { useGetUserStory } from "../services/useGetUserStory";
 import axios from "axios";
+import { NewTask, Task } from "../..";
+import { TaskFields } from "../../Task/types";
+
+interface NewTaskFields {
+  TaskName: string;
+}
+
+type FormFields = UserStoryFields & NewTaskFields;
 
 export const Details: React.FC<DetailsProps> = ({
   userStoryId,
@@ -26,25 +33,38 @@ export const Details: React.FC<DetailsProps> = ({
 }) => {
   const appContext = useContext(AppContext);
   const UserStory = useGetUserStory(userStoryId);
+  const [addTask, setAddTask] = useState<boolean>(false);
+  const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
+    "story"
+  );
+  const [tasks, setTasks] = useState<TaskFields[]>([]);
+
+  useEffect(() => {
+    UserStory.tasksId.forEach((id) => {
+      axios.get(`/Task/${id}`).then((result) => {
+        setTasks((tasks) => [...tasks, result.data]);
+      });
+    });
+  }, [UserStory.tasksId]);
 
   const handleValidate = (values: any) => {
     const errors: any = {};
-    if (!values.StoryPoints) {
-      errors.StoryPoint = "Story Points Required";
+    if (values.storyPoints <= 0) {
+      errors.storyPoints = "Story Points Required";
     }
-    if (!values.Title) {
-      errors.CardTitle = "Title Required";
+    if (!values.title) {
+      errors.title = "Title Required";
     }
     return errors;
   };
 
-  const submitForm = (values: any) => {
+  const submitStory = (values: UserStoryFields) => {
     const toSubmit = {
       ...values,
       id: UserStory.id,
       UserStoryId: UserStory.userStoryId,
+      TasksId: UserStory.tasksId,
     };
-
     axios
       .put(`/UserStory/${UserStory.id}`, toSubmit)
       .then((response) => {
@@ -54,16 +74,50 @@ export const Details: React.FC<DetailsProps> = ({
             UserStory: {
               id: UserStory.id,
               userStoryId: UserStory.userStoryId,
-              title: values.Title,
-              storyPoints: values.StoryPoints,
-              description: values.Description,
-              acceptanceCriteria: values.AcceptanceCriteria,
+              title: values.title,
+              storyPoints: values.storyPoints,
+              description: values.description,
+              acceptanceCriteria: values.acceptanceCriteria,
               archived: UserStory.archived,
+              tasksId: UserStory.tasksId,
             },
           });
         }
       })
       .catch((err) => console.log(err.response));
+  };
+
+  const submitNewTask = (values: NewTaskFields) => {
+    console.log("submitting new task");
+    axios
+      .post(`/Task/${UserStory.id}`, { title: values.TaskName })
+      .then((result) => {
+        console.log(result.data);
+        appContext.UserStoriesDispatcher({
+          type: "UPDATE_USER_STORY",
+          UserStory: {
+            id: UserStory.id,
+            userStoryId: UserStory.userStoryId,
+            title: UserStory.title,
+            storyPoints: UserStory.storyPoints,
+            description: UserStory.description,
+            acceptanceCriteria: UserStory.acceptanceCriteria,
+            archived: UserStory.archived,
+            tasksId: [...UserStory.tasksId, result.data.id],
+          },
+        });
+        // setAddTask(false);
+      });
+  };
+
+  const submitForm = (values: FormFields) => {
+    if (formToSubmit === "story") {
+      submitStory(values);
+    } else if (formToSubmit === "task") {
+      submitNewTask({ TaskName: values.TaskName });
+    } else {
+      console.log("submitting bug form");
+    }
   };
 
   const handleArchive = () => {
@@ -89,10 +143,10 @@ export const Details: React.FC<DetailsProps> = ({
       <Form
         onSubmit={submitForm}
         initialValues={{
-          Title: UserStory.title,
-          Description: UserStory.description,
-          AcceptanceCriteria: UserStory.acceptanceCriteria,
-          StoryPoints: UserStory.storyPoints,
+          title: UserStory.title,
+          description: UserStory.description,
+          acceptanceCriteria: UserStory.acceptanceCriteria,
+          storyPoints: UserStory.storyPoints,
         }}
         validateOnBlur
         validate={handleValidate}
@@ -103,31 +157,66 @@ export const Details: React.FC<DetailsProps> = ({
               <Typography variant="h5" className={styles.id}>
                 {UserStory.userStoryId}
               </Typography>
-              <CardTitle>{UserStory.title}</CardTitle>
+              <CardTitle />
             </Box>
-            <Box>
-              <ArchiveButton onClick={handleArchive} />
+            <Box className={styles.menuBar}>
+              <StoryPoints />
             </Box>
             <Box className={styles.body}>
               <Box className={styles.leftColumn}>
-                <CardDescription>{UserStory.description || ""}</CardDescription>
-                <AcceptanceCriteria>
-                  {UserStory.acceptanceCriteria || ""}
-                </AcceptanceCriteria>
+                <CardDescription />
+                <AcceptanceCriteria />
               </Box>
               <Box className={styles.rightColumn}>
-                <StoryPoints>{UserStory.storyPoints || ""}</StoryPoints>
+                <Box className={styles.titleAndButton}>
+                  <Typography variant="h5" component="h3">
+                    Tasks
+                  </Typography>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={() => {
+                      setAddTask(true);
+                      setFormToSubmit("task");
+                    }}
+                  >
+                    Add Task
+                  </Button>
+                </Box>
+                <Box className={styles.taskBox}>
+                  <NewTask
+                    display={addTask}
+                    storyId={UserStory.id}
+                    setDisplay={setAddTask}
+                    name="TaskName"
+                  />
+                  {tasks.map((task) => (
+                    <Task id={task.id} key={task.id} />
+                  ))}
+                </Box>
               </Box>
             </Box>
             <DialogActions>
               <Button
+                className={styles.archiveButton}
                 type="button"
-                onClick={() => handleClose()}
-                variant="text"
+                onClick={handleArchive}
+                variant="outlined"
+                color="secondary"
               >
+                Archive
+              </Button>
+              <Button type="button" onClick={handleClose} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  setFormToSubmit("story");
+                }}
+              >
                 Save
               </Button>
             </DialogActions>

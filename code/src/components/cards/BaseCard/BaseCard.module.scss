@@ -1,0 +1,23 @@
+@import "../../variables.scss";
+
+.userStory {
+  border-left: 9px solid $color-userStory-border;
+  width: 13rem;
+}
+
+.task {
+  border-left: 9px solid $color-task-border;
+  width: 13rem;
+}
+
+.bug {
+  border-left: 9px solid $color-bug-border;
+  width: 13rem;
+}
+
+.baseCard {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem;
+  cursor: pointer;
+}
