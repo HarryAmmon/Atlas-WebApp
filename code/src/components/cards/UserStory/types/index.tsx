@@ -42,11 +42,12 @@ export type UserStoryActions =
     };
 
 export interface DetailsProps {
-  userStoryId: string;
   showDetails: boolean;
   handleClose: () => void;
 }
 
-export interface SummaryProps {
-  userStoryId: string;
+export interface SummaryProps {}
+
+export interface UserStoryContextProps {
+  userStory: UserStoryFields;
 }

@@ -16,10 +16,11 @@ import {
 } from "../../../forms";
 import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
-import { useGetUserStory } from "../services/useGetUserStory";
 import axios from "axios";
-import { NewTask, Task } from "../..";
+import { NewTask } from "../..";
 import { TaskFields } from "../../Task/types";
+import { UserStoryContext } from "../services/UserStoryContext";
+import { Task } from "../../Task/Task";
 
 interface NewTaskFields {
   TaskName: string;
@@ -27,12 +28,10 @@ interface NewTaskFields {
 
 type FormFields = UserStoryFields & NewTaskFields;
 
-export const Details: React.FC<DetailsProps> = ({
-  userStoryId,
-  handleClose,
-}) => {
+export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const appContext = useContext(AppContext);
-  const UserStory = useGetUserStory(userStoryId);
+  const Context = useContext(UserStoryContext);
+  const UserStory = Context.userStory;
   const [addTask, setAddTask] = useState<boolean>(false);
   const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
     "story"
@@ -122,7 +121,7 @@ export const Details: React.FC<DetailsProps> = ({
 
   const handleArchive = () => {
     axios
-      .delete(`/UserStory/${userStoryId}`)
+      .delete(`/UserStory/${UserStory.id}`)
       .then((response) => {
         if (response.status === 202) {
           appContext.UserStoriesDispatcher({
@@ -132,7 +131,7 @@ export const Details: React.FC<DetailsProps> = ({
         }
         appContext.ColumnsDispatcher({
           type: "ARCHIVE_CARD",
-          CardId: userStoryId,
+          CardId: UserStory.id,
         });
       })
       .catch((err) => console.log(err.response));
