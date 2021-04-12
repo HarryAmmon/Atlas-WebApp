@@ -1,12 +1,18 @@
-import { AppContext } from "../../../../views/components/AppContext";
 import { TaskFields } from "../types";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const useGetTask = (id: string): TaskFields => {
-  const appContext = useContext(AppContext);
-  const task = appContext.Tasks.find((task) => task.id === id);
-  if (task === undefined) {
-    return { id: "-1", title: "Not Found", completed: false };
-  }
+  const [task, setTask] = useState<TaskFields>({
+    id: "-1",
+    title: "-1",
+    completed: false,
+  });
+  useEffect(() => {
+    axios
+      .get(`Task/${id}`)
+      .then((result) => setTask(result.data))
+      .catch((err) => console.warn(err));
+  });
   return task;
 };

@@ -8,20 +8,18 @@ import styles from "./TaskWithCheckbox.module.scss";
 
 export const TaskWithCheckBox: React.FC<SummaryProps> = ({ id }) => {
   const task = useGetTask(id);
-  const appContext = useContext(AppContext);
-  const [checked, setChecked] = useState(task.completed);
   return (
     <Box className={styles.root}>
       <Checkbox
-        onChange={
-          () =>
-            appContext.TasksDispatcher({
-              type: "SET_COMPLETED",
-              id: id,
-              completed: !task.completed,
-            })
-          // setChecked(!checked)
-        }
+        // onChange={
+        //   () =>
+        //     appContext.TasksDispatcher({
+        //       type: "SET_COMPLETED",
+        //       id: id,
+        //       completed: !task.completed,
+        //     })
+        //   // setChecked(!checked)
+        // }
         // checked={checked}
         checked={task.completed}
       />

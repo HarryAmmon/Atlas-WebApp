@@ -21,45 +21,49 @@ export const Details: React.FC<DetailsProps> = ({ id, handleClose }) => {
   const handleArchive = () => {
     console.log("Handling archive");
   };
-  return (
-    <DialogContent>
-      <Form
-        onSubmit={handleSubmit}
-        validateOnBlur
-        initialValues={{ Title: task.title, Description: task.description }}
-      >
-        {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Box className={styles.titleBar}>
-              <Typography variant="h5" className={styles.id}>
-                ID
-              </Typography>
-              <CardTitle />
-            </Box>
-            <Box className={styles.menuBar}></Box>
-            <Box className={styles.body}>
-              <CardDescription />
-            </Box>
-            <DialogActions>
-              <Button
-                type="button"
-                className={styles.archiveButton}
-                onClick={handleArchive}
-                variant="outlined"
-                color="secondary"
-              >
-                Archive
-              </Button>
-              <Button type="button" onClick={handleClose} variant="outlined">
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" color="primary">
-                Save
-              </Button>
-            </DialogActions>
-          </form>
-        )}
-      </Form>
-    </DialogContent>
-  );
+  if (task !== undefined) {
+    return (
+      <DialogContent>
+        <Form
+          onSubmit={handleSubmit}
+          validateOnBlur
+          initialValues={{ Title: task.title, Description: task.description }}
+        >
+          {({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <Box className={styles.titleBar}>
+                <Typography variant="h5" className={styles.id}>
+                  ID
+                </Typography>
+                <CardTitle />
+              </Box>
+              <Box className={styles.menuBar}></Box>
+              <Box className={styles.body}>
+                <CardDescription />
+              </Box>
+              <DialogActions>
+                <Button
+                  type="button"
+                  className={styles.archiveButton}
+                  onClick={handleArchive}
+                  variant="outlined"
+                  color="secondary"
+                >
+                  Archive
+                </Button>
+                <Button type="button" onClick={handleClose} variant="outlined">
+                  Cancel
+                </Button>
+                <Button type="submit" variant="contained" color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </form>
+          )}
+        </Form>
+      </DialogContent>
+    );
+  } else {
+    return <></>;
+  }
 };

@@ -9,7 +9,7 @@ export const Summary: React.FC<SummaryProps> = ({ id }) => {
   return (
     <CardHeader
       titleTypographyProps={{ variant: "body2" }}
-      title={task.completed ? "completed" : "Not completed"}
+      title={task ? task.title : ""}
       className={styles.root}
     />
   );
