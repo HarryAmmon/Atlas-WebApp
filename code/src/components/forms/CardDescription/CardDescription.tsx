@@ -4,7 +4,7 @@ import React from "react";
 export const CardDescription: React.FC = () => {
   return (
     <TextField
-      name="Description"
+      name="description"
       id="card-description"
       label="Description"
       variant="filled"

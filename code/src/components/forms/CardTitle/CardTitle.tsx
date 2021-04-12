@@ -7,7 +7,7 @@ export const CardTitle: React.FC = () => {
     <TextField
       className={Styles.root}
       type="text"
-      name="Title"
+      name="title"
       showError={showErrorOnBlur}
       fullWidth={false}
       InputProps={{ classes: { input: Styles.input } }}
