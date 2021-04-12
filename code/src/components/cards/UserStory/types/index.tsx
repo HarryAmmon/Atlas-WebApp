@@ -7,6 +7,7 @@ export interface UserStoryFields extends NewUserStoryFields {
   description?: string;
   acceptanceCriteria?: string;
   storyPoints?: string;
+  tasksId: string[];
 }
 
 export interface NewUserStoryFields extends UserStoryId {

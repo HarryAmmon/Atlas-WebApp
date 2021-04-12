@@ -6,4 +6,5 @@ export const UserStoryContext = createContext<UserStoryFields>({
   title: "",
   archived: true,
   id: "2",
+  tasksId: [],
 });
