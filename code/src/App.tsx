@@ -3,9 +3,7 @@ import { TypographyPage, Home } from "./views";
 import { Route, Switch } from "react-router";
 import { StylesProvider } from "@material-ui/styles";
 import { AppContext } from "./views/components/AppContext";
-import { reducer } from "./components/cards";
 import { Typography } from "@material-ui/core";
-import { UserStoryFields } from "./components/cards";
 import axios from "axios";
 import {
   KanBanColumnFields,
@@ -15,14 +13,9 @@ import {
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
 
 function App() {
-  let UserStories: UserStoryFields[] = [];
   let Columns: KanBanColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
 
-  const [userStoryState, userStoryDispatcher] = useReducer(
-    reducer,
-    UserStories
-  );
   const [columnsState, columnsDispatcher] = useReducer(
     KanBanColumnReducer,
     Columns
@@ -33,13 +26,6 @@ function App() {
   );
 
   useEffect(() => {
-    axios.get("/UserStory").then((result) => {
-      userStoryDispatcher({
-        type: "ADD_EXISTING_USER_STORIES",
-        UserStories: result.data,
-      });
-    });
-
     axios.get("/KanBanColumn").then((result) => {
       columnsDispatcher({ type: "ADD_EXISTING_COLUMNS", Columns: result.data });
     });
@@ -56,8 +42,6 @@ function App() {
     <StylesProvider injectFirst>
       <AppContext.Provider
         value={{
-          UserStories: userStoryState,
-          UserStoriesDispatcher: userStoryDispatcher,
           ColumnGroups: columnGroupsState,
           ColumnGroupsDispatcher: columnGroupsDispatcher,
           Columns: columnsState,

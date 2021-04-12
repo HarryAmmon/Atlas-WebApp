@@ -1,8 +1,3 @@
-import { TaskActions, TaskFields } from "../../components/cards/Task/types";
-import {
-  UserStoryActions,
-  UserStoryFields,
-} from "../../components/cards/UserStory/types";
 import {
   ColumnActions,
   KanBanColumnFields,
@@ -11,8 +6,6 @@ import {
 } from "../../components/columns";
 
 export interface AppContextFields {
-  UserStories: UserStoryFields[];
-  UserStoriesDispatcher: React.Dispatch<UserStoryActions>;
   Columns: KanBanColumnFields[];
   ColumnsDispatcher: React.Dispatch<ColumnActions>;
   ColumnGroups: ColumnGroupFields[];
