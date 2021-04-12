@@ -12,9 +12,11 @@ import styles from "../../Details.module.scss";
 import { CardDescription, CardTitle } from "../../../forms";
 import { TaskContext } from "../services/TaskContext";
 import axios from "axios";
+import { UserStoryContext } from "../../UserStory/services/UserStoryContext";
 
 export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const taskContext = useContext(TaskContext);
+  const storyContext = useContext(UserStoryContext);
   const handleSubmit = (values: any) => {
     axios
       .put(`Task/${taskContext.Task.id}`, {
@@ -38,9 +40,10 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
 
   const handleArchive = () => {
     axios.delete(`Task/${taskContext.Task.id}`, {}).then((result) => {
-      // REMOVE TASK ID FROM USER STORY LIST
-      // CLOSE THIS VIEW
-      handleClose();
+      storyContext.userStoryDispatcher({
+        type: "REMOVE_TASK",
+        id: taskContext.Task.id,
+      });
     });
   };
   return (
