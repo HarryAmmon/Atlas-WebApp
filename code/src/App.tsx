@@ -13,33 +13,12 @@ import {
   KanBanColumnReducer,
 } from "./components/columns";
 import { ColumnGroupReducer } from "./components/columns/services/columnGroupReducer";
-import { TaskFields } from "./components/cards/Task/types";
-import { TaskReducer } from "./components/cards/Task/services/TaskReducer";
 
 function App() {
   let UserStories: UserStoryFields[] = [];
   let Columns: KanBanColumnFields[] = [];
   let ColumnGroups: ColumnGroupFields[] = [];
-  let Tasks: TaskFields[] = [
-    {
-      title: "My first task",
-      description: "a long description 1",
-      completed: false,
-      id: "anId1",
-    },
-    {
-      title: "My second task",
-      description: "a long description 2",
-      completed: false,
-      id: "anId2",
-    },
-    {
-      title: "My third task",
-      description: "a long description 3",
-      completed: false,
-      id: "anId3",
-    },
-  ];
+
   const [userStoryState, userStoryDispatcher] = useReducer(
     reducer,
     UserStories
@@ -53,7 +32,6 @@ function App() {
     ColumnGroups
   );
 
-  const [taskState, taskDispatcher] = useReducer(TaskReducer, Tasks);
   useEffect(() => {
     axios.get("/UserStory").then((result) => {
       userStoryDispatcher({
@@ -84,8 +62,6 @@ function App() {
           ColumnGroupsDispatcher: columnGroupsDispatcher,
           Columns: columnsState,
           ColumnsDispatcher: columnsDispatcher,
-          Tasks: taskState,
-          TasksDispatcher: taskDispatcher,
         }}
       >
         <Typography component="h1" variant="h5">

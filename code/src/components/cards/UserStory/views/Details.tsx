@@ -18,8 +18,7 @@ import { Form } from "react-final-form";
 import { AppContext } from "../../../../views/components/AppContext";
 import { useGetUserStory } from "../services/useGetUserStory";
 import axios from "axios";
-import { TaskWithCheckBox } from "../../Task/views/TaskWithCheckbox";
-import { NewTask } from "../..";
+import { NewTask, Task } from "../..";
 import { TaskFields } from "../../Task/types";
 
 interface NewTaskFields {
@@ -46,7 +45,7 @@ export const Details: React.FC<DetailsProps> = ({
         setTasks((tasks) => [...tasks, result.data]);
       });
     });
-  }, []);
+  }, [UserStory.tasksId]);
 
   const handleValidate = (values: any) => {
     const errors: any = {};
@@ -89,8 +88,26 @@ export const Details: React.FC<DetailsProps> = ({
   };
 
   const submitNewTask = (values: NewTaskFields) => {
-    axios.post(`/Task/${UserStory.id}`, { title: values.TaskName });
-    setAddTask(false);
+    console.log("submitting new task");
+    axios
+      .post(`/Task/${UserStory.id}`, { title: values.TaskName })
+      .then((result) => {
+        console.log(result.data);
+        appContext.UserStoriesDispatcher({
+          type: "UPDATE_USER_STORY",
+          UserStory: {
+            id: UserStory.id,
+            userStoryId: UserStory.userStoryId,
+            title: UserStory.title,
+            storyPoints: UserStory.storyPoints,
+            description: UserStory.description,
+            acceptanceCriteria: UserStory.acceptanceCriteria,
+            archived: UserStory.archived,
+            tasksId: [...UserStory.tasksId, result.data.id],
+          },
+        });
+        // setAddTask(false);
+      });
   };
 
   const submitForm = (values: FormFields) => {
@@ -156,7 +173,7 @@ export const Details: React.FC<DetailsProps> = ({
                     Tasks
                   </Typography>
                   <Button
-                    type="submit"
+                    type="button"
                     variant="outlined"
                     onClick={() => {
                       setAddTask(true);
@@ -174,7 +191,7 @@ export const Details: React.FC<DetailsProps> = ({
                     name="TaskName"
                   />
                   {tasks.map((task) => (
-                    <TaskWithCheckBox id={task.id} key={task.id} />
+                    <Task id={task.id} key={task.id} />
                   ))}
                 </Box>
               </Box>

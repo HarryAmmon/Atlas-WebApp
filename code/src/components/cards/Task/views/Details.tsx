@@ -5,65 +5,86 @@ import {
   DialogContent,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import { Form } from "react-final-form";
 import { DetailsProps } from "../types";
 import styles from "../../Details.module.scss";
 import { CardDescription, CardTitle } from "../../../forms";
-import { useGetTask } from "../services/useGetTask";
+import { TaskContext } from "../services/TaskContext";
+import axios from "axios";
 
-export const Details: React.FC<DetailsProps> = ({ id, handleClose }) => {
-  const task = useGetTask(id);
+export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
+  const taskContext = useContext(TaskContext);
   const handleSubmit = (values: any) => {
-    console.log({ values });
+    axios
+      .put(`Task/${taskContext.Task.id}`, {
+        ...taskContext.Task,
+        title: values.title,
+        description: values.description,
+      })
+      .then((result) => {
+        taskContext.TaskDispatcher({
+          type: "UPDATE_TASK",
+          Task: {
+            ...taskContext.Task,
+            title: values.title,
+            description: values.description,
+          },
+        });
+        handleClose();
+      })
+      .catch((err) => console.warn(err));
   };
 
   const handleArchive = () => {
-    console.log("Handling archive");
+    axios.delete(`Task/${taskContext.Task.id}`, {}).then((result) => {
+      // REMOVE TASK ID FROM USER STORY LIST
+      // CLOSE THIS VIEW
+      handleClose();
+    });
   };
-  if (task !== undefined) {
-    return (
-      <DialogContent>
-        <Form
-          onSubmit={handleSubmit}
-          validateOnBlur
-          initialValues={{ Title: task.title, Description: task.description }}
-        >
-          {({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <Box className={styles.titleBar}>
-                <Typography variant="h5" className={styles.id}>
-                  ID
-                </Typography>
-                <CardTitle />
-              </Box>
-              <Box className={styles.menuBar}></Box>
-              <Box className={styles.body}>
-                <CardDescription />
-              </Box>
-              <DialogActions>
-                <Button
-                  type="button"
-                  className={styles.archiveButton}
-                  onClick={handleArchive}
-                  variant="outlined"
-                  color="secondary"
-                >
-                  Archive
-                </Button>
-                <Button type="button" onClick={handleClose} variant="outlined">
-                  Cancel
-                </Button>
-                <Button type="submit" variant="contained" color="primary">
-                  Save
-                </Button>
-              </DialogActions>
-            </form>
-          )}
-        </Form>
-      </DialogContent>
-    );
-  } else {
-    return <></>;
-  }
+  return (
+    <DialogContent>
+      <Form
+        onSubmit={handleSubmit}
+        validateOnBlur
+        initialValues={{
+          title: taskContext.Task.title,
+          description: taskContext.Task.description,
+        }}
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Box className={styles.titleBar}>
+              <Typography variant="h5" className={styles.id}>
+                ID
+              </Typography>
+              <CardTitle />
+            </Box>
+            <Box className={styles.menuBar}></Box>
+            <Box className={styles.body}>
+              <CardDescription />
+            </Box>
+            <DialogActions>
+              <Button
+                type="button"
+                className={styles.archiveButton}
+                onClick={handleArchive}
+                variant="outlined"
+                color="secondary"
+              >
+                Archive
+              </Button>
+              <Button type="button" onClick={handleClose} variant="outlined">
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained" color="primary">
+                Save
+              </Button>
+            </DialogActions>
+          </form>
+        )}
+      </Form>
+    </DialogContent>
+  );
 };
