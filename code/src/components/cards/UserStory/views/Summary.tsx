@@ -1,15 +1,15 @@
 import { CardHeader } from "@material-ui/core";
-import React from "react";
-import { useGetUserStory } from "../services/useGetUserStory";
+import React, { useContext } from "react";
 import { SummaryProps } from "../types";
 import styles from "../../Summary.module.scss";
+import { UserStoryContext } from "../services/UserStoryContext";
 
-export const Summary: React.FC<SummaryProps> = ({ userStoryId }) => {
-  const UserStory = useGetUserStory(userStoryId);
+export const Summary: React.FC<SummaryProps> = () => {
+  const UserStory = useContext(UserStoryContext);
 
   return (
     <CardHeader
-      title={UserStory.title}
+      title={UserStory.userStory.title}
       titleTypographyProps={{ variant: "body2" }}
       className={styles.root}
     />

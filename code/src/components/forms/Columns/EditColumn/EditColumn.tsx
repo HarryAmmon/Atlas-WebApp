@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { AbstractColumn } from "../..";
-import { AppContext } from "../../../../views/components/AppContext";
+import { BoardContext } from "../../../boards/services/BoardContext";
 
 export interface EditColumnProps {
   display: boolean;
@@ -14,8 +14,8 @@ export const EditColumn: React.FC<EditColumnProps> = ({
   setDisplay,
   groupId,
 }) => {
-  const appContext = useContext(AppContext);
-  const columnGroup = appContext.ColumnGroups.find(
+  const boardContext = useContext(BoardContext);
+  const columnGroup = boardContext.ColumnGroups.find(
     (x) => x.groupId === groupId
   );
 
@@ -29,7 +29,7 @@ export const EditColumn: React.FC<EditColumnProps> = ({
         limits: values.WIPLimit,
       })
       .then((result) =>
-        appContext.ColumnGroupsDispatcher({
+        boardContext.ColumnGroupsDispatcher({
           type: "EDIT_COLUMN_GROUP",
           ColumnGroup: {
             groupTitle: values.GroupTitle,
@@ -39,6 +39,7 @@ export const EditColumn: React.FC<EditColumnProps> = ({
           },
         })
       );
+    setDisplay(false);
   };
   if (columnGroup !== undefined) {
     return (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import { AppContext } from "../../../../views/components/AppContext";
+import { BoardContext } from "../../../boards/services/BoardContext";
 import { AbstractColumn } from "../AbstractColumnForm/AbstractColumn";
 
 export interface AddColumnProps {
@@ -12,7 +12,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
   display,
   setDisplay,
 }) => {
-  const appContext = useContext(AppContext);
+  const boardContext = useContext(BoardContext);
   const handleSubmit = (values: any) => {
     axios
       .post("/ColumnGroup", {
@@ -21,7 +21,8 @@ export const AddColumn: React.FC<AddColumnProps> = ({
         Limits: values.WIPLimit,
       })
       .then((result) => {
-        appContext.ColumnGroupsDispatcher({
+        console.log({ result });
+        boardContext.ColumnGroupsDispatcher({
           type: "ADD_COLUMN_GROUP",
           ColumnGroup: {
             groupTitle: result.data[0].groupTitle,
@@ -31,9 +32,9 @@ export const AddColumn: React.FC<AddColumnProps> = ({
           },
         });
 
-        appContext.ColumnsDispatcher({
+        boardContext.KanBanColumnDispatcher({
           type: "ADD_NEW_COLUMN",
-          NewColumnFields: {
+          column: {
             title: result.data[1].title,
             groupId: result.data[1].groupId,
             userStoriesId: result.data[1].userStoriesId,
@@ -43,9 +44,9 @@ export const AddColumn: React.FC<AddColumnProps> = ({
           },
         });
 
-        appContext.ColumnsDispatcher({
+        boardContext.KanBanColumnDispatcher({
           type: "ADD_NEW_COLUMN",
-          NewColumnFields: {
+          column: {
             title: result.data[2].title,
             groupId: result.data[2].groupId,
             userStoriesId: result.data[2].userStoriesId,
@@ -56,6 +57,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
         });
       })
       .catch((err: any) => console.log(err));
+    setDisplay(false);
   };
   return (
     <AbstractColumn

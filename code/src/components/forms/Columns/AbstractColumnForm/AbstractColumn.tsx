@@ -9,7 +9,7 @@ import {
 import { TextField } from "mui-rff";
 import React from "react";
 import { Form } from "react-final-form";
-import { ColumnGroupFields } from "../../../columns";
+import { ColumnGroupFields } from "../../../columnGroup";
 import styles from "./AbstractColumn.module.scss";
 
 interface AbstractColumnProps {

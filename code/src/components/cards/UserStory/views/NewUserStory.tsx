@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { Form } from "react-final-form";
 import { BaseCard } from "../..";
-import { AppContext } from "../../../../views/components/AppContext";
+import { BoardContext } from "../../../boards/services/BoardContext";
+
 import {
   SubmitOnBlurTextField,
   SubmitOnBlurTextFieldProps,
@@ -19,27 +20,24 @@ export const NewUserStory: React.FC<NewUserStoryProps> = ({
   columnId,
   name,
 }) => {
-  const appContext = useContext(AppContext);
+  const boardContext = useContext(BoardContext);
   if (display) {
     return (
       <BaseCard variant="UserStory">
         <Form
           onSubmit={(values: any) => {
+            console.log(values);
             axios
               .post("/UserStory", {
                 ...values,
+                TasksId: [],
               })
               .then((response) => {
-                appContext.UserStoriesDispatcher({
-                  type: "ADD_NEW_USER_STORY",
-                  UserStory: response.data,
+                boardContext.KanBanColumnDispatcher({
+                  type: "ADD_CARD",
+                  userStoryId: response.data.id,
                 });
-
-                appContext.ColumnsDispatcher({
-                  type: "ADD_NEW_CARD",
-                  ColumnId: columnId,
-                  Card: response.data,
-                });
+                setDisplay(false);
               })
               .catch((err) => console.warn(err.response));
           }}
