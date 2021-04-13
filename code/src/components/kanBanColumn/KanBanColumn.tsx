@@ -1,12 +1,12 @@
 import { Box, Typography } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import { AddButton } from "../../buttons";
-import { UserStory } from "../../cards";
-import { NewUserStory } from "../../cards/UserStory/views/NewUserStory";
+import { AddButton } from "../buttons";
+import { UserStory } from "../cards";
+import { NewUserStory } from "../cards/UserStory/views/NewUserStory";
 import { KanBanColumnProps } from "./types/KanBanColumnTypes";
 import styles from "./KanBanColumn.module.scss";
-import { BoardContext } from "../../boards/services/BoardContext";
+import { BoardContext } from "../boards/services/BoardContext";
 
 export const KanBanColumn: React.FC<KanBanColumnProps> = ({
   id,
