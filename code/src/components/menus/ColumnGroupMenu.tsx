@@ -1,7 +1,7 @@
 import { Box } from "@material-ui/core";
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { AppContext } from "../../views/components/AppContext";
+import { BoardContext } from "../boards/services/BoardContext";
 import { DeleteButton } from "../buttons/DeleteButton/DeleteButton";
 import { EditButton } from "../buttons/EditButton/EditButton";
 import { EditColumn } from "../forms";
@@ -12,20 +12,23 @@ export interface ColumnGroupProps {
 }
 
 export const ColumnGroupMenu: React.FC<ColumnGroupProps> = ({ groupId }) => {
-  const appContext = useContext(AppContext);
   const [showEdit, setShowEdit] = useState<boolean>(false);
+  const boardContext = useContext(BoardContext);
+
   const handleDelete = () => {
     axios.delete(`/ColumnGroup/${groupId}`).then((result) => {
-      const columns = appContext.Columns.filter((x) => x.groupId === groupId);
+      const columns = boardContext.KanBanColumns.filter(
+        (x) => x.groupId === groupId
+      );
       if (columns) {
         columns.forEach((column) =>
-          appContext.ColumnsDispatcher({
+          boardContext.KanBanColumnDispatcher({
             type: "DELETE_COLUMN",
             ColumnId: column.columnId,
           })
         );
       }
-      appContext.ColumnGroupsDispatcher({
+      boardContext.ColumnGroupsDispatcher({
         type: "REMOVE_COLUMN_GROUP",
         ColumnGroupId: groupId,
       });

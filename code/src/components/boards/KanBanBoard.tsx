@@ -1,13 +1,17 @@
 import { Box, Button, Paper, Typography } from "@material-ui/core";
 import styles from "./KanBanBoard.module.scss";
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { ColumnGroup, KanBanColumn, KanBanColumnFields } from "../columns";
+import React, { useEffect, useReducer, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { AppContext } from "../../views/components/AppContext";
 import axios from "axios";
 import { AddColumn } from "../forms";
 import { BoardContext } from "./services/BoardContext";
-import { BoardReducer } from "./services/BoardReducer";
+import { KanBanColumnReducer } from "../kanBanColumn/services/KanBanColumnReducer";
+import { KanBanColumn, KanBanColumnFields } from "../kanBanColumn";
+import {
+  ColumnGroup,
+  ColumnGroupFields,
+  ColumnGroupReducer,
+} from "../columnGroup";
 
 interface KanBanBoardProps {
   title: string;
@@ -15,11 +19,19 @@ interface KanBanBoardProps {
 
 export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
   const [displayPopUp, setDisplayPopUp] = useState<boolean>(false);
-  const appContext = useContext(AppContext);
 
   let tempColumns: KanBanColumnFields[] = [];
+  let tempColumnGroups: ColumnGroupFields[] = [];
 
-  const [columns, kanBanDispatcher] = useReducer(BoardReducer, tempColumns);
+  const [columns, kanBanDispatcher] = useReducer(
+    KanBanColumnReducer,
+    tempColumns
+  );
+
+  const [columnGroups, columnGroupDispatcher] = useReducer(
+    ColumnGroupReducer,
+    tempColumnGroups
+  );
 
   const backLogColumn = columns.find(
     (x) => x.title === "Backlog" && x.kanBanColumn === false
@@ -50,6 +62,12 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
     axios.get(`/KanBanColumn`).then((result) => {
       kanBanDispatcher({ type: "ADD_EXISTING_COLUMNS", columns: result.data });
     });
+    axios.get("/ColumnGroup").then((result) => {
+      columnGroupDispatcher({
+        type: "ADD_COLUMN_GROUPS",
+        ColumnGroups: result.data,
+      });
+    });
   }, []);
 
   return (
@@ -57,6 +75,8 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
       value={{
         KanBanColumns: columns,
         KanBanColumnDispatcher: kanBanDispatcher,
+        ColumnGroups: columnGroups,
+        ColumnGroupsDispatcher: columnGroupDispatcher,
       }}
     >
       <Paper>
@@ -81,17 +101,9 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
             ) : (
               <></>
             )}
-            {appContext.ColumnGroups.map((columnGroup, index) => (
+            {columnGroups.map((columnGroup, index) => (
               <Box className={styles.columnContainer} key={columnGroup.groupId}>
-                <ColumnGroup
-                  groupId={columnGroup.groupId}
-                  groupTitle={columnGroup.groupTitle}
-                  columns={columns.filter(
-                    (x) => x.groupId === columnGroup.groupId
-                  )}
-                  limits={columnGroup.limits}
-                  exitCriteria={columnGroup.exitCriteria}
-                />
+                <ColumnGroup id={columnGroup.groupId} />
               </Box>
             ))}
             {doneColumn ? (
