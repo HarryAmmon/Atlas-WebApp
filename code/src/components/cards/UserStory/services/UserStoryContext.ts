@@ -10,4 +10,6 @@ export const UserStoryContext = createContext<UserStoryContextProps>({
     userStoryId: "",
   },
   userStoryDispatcher: () => {},
+  tasks: [],
+  taskDispatcher: () => {},
 });
