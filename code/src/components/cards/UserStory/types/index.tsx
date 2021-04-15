@@ -1,4 +1,4 @@
-import { TaskId } from "../../Task/types";
+import { TaskActions, TaskFields, TaskId } from "../../Task/types";
 
 export interface UserStoryProps extends UserStoryId {
   className: string;
@@ -46,4 +46,6 @@ export interface SummaryProps {}
 export interface UserStoryContextProps {
   userStory: UserStoryFields;
   userStoryDispatcher: React.Dispatch<UserStoryActions>;
+  tasks: TaskFields[];
+  taskDispatcher: React.Dispatch<TaskActions>;
 }

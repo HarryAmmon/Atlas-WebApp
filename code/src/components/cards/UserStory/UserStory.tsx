@@ -8,6 +8,8 @@ import { BaseCard } from "..";
 import { UserStoryContext } from "./services/UserStoryContext";
 import axios from "axios";
 import { reducer } from "./services/reducer";
+import { TaskFields } from "../Task/types";
+import { TaskReducer } from "../Task/services/TaskReducer";
 
 export const UserStory: React.FC<UserStoryProps> = ({
   userStoryId,
@@ -23,6 +25,7 @@ export const UserStory: React.FC<UserStoryProps> = ({
     tasksId: [],
     userStoryId: "",
   };
+  let tempTask: TaskFields[] = [];
   const [story, storyDispatcher] = useReducer(reducer, tempStory);
 
   useEffect(() => {
@@ -31,9 +34,24 @@ export const UserStory: React.FC<UserStoryProps> = ({
     });
   }, [userStoryId]);
 
+  const [tasks, taskDispatcher] = useReducer(TaskReducer, tempTask);
+
+  useEffect(() => {
+    story.tasksId.forEach((id) =>
+      axios.get(`/Task/${id}`).then((result) => {
+        taskDispatcher({ type: "ADD_TASK", Task: result.data });
+      })
+    );
+  }, [story.tasksId]);
+
   return (
     <UserStoryContext.Provider
-      value={{ userStory: story, userStoryDispatcher: storyDispatcher }}
+      value={{
+        userStory: story,
+        userStoryDispatcher: storyDispatcher,
+        tasks: tasks,
+        taskDispatcher: taskDispatcher,
+      }}
     >
       <BaseCard
         className={`${styles.summary} ${className}`}

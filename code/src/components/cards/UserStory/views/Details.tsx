@@ -30,7 +30,7 @@ type FormFields = UserStoryFields & NewTaskFields;
 export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const StoryContext = useContext(UserStoryContext);
   const boardContext = useContext(BoardContext);
-  const UserStory = StoryContext.userStory;
+  // const UserStory = StoryContext.userStory;
   const [addTask, setAddTask] = useState<boolean>(false);
   const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
     "story"
@@ -50,16 +50,16 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const submitStory = (values: UserStoryFields) => {
     const toSubmit = {
       ...values,
-      id: UserStory.id,
-      UserStoryId: UserStory.userStoryId,
-      TasksId: UserStory.tasksId,
+      id: StoryContext.userStory.id,
+      UserStoryId: StoryContext.userStory.userStoryId,
+      TasksId: StoryContext.userStory.tasksId,
     };
     axios
-      .put(`/UserStory/${UserStory.id}`, toSubmit)
+      .put(`/UserStory/${StoryContext.userStory.id}`, toSubmit)
       .then((response) => {
         StoryContext.userStoryDispatcher({
           type: "UPDATE_USER_STORY",
-          UserStory: { ...UserStory, ...values },
+          UserStory: { ...StoryContext.userStory, ...values },
         });
         handleClose();
       })
@@ -68,7 +68,7 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
 
   const submitNewTask = (values: NewTaskFields) => {
     axios
-      .post(`/Task/${UserStory.id}`, { title: values.TaskName })
+      .post(`/Task/${StoryContext.userStory.id}`, { title: values.TaskName })
       .then((result) => {
         StoryContext.userStoryDispatcher({
           type: "ADD_NEW_TASK",
@@ -91,11 +91,11 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
 
   const handleArchive = () => {
     axios
-      .delete(`/UserStory/${UserStory.id}`)
+      .delete(`/UserStory/${StoryContext.userStory.id}`)
       .then((response) => {
         boardContext.KanBanColumnDispatcher({
           type: "REMOVE_CARD",
-          userStoryId: UserStory.id,
+          userStoryId: StoryContext.userStory.id,
         });
       })
       .catch((err) => console.log(err.response));
@@ -106,10 +106,10 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
       <Form
         onSubmit={submitForm}
         initialValues={{
-          title: UserStory.title,
-          description: UserStory.description,
-          acceptanceCriteria: UserStory.acceptanceCriteria,
-          storyPoints: UserStory.storyPoints,
+          title: StoryContext.userStory.title,
+          description: StoryContext.userStory.description,
+          acceptanceCriteria: StoryContext.userStory.acceptanceCriteria,
+          storyPoints: StoryContext.userStory.storyPoints,
         }}
         validateOnBlur
         validate={handleValidate}
@@ -118,7 +118,7 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
           <form onSubmit={handleSubmit}>
             <Box className={styles.titleBar}>
               <Typography variant="h5" className={styles.id}>
-                {UserStory.userStoryId}
+                {StoryContext.userStory.userStoryId}
               </Typography>
               <CardTitle />
             </Box>
@@ -149,11 +149,11 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
                 <Box className={styles.taskBox}>
                   <NewTask
                     display={addTask}
-                    storyId={UserStory.id}
+                    storyId={StoryContext.userStory.id}
                     setDisplay={setAddTask}
                     name="TaskName"
                   />
-                  {UserStory.tasksId.map((id) => (
+                  {StoryContext.userStory.tasksId.map((id) => (
                     <Task id={id} key={id} />
                   ))}
                 </Box>
