@@ -1,3 +1,4 @@
+import { BugActions, BugFields, BugId } from "../../Bug/types";
 import { TaskActions, TaskFields, TaskId } from "../../Task/types";
 
 export interface UserStoryProps extends UserStoryId {
@@ -10,6 +11,7 @@ export interface UserStoryFields extends NewUserStoryFields {
   acceptanceCriteria?: string;
   storyPoints?: string;
   tasksId: string[];
+  bugsId: string[];
 }
 
 export interface NewUserStoryFields extends UserStoryId {
@@ -34,7 +36,9 @@ export type UserStoryActions =
       type: "ADD_NEW_TASK";
       id: TaskId;
     }
-  | { type: "REMOVE_TASK"; id: TaskId };
+  | { type: "REMOVE_TASK"; id: TaskId }
+  | { type: "ADD_BUG"; id: BugId }
+  | { type: "REMOVE_BUG"; id: BugId };
 
 export interface DetailsProps {
   showDetails: boolean;
@@ -48,4 +52,6 @@ export interface UserStoryContextProps {
   userStoryDispatcher: React.Dispatch<UserStoryActions>;
   tasks: TaskFields[];
   taskDispatcher: React.Dispatch<TaskActions>;
+  bugs: BugFields[];
+  bugDispatcher: React.Dispatch<BugActions>;
 }

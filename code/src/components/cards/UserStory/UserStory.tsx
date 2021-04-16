@@ -10,6 +10,8 @@ import axios from "axios";
 import { reducer } from "./services/reducer";
 import { TaskFields } from "../Task/types";
 import { TaskReducer } from "../Task/services/TaskReducer";
+import { BugFields } from "../Bug/types";
+import { BugReducer } from "../Bug/services/BugReducer";
 
 export const UserStory: React.FC<UserStoryProps> = ({
   userStoryId,
@@ -23,6 +25,7 @@ export const UserStory: React.FC<UserStoryProps> = ({
     title: "",
     archived: false,
     tasksId: [],
+    bugsId: [],
     userStoryId: "",
   };
   let tempTask: TaskFields[] = [];
@@ -44,6 +47,17 @@ export const UserStory: React.FC<UserStoryProps> = ({
     );
   }, [story.tasksId]);
 
+  let tempBugs: BugFields[] = [];
+  const [bugs, bugDispatcher] = useReducer(BugReducer, tempBugs);
+
+  useEffect(() => {
+    story.bugsId.forEach((id) =>
+      axios.get(`/Bug/${id}`).then((result) => {
+        bugDispatcher({ type: "ADD_BUG", Bug: result.data });
+      })
+    );
+  }, [story.bugsId]);
+
   return (
     <UserStoryContext.Provider
       value={{
@@ -51,6 +65,8 @@ export const UserStory: React.FC<UserStoryProps> = ({
         userStoryDispatcher: storyDispatcher,
         tasks: tasks,
         taskDispatcher: taskDispatcher,
+        bugs: bugs,
+        bugDispatcher: bugDispatcher,
       }}
     >
       <BaseCard

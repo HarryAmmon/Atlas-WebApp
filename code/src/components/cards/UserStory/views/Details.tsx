@@ -20,18 +20,24 @@ import { NewTask } from "../..";
 import { UserStoryContext } from "../services/UserStoryContext";
 import { Task } from "../../Task/Task";
 import { BoardContext } from "../../../boards/services/BoardContext";
+import { NewBug } from "../../Bug/views/NewBug";
+import { Bug } from "../../Bug/Bug";
 
 interface NewTaskFields {
   TaskName: string;
 }
 
-type FormFields = UserStoryFields & NewTaskFields;
+interface NewBugFields {
+  BugName: string;
+}
+
+type FormFields = UserStoryFields & NewTaskFields & NewBugFields;
 
 export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
   const StoryContext = useContext(UserStoryContext);
   const boardContext = useContext(BoardContext);
-  // const UserStory = StoryContext.userStory;
   const [addTask, setAddTask] = useState<boolean>(false);
+  const [addBug, setAddBug] = useState<boolean>(false);
   const [formToSubmit, setFormToSubmit] = useState<"story" | "task" | "bug">(
     "story"
   );
@@ -53,6 +59,7 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
       id: StoryContext.userStory.id,
       UserStoryId: StoryContext.userStory.userStoryId,
       TasksId: StoryContext.userStory.tasksId,
+      BugsId: StoryContext.userStory.bugsId,
     };
     axios
       .put(`/UserStory/${StoryContext.userStory.id}`, toSubmit)
@@ -79,13 +86,26 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
       .catch((err) => console.warn(err));
   };
 
+  const submitNewBug = (values: NewBugFields) => {
+    axios
+      .post(`/Bug/${StoryContext.userStory.id}`, { title: values.BugName })
+      .then((result) => {
+        StoryContext.userStoryDispatcher({
+          type: "ADD_BUG",
+          id: result.data.id,
+        });
+        setAddBug(false);
+      })
+      .catch((err) => console.warn(err));
+  };
+
   const submitForm = (values: FormFields) => {
     if (formToSubmit === "story") {
       submitStory(values);
     } else if (formToSubmit === "task") {
       submitNewTask({ TaskName: values.TaskName });
     } else {
-      console.log("submitting bug form");
+      submitNewBug({ BugName: values.BugName });
     }
   };
 
@@ -155,6 +175,32 @@ export const Details: React.FC<DetailsProps> = ({ handleClose }) => {
                   />
                   {StoryContext.userStory.tasksId.map((id) => (
                     <Task id={id} key={id} />
+                  ))}
+                </Box>
+                <Box className={styles.titleAndButton}>
+                  <Typography variant="h5" component="h3">
+                    Bugs
+                  </Typography>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={() => {
+                      setAddBug(true);
+                      setFormToSubmit("bug");
+                    }}
+                  >
+                    Add Bug
+                  </Button>
+                </Box>
+                <Box className={styles.taskBox}>
+                  <NewBug
+                    display={addBug}
+                    storyId={StoryContext.userStory.id}
+                    setDisplay={setAddTask}
+                    name="BugName"
+                  />
+                  {StoryContext.userStory.bugsId.map((id) => (
+                    <Bug id={id} key={id} />
                   ))}
                 </Box>
               </Box>

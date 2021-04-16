@@ -55,10 +55,6 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
   };
 
   useEffect(() => {
-    console.log("board render");
-  }, []);
-
-  useEffect(() => {
     axios.get(`/KanBanColumn`).then((result) => {
       kanBanDispatcher({ type: "ADD_EXISTING_COLUMNS", columns: result.data });
     });
@@ -81,7 +77,9 @@ export const KanBanBoard: React.FC<KanBanBoardProps> = ({ title }) => {
     >
       <Paper>
         <Box className={styles.boardMenuBar}>
-          <Typography variant="h2">{title}</Typography>
+          <Typography variant="h4" component="h2">
+            {title}
+          </Typography>
           <Button
             type="button"
             onClick={() => {

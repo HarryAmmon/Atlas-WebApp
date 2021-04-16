@@ -21,12 +21,25 @@ export const Summary: React.FC<SummaryProps> = () => {
       />
       {UserStory.tasks.length > 0 ? (
         <Box>
-          <Typography variant="h5">Tasks</Typography>
+          <Typography variant="body1">Tasks</Typography>
           <ProgressBar
             maxValue={UserStory.tasks.length}
             value={UserStory.tasks.filter((x) => x.completed === true).length}
           />
         </Box>
+      ) : (
+        <></>
+      )}
+      {UserStory.bugs.length > 0 ? (
+        <>
+          <Box>
+            <Typography variant="body1">Bugs</Typography>
+            <ProgressBar
+              maxValue={UserStory.bugs.length}
+              value={UserStory.bugs.filter((x) => x.completed === true).length}
+            />
+          </Box>
+        </>
       ) : (
         <></>
       )}

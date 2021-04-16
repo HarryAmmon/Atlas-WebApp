@@ -31,6 +31,7 @@ export const NewUserStory: React.FC<NewUserStoryProps> = ({
               .post("/UserStory", {
                 ...values,
                 TasksId: [],
+                BugsId: [],
               })
               .then((response) => {
                 boardContext.KanBanColumnDispatcher({

@@ -8,8 +8,11 @@ export const UserStoryContext = createContext<UserStoryContextProps>({
     tasksId: [],
     archived: false,
     userStoryId: "",
+    bugsId: [],
   },
   userStoryDispatcher: () => {},
   tasks: [],
   taskDispatcher: () => {},
+  bugs: [],
+  bugDispatcher: () => {},
 });

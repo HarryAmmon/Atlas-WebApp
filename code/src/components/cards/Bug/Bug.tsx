@@ -1,14 +1,14 @@
-import { Box, Checkbox, Dialog } from "@material-ui/core";
-import axios from "axios";
 import React, { useContext, useState } from "react";
-import { BaseCard } from "../BaseCard/BaseCard";
-import { TaskProps } from "./types";
-import { Details } from "./views/Details";
-import { Summary } from "./views/Summary";
-import styles from "../Summary.module.scss";
 import { UserStoryContext } from "../UserStory/services/UserStoryContext";
+import { BugProps } from "./types";
+import styles from "../Summary.module.scss";
+import { Box, Checkbox, Dialog } from "@material-ui/core";
+import { BaseCard } from "..";
+import { Summary } from "./views/Summary";
+import { Details } from "./views/Details";
+import axios from "axios";
 
-export const Task: React.FC<TaskProps> = ({ id, className }) => {
+export const Bug: React.FC<BugProps> = ({ id, className }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const handleOpen = () => setShowDetails(true);
   const handleClose = () => setShowDetails(false);
@@ -19,27 +19,27 @@ export const Task: React.FC<TaskProps> = ({ id, className }) => {
     <>
       <Box className={styles.checkboxWithSummary}>
         <Checkbox
+          checked={story.bugs.find((x) => x.id === id)?.completed}
           onChange={() => {
-            const task = story.tasks.find((x) => x.id === id);
-            if (task) {
+            const bug = story.bugs.find((x) => x.id === id);
+            if (bug) {
               axios
-                .put(`Task/${task.id}`, {
-                  ...task,
-                  completed: !task?.completed,
+                .put(`Bug/${bug.id}`, {
+                  ...bug,
+                  completed: !bug.completed,
                 })
                 .then((result) => {
-                  story.taskDispatcher({
+                  story.bugDispatcher({
                     type: "SET_COMPLETED",
-                    completed: !task.completed,
-                    id: task.id,
+                    id: bug.id,
+                    completed: !bug.completed,
                   });
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.warn(err));
             }
           }}
-          checked={story.tasks.find((x) => x.id === id)?.completed}
         />
-        <BaseCard variant="Task" className={className} changeView={handleOpen}>
+        <BaseCard variant="Bug" className={className} changeView={handleOpen}>
           <Summary id={id} />
         </BaseCard>
       </Box>

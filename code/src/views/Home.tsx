@@ -6,7 +6,7 @@ export const Home = () => {
   return (
     <React.Fragment>
       <Paper>
-        <KanBanBoard title="Atlas Development Board" />
+        <KanBanBoard title="Atlax Development Board" />
       </Paper>
     </React.Fragment>
   );
