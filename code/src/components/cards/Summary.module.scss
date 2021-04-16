@@ -1,3 +1,8 @@
 .root {
   padding: 2px;
 }
+
+.checkboxWithSummary {
+  display: flex;
+  flex-direction: row;
+}

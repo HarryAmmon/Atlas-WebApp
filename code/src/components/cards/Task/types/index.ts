@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface DetailsProps {
   showDetails: boolean;
   handleClose: () => void;

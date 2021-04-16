@@ -23,6 +23,15 @@ export const reducer = (
         UserStory.tasksId.splice(taskIndex, 1);
       }
       return { ...UserStory };
+    case "ADD_BUG":
+      UserStory.bugsId = [...UserStory.bugsId, action.id];
+      return { ...UserStory };
+    case "REMOVE_BUG":
+      const bugIndex = UserStory.bugsId.findIndex((x) => x === action.id);
+      if (bugIndex !== -1) {
+        UserStory.bugsId.splice(bugIndex, 1);
+      }
+      return { ...UserStory };
     default:
       return { ...UserStory };
   }
