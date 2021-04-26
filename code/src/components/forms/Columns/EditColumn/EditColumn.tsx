@@ -20,7 +20,6 @@ export const EditColumn: React.FC<EditColumnProps> = ({
   );
 
   const handleSubmit = (values: any) => {
-    console.log({ values });
     axios
       .put(`/ColumnGroup/${groupId}`, {
         groupTitle: values.GroupTitle,
@@ -45,6 +44,7 @@ export const EditColumn: React.FC<EditColumnProps> = ({
     return (
       <AbstractColumn
         title="Edit"
+        button="Save"
         display={display}
         setDisplay={setDisplay}
         handleSubmit={handleSubmit}

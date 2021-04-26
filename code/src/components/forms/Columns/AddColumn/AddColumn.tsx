@@ -21,7 +21,6 @@ export const AddColumn: React.FC<AddColumnProps> = ({
         Limits: values.WIPLimit,
       })
       .then((result) => {
-        console.log({ result });
         boardContext.ColumnGroupsDispatcher({
           type: "ADD_COLUMN_GROUP",
           ColumnGroup: {
@@ -62,6 +61,7 @@ export const AddColumn: React.FC<AddColumnProps> = ({
   return (
     <AbstractColumn
       title="Add"
+      button="Add"
       display={display}
       setDisplay={setDisplay}
       handleSubmit={handleSubmit}
