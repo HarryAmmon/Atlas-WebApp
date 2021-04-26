@@ -14,6 +14,7 @@ import styles from "./AbstractColumn.module.scss";
 
 interface AbstractColumnProps {
   title: string;
+  button: string;
   display: boolean;
   setDisplay: (state: boolean) => void;
   handleSubmit: (values: any) => void;
@@ -22,6 +23,7 @@ interface AbstractColumnProps {
 
 export const AbstractColumn: React.FC<AbstractColumnProps> = ({
   title,
+  button,
   display,
   setDisplay,
   handleSubmit,
@@ -86,7 +88,7 @@ export const AbstractColumn: React.FC<AbstractColumnProps> = ({
                     Cancel
                   </Button>
                   <Button variant="contained" type="submit">
-                    {title}
+                    {button}
                   </Button>
                 </DialogActions>
               </Box>
