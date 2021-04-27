@@ -8,6 +8,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { CardTitle } from "../components/forms";
+import { Form } from "react-final-form";
 
 export const TypographyPage = () => (
   <React.Fragment>
@@ -43,7 +44,13 @@ export const TypographyPage = () => (
       <Divider />
     </Box>
     <Box my={2}>
-      <CardTitle>My Title</CardTitle>
+      <Form onSubmit={console.log}>
+        {({ handleSubmit }) => (
+          <form>
+            <CardTitle>My Title</CardTitle>
+          </form>
+        )}
+      </Form>
     </Box>
   </React.Fragment>
 );
